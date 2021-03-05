@@ -1,7 +1,8 @@
 import React from 'react'
+import LoginPage from './components/LoginPage'
 
 const App = () => {
-  return <div>Hello world</div>
+  return <LoginPage />
 }
 
 export default App
