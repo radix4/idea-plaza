@@ -1,0 +1,88 @@
+.box {
+  float: left;
+  height: 80px;
+  width: 100%;
+  margin-bottom: 15px;
+  clear: both;
+
+  background-color: #2b7a98;
+}
+
+.inputs {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 800px;
+
+  transform: translate(-50%, -50%);
+}
+
+.display {
+  position: fixed;
+
+  top: 55%;
+  left: 25%;
+  width: 400px;
+
+  transform: translate(-50%, -50%);
+}
+
+.NameSize {
+  font-size: 40px;
+}
+.bold {
+  font-weight: bold;
+}
+
+.cardPlacement {
+  position: fixed;
+
+  top: 50%;
+  left: 35%;
+}
+
+/* .image {
+  background-image: url("./profilePics/background.jpg");
+  height: 950px;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  background-attachment: fixed;
+} */
+/* Location of setProfile boxes */
+.container {
+  position: fixed;
+  top: 27%;
+  left: 50%;
+}
+/* Location ProfilePic  */
+.container2 {
+  position: fixed;
+  top: 27%;
+  left: 20%;
+}
+#clip {
+  position: absolute;
+  transform: translate(-61%, -33%);
+  /* clip: rect(200px, 1300px, 450px, 1050px); */
+  clip-path: circle(8% at 60% 33%);
+  /* clip-path: circle(30%); */
+  /* clip: shape(top, right, bottom, left); NB 'rect' is the only available option */
+
+  /* 1920 × 987 */
+}
+
+.goBack_placement {
+  position: fixed;
+
+  top: 20%;
+  left: 70%;
+}
+
+.goEdit_placement {
+  position: fixed;
+
+  top: 20%;
+  left: 70%;
+}
