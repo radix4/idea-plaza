@@ -1,10 +1,9 @@
 // eslint-disable-next-line
-import React, { Component } from "react";
-import SetProfile from "./SetupProfile";
-import Profile from "./Profile";
+import React, { Component } from 'react'
+import SetProfile from './components/SetupProfile'
+import Profile from './components/Profile'
 
-
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 class App extends React.Component {
   // constructor() {
@@ -18,16 +17,16 @@ class App extends React.Component {
         <div>
           <Switch>
             {/* On Boot */}
-            <Route path="/" exact component={Profile} />
+            <Route path='/' exact component={Profile} />
             {/* Other Site */}
-            <Route path="/setProfile" component={SetProfile} />
+            <Route path='/setProfile' component={SetProfile} />
             {/* Error Case */}
             {/* <Route component={NoMatch} /> */}
           </Switch>
         </div>
       </Router>
-    );
+    )
   }
 }
 
-export default App;
+export default App
