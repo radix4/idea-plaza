@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import profile from './profilePics/background.jpg'
+import profile from './profilePics/background.jpeg'
 import Card from 'react-bootstrap/Card'
 import './Styles.css'
 import { Link } from 'react-router-dom'
-import listProject from './listProject'
+import ListProject from './ListProject'
 
 export default function Profile() {
   const [name, setName] = useState('Allen Baek')
@@ -18,7 +18,7 @@ export default function Profile() {
   }
 
   return (
-    <div>
+    <div className='scrolling'>
       {/* This is needed to get the Card working */}
       <link
         rel='stylesheet'
@@ -30,15 +30,15 @@ export default function Profile() {
       {/* Background Box*/}
       <div className='box'></div>
 
-      {/* ProfileImage */}
-      <div className='container2'>
-        <img src={profile} alt='Image_file' id='clip' />
-      </div>
       {/* Button */}
       <div className='goEdit_placement'>
         <Link to='./setProfile'>
           <Button>Edit Profile</Button>
         </Link>
+      </div>
+      {/* ProfileImage */}
+      <div className='container2'>
+        <img src={profile} alt='Image_file' id='clip' />
       </div>
 
       {/* Input fields */}
@@ -53,17 +53,9 @@ export default function Profile() {
         <div className='bold'>Achievements</div>
         <div>{achieve}</div>
       </div>
-
+      {/* displays list of projects */}
       <div className='cardPlacement'>
-        <Card style={{ fontSize: '15px' }}>
-          <Card.Header>Title of the Project</Card.Header>
-          <Card.Body>
-            <Card.Text>
-              With supporting text below as a natural lead-in to additional
-              content.
-            </Card.Text>
-          </Card.Body>
-        </Card>
+        <ListProject />
       </div>
     </div>
   )

@@ -1,50 +1,49 @@
-import React, { useState } from "react";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import "bootstrap/dist/css/bootstrap.min.css";
-import profile from "./profilePics/background.jpg";
-import "./Styles.css";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react'
+import Button from 'react-bootstrap/Button'
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import profile from './profilePics/background.jpeg'
+import './Styles.css'
+import { Link } from 'react-router-dom'
 
 export default function SetupProfile() {
-  const [bios, setBios] = useState("");
-  const [achieve, setAchieve] = useState("");
+  const [bios, setBios] = useState('')
+  const [achieve, setAchieve] = useState('')
 
   // updates on input
   const handleChangeB = ({ target }) => {
-    setBios(target.value);
-  };
+    setBios(target.value)
+  }
 
   const handleChangeA = ({ target }) => {
-    setAchieve(target.value);
-  };
+    setAchieve(target.value)
+  }
 
   const handleSubmit = () => {
-    console.log("Bios : " + bios);
-    console.log("Achievements : " + achieve);
-  };
+    console.log('Bios : ' + bios)
+    console.log('Achievements : ' + achieve)
+  }
 
-  
   return (
-    <div>
+    <div className='scrolling'>
       {/* Background Box*/}
-      <div className="box"></div>
+      <div className='box'></div>
 
       {/* ProfileImage */}
-      <div className="container">
-        <img src={profile} alt="Image_file" id="clip" />
+      <div className='container'>
+        <img src={profile} alt='Image_file' id='clip' />
       </div>
 
-      <div className="goBack_placement">
-      <Link to="./">
-        <Button>Profile Page</Button>
+      <div className='goBack_placement'>
+        <Link to='./'>
+          <Button>Profile Page</Button>
         </Link>
       </div>
 
       {/* Input fields */}
-      <div className="inputs">
+      <div className='inputs'>
         <Form>
           <br />
           <br />
@@ -52,16 +51,16 @@ export default function SetupProfile() {
           <br />
           <br />
           <br />
-          <Form.Group as={Row} controlId="Bios">
-            <Form.Label column sm="2">
+          <Form.Group as={Row} controlId='Bios'>
+            <Form.Label column sm='2'>
               Biography
             </Form.Label>
 
-            <Col sm="8">
+            <Col sm='8'>
               <Form.Control
-                type="text"
-                as="textarea"
-                placeholder="About Yourself"
+                type='text'
+                as='textarea'
+                placeholder='About Yourself'
                 value={bios}
                 onChange={handleChangeB}
                 rows={3}
@@ -69,16 +68,16 @@ export default function SetupProfile() {
             </Col>
           </Form.Group>
 
-          <Form.Group as={Row} controlId="Achievement">
-            <Form.Label column sm="2">
+          <Form.Group as={Row} controlId='Achievement'>
+            <Form.Label column sm='2'>
               Achievements
             </Form.Label>
 
-            <Col sm="8">
+            <Col sm='8'>
               <Form.Control
-                type="text"
-                as="textarea"
-                placeholder="Your Achievements"
+                type='text'
+                as='textarea'
+                placeholder='Your Achievements'
                 value={achieve}
                 onChange={handleChangeA}
                 rows={3}
@@ -90,5 +89,5 @@ export default function SetupProfile() {
         </Form>
       </div>
     </div>
-  );
+  )
 }
