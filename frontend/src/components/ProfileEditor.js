@@ -1,10 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
-//import { Link } from 'react-router-dom'
-import profile from './profilePics/background.jpeg'
-import './Styles.css'
+import profileImage from '../images/background.png'
 
-export default function SetupProfile() {
+const ProfileEditor = () => {
   const [bios, setBios] = useState('')
   const [achieve, setAchieve] = useState('')
 
@@ -29,18 +27,15 @@ export default function SetupProfile() {
 
       {/* ProfileImage */}
       <div className='container'>
-        <img src={profile} alt='Image_file' id='clip' />
+        <img src={profileImage} alt='Image_file' id='clip' />
       </div>
 
-      <div className='goBack_placement'>
-        {/* <Link to='./'>
-          <Button>Profile Page</Button>
-        </Link> */}
-      </div>
+      <div className='goBack_placement'></div>
 
       {/* Input fields */}
       <div className='inputs'>
         <Form>
+          {/* ! Try to get rid of these line breaks */}
           <br />
           <br />
           <br />
@@ -87,3 +82,5 @@ export default function SetupProfile() {
     </div>
   )
 }
+
+export default ProfileEditor

@@ -1,19 +1,11 @@
 import React, { useState } from 'react'
-import { Button } from 'react-bootstrap'
-//import { Link } from 'react-router-dom'
-import ListProject from './listProject'
-import profile from './profilePics/background.jpeg'
-import './Styles.css'
+import AllProjects from './AllProjects'
+import profileImage from '../images/background.png'
 
-export default function Profile() {
+const Profile = () => {
   const [name, setName] = useState('Allen Baek')
   const [bios, setBios] = useState('My bios')
   const [achieve, setAchieve] = useState('My achievements')
-
-  const handleSubmit = () => {
-    console.log('Bios : ' + bios)
-    console.log('Achievements : ' + achieve)
-  }
 
   return (
     <div className='scrolling'>
@@ -21,14 +13,10 @@ export default function Profile() {
       <div className='box'></div>
 
       {/* Button */}
-      <div className='goEdit_placement'>
-        {/* <Link to='./setProfile'>
-          <Button>Edit Profile</Button>
-        </Link> */}
-      </div>
+      <div className='goEdit_placement'></div>
       {/* ProfileImage */}
       <div className='container2'>
-        <img src={profile} alt='Image_file' id='clip' />
+        <img src={profileImage} alt='Image_file' id='clip' />
       </div>
 
       {/* Input fields */}
@@ -45,8 +33,10 @@ export default function Profile() {
       </div>
       {/* displays list of projects */}
       <div className='cardPlacement'>
-        <ListProject />
+        <AllProjects />
       </div>
     </div>
   )
 }
+
+export default Profile

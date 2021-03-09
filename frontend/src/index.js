@@ -1,12 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-//import App from './App'
-import SetProfile from './components/SetupProfile'
-import Profile from './components/Profile'
+import App from './App'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Profile />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 )
