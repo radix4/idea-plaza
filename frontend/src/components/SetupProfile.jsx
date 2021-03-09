@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import profile from './profilePics/background.jpeg'
 import './Styles.css'
 
@@ -33,9 +33,9 @@ export default function SetupProfile() {
       </div>
 
       <div className='goBack_placement'>
-        <Link to='./'>
+        {/* <Link to='./'>
           <Button>Profile Page</Button>
-        </Link>
+        </Link> */}
       </div>
 
       {/* Input fields */}

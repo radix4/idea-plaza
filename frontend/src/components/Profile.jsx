@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+//import { Link } from 'react-router-dom'
 import ListProject from './listProject'
 import profile from './profilePics/background.jpeg'
 import './Styles.css'
@@ -22,9 +22,9 @@ export default function Profile() {
 
       {/* Button */}
       <div className='goEdit_placement'>
-        <Link to='./setProfile'>
+        {/* <Link to='./setProfile'>
           <Button>Edit Profile</Button>
-        </Link>
+        </Link> */}
       </div>
       {/* ProfileImage */}
       <div className='container2'>
