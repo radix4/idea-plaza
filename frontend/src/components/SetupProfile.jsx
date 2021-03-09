@@ -1,12 +1,8 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Row from 'react-bootstrap/Row'
-import Col from 'react-bootstrap/Col'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { Button, Form, Row, Col } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import profile from './profilePics/background.jpeg'
 import './Styles.css'
-import { Link } from 'react-router-dom'
 
 export default function SetupProfile() {
   const [bios, setBios] = useState('')

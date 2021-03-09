@@ -1,11 +1,9 @@
 import React, { useState } from 'react'
-import Button from 'react-bootstrap/Button'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import profile from './profilePics/background.jpeg'
-import Card from 'react-bootstrap/Card'
-import './Styles.css'
+import { Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import ListProject from './ListProject'
+import ListProject from './listProject'
+import profile from './profilePics/background.jpeg'
+import './Styles.css'
 
 export default function Profile() {
   const [name, setName] = useState('Allen Baek')
