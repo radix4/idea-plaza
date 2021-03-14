@@ -1,0 +1,6 @@
+0. Add sub-headers to IdeaPage.
+1. Create a MongoDB.
+2. Connect IdeaPage to database.
+3. Populate database with 4 authors, each with 2-3 ideas.  
+4. Get one author profile & one idea to render.
+5. Change profile pic into actual image.

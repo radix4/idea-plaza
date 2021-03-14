@@ -30,15 +30,18 @@ const IdeaPage = () => {
             <Card.Header as='h2'>Title of idea</Card.Header>
             <Card.Body>
               <Card.Text>
-                This is where the description of the idea will go. Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Mauris tortor leo,
-                volutpat id ex sit amet, pretium lobortis lorem. Nunc mi nunc,
-                mollis bibendum tincidunt ac, euismod et lorem. Donec ornare
-                suscipit ex, at porttitor mauris ullamcorper a. Aliquam
-                ullamcorper vestibulum ultricies. Nam at ornare turpis. In
-                iaculis ex feugiat pulvinar feugiat. Donec ornare vel eros ut
-                faucibus. Sed non orci at augue vehicula efficitur eget at
-                magna.
+                <h3>Problem description</h3>
+                This is where the description of the problem will go. Lorem
+                ipsum dolor sit amet, consectetur adipiscing elit. Mauris tortor
+                leo, volutpat id ex sit amet, pretium lobortis lorem.
+                <h3>Current solutions on the market </h3>
+                Nunc mi nunc, mollis bibendum tincidunt ac, euismod et lorem.
+                Donec ornare suscipit ex, at porttitor mauris ullamcorper a.
+                Aliquam ullamcorper vestibulum ultricies.
+                <h3>My proposed solution</h3>
+                Nam at ornare turpis. In iaculis ex feugiat pulvinar feugiat.
+                Donec ornare vel eros ut faucibus. Sed non orci at augue
+                vehicula efficitur eget at magna.
               </Card.Text>
             </Card.Body>
           </Card>
@@ -88,25 +91,25 @@ const IdeaPage = () => {
           <Card>
             <Card.Header>
               {' '}
-              Comments
+              Questions
               <Button style={styles.buttonRight} size='sm'>
-                Add new comment
+                Add new question
               </Button>
             </Card.Header>
             <Card.Body>
               <Table bordered hover>
                 <tbody>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>{' '}
                 </tbody>{' '}
               </Table>
@@ -117,25 +120,25 @@ const IdeaPage = () => {
           <Card>
             <Card.Header>
               {' '}
-              Criticisim
+              Criticism
               <Button style={styles.buttonRight} size='sm'>
-                Add new criticisim
+                Add new criticism
               </Button>
             </Card.Header>
             <Card.Body>
               <Table bordered hover>
                 <tbody>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>{' '}
                 </tbody>
               </Table>
