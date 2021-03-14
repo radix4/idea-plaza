@@ -20,28 +20,72 @@ const ProfileEditor = () => {
     console.log('Achievements : ' + achieve)
   }
 
+  //Style
+
+  const box = {
+    float: 'left',
+    height: '80px',
+    width: '100%',
+    marginBottom: '15px',
+    clear: 'both',
+
+    backgroundColor: '#2b7a98',
+  }
+  /* for EditProfile */
+  const inputs = {
+    position: 'absolute',
+    top: '60%',
+    left: '50%',
+    width: '800px',
+
+    transform: 'translate(-50%, -50%)',
+  }
+
+  /* Location ProfilePic  */
+  const container = {
+    position: 'fixed',
+    top: '5.5%',
+    left: '40%',
+  }
+  // edits profile picture
+  const clip = {
+    position: 'absolute',
+    clipPath: 'circle(40%)',
+  }
+  // Button to go back to Profile Page
+  const EditPlacement = {
+    position: 'absolute',
+
+    top: '20%',
+    left: '70%',
+  }
+
+  const scrolling = {
+    paddingBottom: 'auto',
+    overflowY: 'scroll',
+    /* Disables left scrolling */
+    maxWidth: '100%',
+    overflowX: 'hidden',
+  }
+
   return (
-    <div className='scrolling'>
+    <div style={scrolling}>
       {/* Background Box*/}
-      <div className='box'></div>
+      <div style={box}></div>
 
       {/* ProfileImage */}
-      <div className='container'>
-        <img src={profileImage} alt='Image_file' id='clip' />
+      <div style={container}>
+        <img src={profileImage} alt='Image_file' style={clip} />
       </div>
 
-      <div className='goBack_placement'></div>
+      {/* Go to Profile page button */}
+      <div style={EditPlacement}>
+        <Button>Profile</Button>
+      </div>
 
       {/* Input fields */}
-      <div className='inputs'>
+      <div style={inputs}>
         <Form>
-          {/* ! Try to get rid of these line breaks */}
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
           <Form.Group as={Row} controlId='Bios'>
             <Form.Label column sm='2'>
               Biography
