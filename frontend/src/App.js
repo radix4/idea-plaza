@@ -1,11 +1,10 @@
 // eslint-disable-next-line
 import React from 'react'
-import ProfileEditor from './components/ProfileEditor'
-import Profile from './components/Profile'
-import './Styles/Styles.css'
+import LoginPage from './components/LoginPage'
+import RegistrationPage from './components/RegistrationPage'
 
 const App = () => {
-  return <Profile />
+  return <RegistrationPage />
 }
 
 export default App
