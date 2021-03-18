@@ -1,5 +1,4 @@
 import React from 'react'
-import './style.css'
 import {
   Navbar,
   Nav,
@@ -10,8 +9,28 @@ import {
 } from 'react-bootstrap'
 
 const MyNavbar = () => {
+  const navbarStyle = {
+    backgroundColor: '#2b7a98',
+  }
+
+  const searchFieldStyle = {
+    width: '350px',
+  }
+
+  const loginButtonStyle = {
+    width: '100px',
+  }
+
+  const signupButtonStyle = {
+    width: '100px',
+  }
+
+  const navDropdownStyle = {
+    color: 'white',
+  }
+
   return (
-    <Navbar expand='lg' className='nav-bg fixed-top'>
+    <Navbar expand='lg' className='fixed-top' style={navbarStyle}>
       <Navbar.Brand>
         <img
           src='images/logo_white.png'
@@ -28,24 +47,32 @@ const MyNavbar = () => {
             type='text'
             placeholder='Search'
             className='mr-sm-4'
-            id='field-search'
+            style={searchFieldStyle}
           />
-          <Button variant='outline-light'>Search</Button>
+          <Button variant='info' class='btn-info'>
+            Search
+          </Button>
         </Form>
         <Nav className='mr-auto'>
-          <NavDropdown title='Sort by' id='basic-nav-dropdown'>
+          <NavDropdown title='Sort by' style={navDropdownStyle}>
             <NavDropdown.Item>Relevance</NavDropdown.Item>
             <NavDropdown.Item>Popularity</NavDropdown.Item>
             <NavDropdown.Item>Date</NavDropdown.Item>
           </NavDropdown>
         </Nav>
         <Form className='mr-4'>
-          <Button variant='outline-light' className='btn-login rounded-pill'>
+          <Button
+            variant='info'
+            className='rounded-pill'
+            style={loginButtonStyle}>
             Login
           </Button>
         </Form>
         <Form>
-          <Button variant='outline-light' className='btn-signup rounded-pill'>
+          <Button
+            variant='outline-light'
+            className='rounded-pill'
+            style={signupButtonStyle}>
             Sign Up
           </Button>
         </Form>
