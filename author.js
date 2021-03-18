@@ -12,8 +12,8 @@ const authorSchema = new Schema({
     required: true,
   },
   ideas: {
-    type: [Schema.Types.ObjectId],
+    type: [{type: Schema.Types.ObjectId, ref: 'Idea'}],
   },
 })
-const Author = mongoose.model('Authors', authorSchema)
+const Author = mongoose.model('Author', authorSchema)
 module.exports = Author
