@@ -1,8 +1,9 @@
 import React from 'react'
-import IdeaPage from './components/IdeaPage'
+import LoginPage from './components/LoginPage'
+import RegistrationPage from './components/RegistrationPage'
 
 const App = () => {
-  return <IdeaPage />
+  return <RegistrationPage />
 }
 
 export default App
