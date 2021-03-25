@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 import React from 'react'
 import LoginPage from './components/LoginPage'
 import RegistrationPage from './components/RegistrationPage'
