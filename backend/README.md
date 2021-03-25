@@ -1,3 +1,4 @@
 # Dependencies
 
-1. npm init -- initialize package.json
+1. npm init
+2. npm install --save-dev nodemon
