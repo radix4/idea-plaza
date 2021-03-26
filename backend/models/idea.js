@@ -62,7 +62,7 @@ const ideaSchema = new mongoose.Schema({
 /* 
 This function reformats mongo's id and versioning field.
 Mongo's id field looks like a string, but it's an object (watch out!) and
-the toJSON method here takes care of it just in case.
+    the toJSON method here takes care of it just in case.
 */
 ideaSchema.set('toJSON', {
   transform: (document, returnedObject) => {

@@ -30,11 +30,11 @@ const userSchema = new mongoose.Schema({
   },
   biography: {
     type: String,
-    required: true,
+    required: false,
   },
   achievements: {
     type: String,
-    required: true,
+    required: false,
   },
   ideas: [
     {
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
 /* 
 This function reformats mongo's id and versioning field.
 Mongo's id field looks like a string, but it's an object (watch out!) and
-the toJSON method here takes care of it just in case.
+    the toJSON method here takes care of it just in case.
 */
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
