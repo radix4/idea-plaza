@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import profileImage from '../images/background.png'
+import MyNavbar from './MyNavbar'
 
 const ProfileEditor = () => {
   const [bios, setBios] = useState('')
@@ -70,8 +71,8 @@ const ProfileEditor = () => {
 
   return (
     <div style={scrolling}>
-      {/* Background Box*/}
-      <div style={box}></div>
+      {/* Navbar*/}
+      <MyNavbar />
 
       {/* ProfileImage */}
       <div style={container}>

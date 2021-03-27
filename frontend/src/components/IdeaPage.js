@@ -1,7 +1,8 @@
 import React from 'react'
-import UpArrow from './uparrow.png'
-import DownArrow from './downarrow.png'
 import { Card, Row, Col, Container, Button, Table } from 'react-bootstrap'
+import MyNavbar from './MyNavbar'
+import upvoteActiveImage from '../images/upvote_active.png'
+import downvoteActiveImage from '../images/downvote_active.png'
 
 const styles = {
   circle: {
@@ -21,10 +22,12 @@ const styles = {
 
 const IdeaPage = () => {
   return (
-    <Container>
+    <Container className='mt-5 pt-5'>
+      <MyNavbar />
       {/* Top row */}
       <Row>
         <Col md={8}>
+          {/* =================IDEA================ */}
           <Card>
             {/* Will replace with actual title later */}
             <Card.Header as='h2'>Title of idea</Card.Header>
@@ -44,39 +47,51 @@ const IdeaPage = () => {
           </Card>
         </Col>
         <Col md={2}>
+          {/* =============POPULARITY============ */}
           <Card>
             <Card.Header> Popularity</Card.Header>
             <Card.Body>
-              <Table striped borderless hover>
+              <div className='col text-center'>
+                <div className='row mb-1'>
+                  <Button variant='link'>
+                    <img src={upvoteActiveImage} width='30' height='30' />
+                  </Button>
+                  <h6 className='mt-3'>420</h6>
+                </div>
+                <div className='row mb-1'>
+                  <Button variant='link'>
+                    <img src={downvoteActiveImage} width='30' height='30' />
+                  </Button>
+                  <h6 className='mt-2'>69</h6>
+                </div>
+              </div>
+              {/* <Table striped borderless hover>
                 <tr>
                   <td>
-                    <Button
-                      img
-                      src={UpArrow}
-                      style={styles.votingButton}
-                      size='sm'></Button>
+                    <Button variant='link'>
+                      <img src={upvoteActiveImage} width='30' height='30' />
+                    </Button>
                   </td>
                   <td>+++</td>
                 </tr>
                 <tr>
                   <td>
-                    <Button
-                      img
-                      src={DownArrow}
-                      style={styles.votingButton}
-                      size='sm'></Button>
+                    <Button variant='link'>
+                      <img src={downvoteActiveImage} width='30' height='30' />
+                    </Button>
                   </td>
                   <td>---</td>
                 </tr>
-              </Table>
+              </Table> */}
               Images
             </Card.Body>
           </Card>
         </Col>
+        {/* =============AUTHOR============ */}
         <Col md={2}>
-          <div style={styles.circle}></div>
+          <div style={styles.circle} className='mb-3'></div>
           <Card>
-            <Card.Header> Bio</Card.Header>
+            <Card.Header>Bio</Card.Header>
             <Card.Body>Text</Card.Body>
           </Card>
         </Col>
@@ -85,6 +100,7 @@ const IdeaPage = () => {
       {/* Bottom row */}
       <Row>
         <Col md={6}>
+          {/* =============COMMENTS============ */}
           <Card>
             <Card.Header>
               {' '}
@@ -114,6 +130,7 @@ const IdeaPage = () => {
           </Card>
         </Col>
         <Col md={6}>
+          {/* =============CRITICISM============ */}
           <Card>
             <Card.Header>
               {' '}

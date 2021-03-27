@@ -1,16 +1,34 @@
 import React from 'react'
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button, ButtonGroup, Image } from 'react-bootstrap'
+import upvoteImage from '../images/upvote.png'
+import downvoteImage from '../images/downvote.png'
 
-const Post = () => {
+const Idea = () => {
   return (
-    <div class='mt-4 mb-4'>
+    <div className='mt-4 mb-4 d-flex justify-content-between'>
+      <div className='mt-1 mr-1'>
+        {/* =============UPVOTE/DOWNVOTE============ */}
+        <ButtonGroup vertical>
+          <Button variant='link'>
+            <img src={upvoteImage} width='30' height='30' />
+          </Button>
+          <div className='col text-center'>
+            <h5>51</h5>
+          </div>
+          <Button variant='link'>
+            <img src={downvoteImage} width='30' height='30' />
+          </Button>
+        </ButtonGroup>
+      </div>
       <Card border='primary'>
+        {/* =============TITLE AND DATE============ */}
         <Card.Header>
-          <div class='d-flex align-items-center justify-content-between'>
-            <h4>Idea Plaza</h4>
+          <div className='d-flex align-items-center justify-content-between'>
+            <h5>Idea Plaza</h5>
             <p>03/14/2021</p>
           </div>
         </Card.Header>
+        {/* =============DESCRIPTION AND AUTHOR============ */}
         <Card.Body>
           <Card.Text>
             A very cool Reddit-like website for posting startup/project ideas.
@@ -23,7 +41,7 @@ const Post = () => {
             typesetting, remaining essentially unchanged. It was popularised in
             the 1960s with the release of . . .
           </Card.Text>
-          <div class='d-flex justify-content-between'>
+          <div className='d-flex justify-content-between'>
             <Button variant='primary'>Go to the idea page</Button>
             <p>author: Jonathan Joestar</p>
           </div>
@@ -33,4 +51,4 @@ const Post = () => {
   )
 }
 
-export default Post
+export default Idea

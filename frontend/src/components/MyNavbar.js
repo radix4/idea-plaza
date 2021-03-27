@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap'
+import logoImage from '../images/logo_white.png'
 
 const MyNavbar = () => {
   const navbarStyle = {
@@ -31,17 +32,20 @@ const MyNavbar = () => {
 
   return (
     <Navbar expand='lg' className='fixed-top' style={navbarStyle}>
+      {/* ============= LOGO ============= */}
       <Navbar.Brand>
         <img
-          src='images/logo_white.png'
+          src={logoImage}
           width='120'
           height='30'
           alt='Idea Plaza'
           className='mb-0.5 mr-2'
         />
       </Navbar.Brand>
+
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
+        {/* ============= SEARCH ============= */}
         <Form inline className='mr-3'>
           <FormControl
             type='text'
@@ -53,6 +57,7 @@ const MyNavbar = () => {
             Search
           </Button>
         </Form>
+        {/* ============= SORT BY ============= */}
         <Nav className='mr-auto'>
           <NavDropdown title='Sort by' style={navDropdownStyle}>
             <NavDropdown.Item>Relevance</NavDropdown.Item>
@@ -60,6 +65,7 @@ const MyNavbar = () => {
             <NavDropdown.Item>Date</NavDropdown.Item>
           </NavDropdown>
         </Nav>
+        {/* ============= LOGIN ============= */}
         <Form className='mr-4'>
           <Button
             variant='info'
@@ -68,6 +74,7 @@ const MyNavbar = () => {
             Login
           </Button>
         </Form>
+        {/* ============= SING UP ============= */}
         <Form>
           <Button
             variant='outline-light'

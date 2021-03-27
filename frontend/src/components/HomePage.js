@@ -1,40 +1,42 @@
 import { Button } from 'react-bootstrap'
 import React from 'react'
-import Post from './Post'
+import Idea from './Idea'
 import MyNavbar from './MyNavbar'
 
-const Home = () => {
+const HomePage = () => {
   return (
     <div>
       <MyNavbar />
       <div className='d-flex justify-content-between mt-5 pt-4 pl-5 ml-5 pr-4'>
-        <div className='flex-column p-2 pr-4'>
+        {/* ============= IDEAS ============= */}
+        <div className='p-2 pr-4'>
           <Button variant='primary' className='btn-block'>
             Create New Idea
           </Button>
-          <Post />
-          <Post />
+          <Idea />
+          <Idea />
         </div>
-        <div class='container bg-light rounded p-3 h-25'>
-          <div class='row'>
-            <div class='col'>
+        {/* ============= OTHER LINKS ============= */}
+        <div className='container bg-light rounded p-3 h-25'>
+          <div className='row'>
+            <div className='col'>
               <a href='#'>Help</a>
             </div>
-            <div class='col'>
+            <div className='col'>
               <a href='#'>About</a>
             </div>
-            <div class='w-100'></div>
-            <div class='col'>
+            <div className='w-100'></div>
+            <div className='col'>
               <a href='#'>Contact</a>
             </div>
-            <div class='col'>
+            <div className='col'>
               <a href='#'>Careers</a>
             </div>
-            <div class='w-100'></div>
-            <div class='col'>
+            <div className='w-100'></div>
+            <div className='col'>
               <a href='#'>Blog</a>
             </div>
-            <div class='col'>
+            <div className='col'>
               <a href='#'>Privacy Policy</a>
             </div>
           </div>
@@ -44,4 +46,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default HomePage

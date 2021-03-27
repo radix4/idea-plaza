@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Button } from 'react-bootstrap'
 import AllProjects from './AllProjects'
 import profileImage from '../images/background.png'
+import MyNavbar from './MyNavbar'
 
 const Profile = () => {
   const [name, setName] = useState('Allen Baek')
@@ -70,9 +71,8 @@ const Profile = () => {
 
   return (
     <div style={scrolling}>
-      {/* Background Box*/}
-      <div style={box}></div>
-
+      {/* Navbar*/}
+      <MyNavbar />
       {/* Button */}
       <div style={EditPlacement}>
         <Button>Edit</Button>
