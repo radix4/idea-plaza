@@ -19,7 +19,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // TODO: make email address to be unique
   email: {
     type: String,
     required: true,
