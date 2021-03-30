@@ -4,8 +4,9 @@ import profileImage from '../images/background.png'
 import MyNavbar from './MyNavbar'
 
 const ProfileEditor = () => {
-  const [bios, setBios] = useState('')
-  const [achieve, setAchieve] = useState('')
+  const [bios, setBios] = useState('My bios')
+  const [achieve, setAchieve] = useState('My Achievements')
+  const [edit, setEdit] = useState(false)
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -19,6 +20,14 @@ const ProfileEditor = () => {
   const handleSubmit = () => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
+  }
+
+  const switchstateT = () => {
+    setEdit(true)
+  }
+
+  const switchstateF = () => {
+    setEdit(false)
   }
 
   //Style
@@ -69,6 +78,68 @@ const ProfileEditor = () => {
     overflowX: 'hidden',
   }
 
+  //For Bios and Achievement editibility
+  var input1 = <Form.Control />
+  var input2 = <Form.Control />
+  var button = <Button></Button>
+  var submit = ''
+
+  if (edit) {
+    input1 = (
+      <Form.Control
+        type='text'
+        as='textarea'
+        placeholder='About Yourself'
+        value={bios}
+        onChange={handleChangeB}
+        rows={3}
+      />
+    )
+
+    input2 = (
+      <Form.Control
+        type='text'
+        as='textarea'
+        placeholder='Your Achievements'
+        value={achieve}
+        onChange={handleChangeA}
+        rows={3}
+      />
+    )
+
+    button = <Button onClick={switchstateF}>Cancel</Button>
+
+    submit = <Button onClick={(handleSubmit, switchstateF)}> Save </Button>
+  } else {
+    input1 = (
+      <Form.Control
+        type='text'
+        as='textarea'
+        placeholder='About Yourself'
+        value={bios}
+        onChange={handleChangeB}
+        rows={3}
+        disabled
+      />
+    )
+
+    input2 = (
+      <Form.Control
+        type='text'
+        as='textarea'
+        placeholder='Your Achievements'
+        value={achieve}
+        onChange={handleChangeA}
+        rows={3}
+        disabled
+      />
+    )
+
+    button = <Button onClick={switchstateT}>Edit</Button>
+
+    submit = ''
+  }
+
   return (
     <div style={scrolling}>
       {/* Navbar*/}
@@ -92,16 +163,7 @@ const ProfileEditor = () => {
               Biography
             </Form.Label>
 
-            <Col sm='8'>
-              <Form.Control
-                type='text'
-                as='textarea'
-                placeholder='About Yourself'
-                value={bios}
-                onChange={handleChangeB}
-                rows={3}
-              />
-            </Col>
+            <Col sm='8'>{input1}</Col>
           </Form.Group>
 
           <Form.Group as={Row} controlId='Achievement'>
@@ -109,19 +171,12 @@ const ProfileEditor = () => {
               Achievements
             </Form.Label>
 
-            <Col sm='8'>
-              <Form.Control
-                type='text'
-                as='textarea'
-                placeholder='Your Achievements'
-                value={achieve}
-                onChange={handleChangeA}
-                rows={3}
-              />
-            </Col>
+            <Col sm='8'>{input2}</Col>
           </Form.Group>
-
-          <Button onClick={handleSubmit}> Save </Button>
+          {button}
+          <br />
+          <br />
+          {submit}
         </Form>
       </div>
     </div>
