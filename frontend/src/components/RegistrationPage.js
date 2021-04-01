@@ -1,8 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import backgroundImage from '../images/registration.png'
+import userService from '../services/users'
 
 const RegistrationPage = () => {
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
   const backgroundImageStyle = {
     width: '100%',
     height: '946px',
@@ -22,6 +29,54 @@ const RegistrationPage = () => {
     marginTop: '30px',
   }
 
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value)
+  }
+
+  const handleLastNameChange = (event) => {
+    setLastName(event.target.value)
+  }
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value)
+  }
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value)
+  }
+
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value)
+  }
+
+  const addUser = async (event) => {
+    event.preventDefault()
+
+    const newUser = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    }
+
+    try {
+      await userService.create(newUser).then((returnedUser) => {
+        console.log('create user success!')
+      })
+
+      setFirstName('')
+      setLastName('')
+      setEmail('')
+      setPassword('')
+      setConfirmPassword('')
+
+      // clear react bootstrap form
+      //document.getElementById('create-user-form').reset()
+    } catch (exception) {
+      console.log('Create user fail')
+    }
+  }
+
   return (
     <Container fluid>
       <Row className='align-items-center d-flex flex-wrap-reverse'>
@@ -35,9 +90,12 @@ const RegistrationPage = () => {
         <Col md={6}>
           <Row style={rightColStyle}>
             <h1>Registration</h1>
-            <Form style={formStyle} id='registration'>
+            <Form style={formStyle} id='registration' onSubmit={addUser}>
               {/* ============= FIRST NAME ============= */}
-              <Form.Group as={Row} controlId='firstName'>
+              <Form.Group
+                as={Row}
+                controlId='firstName'
+                onChange={handleFirstNameChange}>
                 <Form.Label column md={4}>
                   First Name
                 </Form.Label>
@@ -47,7 +105,10 @@ const RegistrationPage = () => {
               </Form.Group>
 
               {/* ============= LAST NAME ============= */}
-              <Form.Group as={Row} controlId='lastName'>
+              <Form.Group
+                as={Row}
+                controlId='lastName'
+                onChange={handleLastNameChange}>
                 <Form.Label column md={4}>
                   Last Name
                 </Form.Label>
@@ -57,7 +118,10 @@ const RegistrationPage = () => {
               </Form.Group>
 
               {/* ============= EMAIL ============= */}
-              <Form.Group as={Row} controlId='email'>
+              <Form.Group
+                as={Row}
+                controlId='email'
+                onChange={handleEmailChange}>
                 <Form.Label column md={4}>
                   Email
                 </Form.Label>
@@ -67,7 +131,10 @@ const RegistrationPage = () => {
               </Form.Group>
 
               {/* ============= PASSWORD ============= */}
-              <Form.Group as={Row} controlId='password'>
+              <Form.Group
+                as={Row}
+                controlId='password'
+                onChange={handlePasswordChange}>
                 <Form.Label column md={4}>
                   Password
                 </Form.Label>
@@ -77,7 +144,10 @@ const RegistrationPage = () => {
               </Form.Group>
 
               {/* ============= CONFIRM PASSWORD ============= */}
-              <Form.Group as={Row} controlId='confirmPassword'>
+              <Form.Group
+                as={Row}
+                controlId='confirmPassword'
+                onChange={handleConfirmPasswordChange}>
                 <Form.Label column md={4}>
                   Confirm Password
                 </Form.Label>
