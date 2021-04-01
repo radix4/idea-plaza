@@ -24,6 +24,9 @@ mongoose
 const usersRouter = require('./controllers/users')
 app.use('/api/users', usersRouter)
 
+const ideasRouter = require('./controllers/ideas')
+app.use('/api/ideas', ideasRouter)
+
 /* opens port on the browser */
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {

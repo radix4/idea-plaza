@@ -1,0 +1,12 @@
+POST http://localhost:3001/api/ideas/
+Content-Type: application/json
+
+{
+    "title": "Title1", 
+    "problemStatement": {"domain": "domain1", "stateOfTheArt": "stateOfArt1", "solution": "solution1"},
+    "author": "author1",
+    "upVote": 34,
+    "downVote": 12,
+    "questions": [],
+    "criticisms": []
+}

@@ -53,10 +53,11 @@ const ideaSchema = new mongoose.Schema({
       ref: 'Criticism',
     },
   ],
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  // user: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: false,
+  // },
 })
 
 /* 
