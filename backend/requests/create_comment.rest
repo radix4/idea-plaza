@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/comments/
+Content-Type: application/json
+
+{
+    "content": "Your idea should be ashamed of itself.",
+    "replies": []
+    //"idea": 
+}
