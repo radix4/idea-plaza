@@ -104,25 +104,25 @@ const IdeaPage = () => {
           <Card>
             <Card.Header>
               {' '}
-              Comments
+              Questions
               <Button style={styles.buttonRight} size='sm'>
-                Add new comment
+                Add new question
               </Button>
             </Card.Header>
             <Card.Body>
               <Table bordered hover>
                 <tbody>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>{' '}
                 </tbody>{' '}
               </Table>
