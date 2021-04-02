@@ -14,7 +14,7 @@ const styles = {
   },
   buttonRight: {
     float: 'right',
-    fontSize: 12,
+    fontSize: 14,
   },
   votingButton: {
     float: 'left',
