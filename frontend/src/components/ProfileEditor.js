@@ -17,9 +17,12 @@ const ProfileEditor = () => {
     setAchieve(target.value)
   }
 
+  // Saves Input to database
   const handleSubmit = () => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
+
+    // axios
   }
 
   const switchstateT = () => {
