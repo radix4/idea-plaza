@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Form, Row, Col } from 'react-bootstrap'
-import profileImage from '../images/background.png'
+import { Button } from 'react-bootstrap'
 import BioAchieve from './BioAchieve'
+import ContactInfo from './ContactInfo'
+import Password from './Password'
 import MyNavbar from './MyNavbar'
 
 const ProfileEditor = () => {
-  const [page, setPage] = useState('BioAch')
+  const [page, setPage] = useState(<BioAchieve />)
 
+  //Style
   const scrolling = {
     paddingBottom: 'auto',
     overflowY: 'scroll',
@@ -14,11 +16,25 @@ const ProfileEditor = () => {
     maxWidth: '100%',
     overflowX: 'hidden',
   }
+
+  const SelectionPos = {
+    position: 'fixed',
+    left: '10%',
+    top: '30%',
+  }
+
   var thePage = 'hello'
 
-  //Base Page edit Bio and Achievement
-  if (page.localeCompare('BioArch')) {
-    thePage = 'hello World'
+  const goBioAchieve = () => {
+    setPage(<BioAchieve />)
+  }
+
+  const goContactInfo = () => {
+    setPage(<ContactInfo />)
+  }
+
+  const goPassword = () => {
+    setPage(<Password />)
   }
 
   return (
@@ -26,7 +42,20 @@ const ProfileEditor = () => {
       {/* Navbar*/}
       <MyNavbar />
 
-      <BioAchieve />
+      <a style={SelectionPos}>
+        <Button onClick={goBioAchieve}>
+          View/Change Biography and Achievement
+        </Button>
+        <br />
+        <br />
+        <Button onClick={goContactInfo}>View Contact Info.</Button>
+        <br />
+        <br />
+        <Button onClick={goPassword}>Change Password</Button>
+      </a>
+
+      {/* Display different states */}
+      {page}
     </div>
   )
 }

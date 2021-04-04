@@ -139,7 +139,7 @@ const BioAchieve = () => {
       <div style={EditPlacement}>
         <Button>Profile</Button>
       </div>
-      Input fields
+
       <div style={inputs}>
         <Form>
           <Form.Group as={Row} controlId='Bios'>
