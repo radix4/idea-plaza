@@ -1,8 +1,9 @@
-import React from 'react'
-import { Card, Row, Col, Container, Button, Table } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Card, Row, Col, Container, Button, Form, Table } from 'react-bootstrap'
 import MyNavbar from './MyNavbar'
 import upvoteActiveImage from '../images/upvote_active.png'
 import downvoteActiveImage from '../images/downvote_active.png'
+import commentService from '../services/comments'
 
 const styles = {
   circle: {
@@ -13,6 +14,7 @@ const styles = {
   },
   buttonRight: {
     float: 'right',
+    fontSize: 14,
   },
   votingButton: {
     float: 'left',
@@ -21,6 +23,36 @@ const styles = {
 }
 
 const IdeaPage = () => {
+  const [content, setContent] = useState('')
+  const [replies, setReplies] = useState('')
+
+  const handleContentChange = (event) => {
+    setContent(event.target.value)
+  }
+
+  const addComment = async (event) => {
+    event.preventDefault()
+
+    const newComment = {
+      content: content,
+      replies: replies,
+    }
+
+    try {
+      await commentService.create(newComment).then((returnedComment) => {
+        console.log('create comment success!')
+      })
+
+      setContent('')
+      setReplies('')
+
+      // clear react bootstrap form
+      //document.getElementById('create-user-form').reset()
+    } catch (exception) {
+      console.log('Create comment fail')
+    }
+  }
+
   return (
     <Container className='mt-5 pt-5'>
       <MyNavbar />
@@ -65,25 +97,6 @@ const IdeaPage = () => {
                   <h6 className='mt-2'>69</h6>
                 </div>
               </div>
-              {/* <Table striped borderless hover>
-                <tr>
-                  <td>
-                    <Button variant='link'>
-                      <img src={upvoteActiveImage} width='30' height='30' />
-                    </Button>
-                  </td>
-                  <td>+++</td>
-                </tr>
-                <tr>
-                  <td>
-                    <Button variant='link'>
-                      <img src={downvoteActiveImage} width='30' height='30' />
-                    </Button>
-                  </td>
-                  <td>---</td>
-                </tr>
-              </Table> */}
-              Images
             </Card.Body>
           </Card>
         </Col>
@@ -102,27 +115,37 @@ const IdeaPage = () => {
         <Col md={6}>
           {/* =============COMMENTS============ */}
           <Card>
-            <Card.Header>
-              {' '}
-              Comments
-              <Button style={styles.buttonRight} size='sm'>
-                Add new comment
-              </Button>
-            </Card.Header>
+            <Card.Header> Questions</Card.Header>
             <Card.Body>
+              <Form id='question' onSubmit={addComment}>
+                <Form.Group
+                  as={Row}
+                  controlId='content'
+                  onChange={handleContentChange}>
+                  <Col md={9}>
+                    <Form.Control type='text' placeholder='Content...' />
+                  </Col>
+                  <Col>
+                    <Button type='submit' size='sm' style={styles.buttonRight}>
+                      Add question
+                    </Button>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row}></Form.Group>
+              </Form>
               <Table bordered hover>
                 <tbody>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new comment</td>
+                    <td style={{ padding: 20 }}>new question</td>
                   </tr>{' '}
                 </tbody>{' '}
               </Table>
@@ -132,27 +155,37 @@ const IdeaPage = () => {
         <Col md={6}>
           {/* =============CRITICISM============ */}
           <Card>
-            <Card.Header>
-              {' '}
-              Criticisim
-              <Button style={styles.buttonRight} size='sm'>
-                Add new criticisim
-              </Button>
-            </Card.Header>
+            <Card.Header> Criticisms</Card.Header>
             <Card.Body>
+              <Form id='criticism' onSubmit={addComment}>
+                <Form.Group
+                  as={Row}
+                  controlId='content'
+                  onChange={handleContentChange}>
+                  <Col md={9}>
+                    <Form.Control type='text' placeholder='Content...' />
+                  </Col>
+                  <Col>
+                    <Button type='submit' size='sm' style={styles.buttonRight}>
+                      Add criticism
+                    </Button>
+                  </Col>
+                </Form.Group>
+                <Form.Group as={Row}></Form.Group>
+              </Form>
               <Table bordered hover>
                 <tbody>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>
                   <tr>
-                    <td style={{ padding: 20 }}>new criticisim</td>
+                    <td style={{ padding: 20 }}>new criticism</td>
                   </tr>{' '}
                 </tbody>
               </Table>

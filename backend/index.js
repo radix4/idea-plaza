@@ -2,6 +2,8 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const express = require('express')
 const app = express()
+const cors = require('cors')
+app.use(cors())
 app.use(express.json()) /* parse request.body to json, important middleware */
 
 const url = process.env.MONGODB_URI
@@ -22,7 +24,12 @@ mongoose
   })
 
 const usersRouter = require('./controllers/users')
+const ideasRouter = require('./controllers/ideas')
+const commentsRouter = require('./controllers/comments')
+
 app.use('/api/users', usersRouter)
+app.use('/api/ideas', ideasRouter)
+app.use('/api/comments', commentsRouter)
 
 /* opens port on the browser */
 const PORT = process.env.PORT || 3001

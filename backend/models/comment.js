@@ -12,16 +12,16 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  replies: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Reply',
-    },
-  ],
-  idea: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Idea',
-  },
+  // replies: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Reply',
+  //   },
+  // ],
+  // idea: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'Idea',
+  // },
 })
 
 /* 

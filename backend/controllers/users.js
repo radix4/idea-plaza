@@ -104,4 +104,24 @@ usersRouter.delete('/:id', async (request, response) => {
   }
 })
 
+usersRouter.post('/updateBios_Achieve', async (request, response) => {
+  const body = request.body
+
+  const find = { firstName: body.firstName }
+  const update = { biography: 'test1', achievements: 'test1' }
+
+  const doc = await User.findOneAndUpdate(find, update, (error, data) => {
+    if (error) {
+      // prints error
+      console.log(error)
+    } else {
+      // prints outcome
+      console.log(data)
+      response.json(data)
+    }
+  })
+
+  console.log('Updated user')
+})
+
 module.exports = usersRouter

@@ -44,19 +44,20 @@ const ideaSchema = new mongoose.Schema({
   questions: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Question',
+      ref: 'Comment',
     },
   ],
   criticisms: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Criticism',
+      ref: 'Comment',
     },
   ],
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-  },
+  // user: {
+  //   type: mongoose.Schema.Types.ObjectId,
+  //   ref: 'User',
+  //   required: false,
+  // },
 })
 
 /* 

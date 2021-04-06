@@ -1,66 +1,14 @@
 import React, { useState } from 'react'
-import { Button, Form, Row, Col } from 'react-bootstrap'
-import profileImage from '../images/background.png'
+import { Button } from 'react-bootstrap'
+import BioAchieve from './BioAchieve'
+import ContactInfo from './ContactInfo'
+import Password from './Password'
 import MyNavbar from './MyNavbar'
 
 const ProfileEditor = () => {
-  const [bios, setBios] = useState('')
-  const [achieve, setAchieve] = useState('')
-
-  // updates on input
-  const handleChangeB = ({ target }) => {
-    setBios(target.value)
-  }
-
-  const handleChangeA = ({ target }) => {
-    setAchieve(target.value)
-  }
-
-  const handleSubmit = () => {
-    console.log('Bios : ' + bios)
-    console.log('Achievements : ' + achieve)
-  }
+  const [page, setPage] = useState(<BioAchieve />)
 
   //Style
-
-  const box = {
-    float: 'left',
-    height: '80px',
-    width: '100%',
-    marginBottom: '15px',
-    clear: 'both',
-
-    backgroundColor: '#2b7a98',
-  }
-  /* for EditProfile */
-  const inputs = {
-    position: 'absolute',
-    top: '60%',
-    left: '50%',
-    width: '800px',
-
-    transform: 'translate(-50%, -50%)',
-  }
-
-  /* Location ProfilePic  */
-  const container = {
-    position: 'fixed',
-    top: '5.5%',
-    left: '40%',
-  }
-  // edits profile picture
-  const clip = {
-    position: 'absolute',
-    clipPath: 'circle(40%)',
-  }
-  // Button to go back to Profile Page
-  const EditPlacement = {
-    position: 'absolute',
-
-    top: '20%',
-    left: '70%',
-  }
-
   const scrolling = {
     paddingBottom: 'auto',
     overflowY: 'scroll',
@@ -69,61 +17,45 @@ const ProfileEditor = () => {
     overflowX: 'hidden',
   }
 
+  const SelectionPos = {
+    position: 'fixed',
+    left: '10%',
+    top: '30%',
+  }
+
+  var thePage = 'hello'
+
+  const goBioAchieve = () => {
+    setPage(<BioAchieve />)
+  }
+
+  const goContactInfo = () => {
+    setPage(<ContactInfo />)
+  }
+
+  const goPassword = () => {
+    setPage(<Password />)
+  }
+
   return (
     <div style={scrolling}>
       {/* Navbar*/}
       <MyNavbar />
 
-      {/* ProfileImage */}
-      <div style={container}>
-        <img src={profileImage} alt='Image_file' style={clip} />
-      </div>
+      <a style={SelectionPos}>
+        <Button onClick={goBioAchieve}>
+          View/Change Biography and Achievement
+        </Button>
+        <br />
+        <br />
+        <Button onClick={goContactInfo}>View Contact Info.</Button>
+        <br />
+        <br />
+        <Button onClick={goPassword}>Change Password</Button>
+      </a>
 
-      {/* Go to Profile page button */}
-      <div style={EditPlacement}>
-        <Button>Profile</Button>
-      </div>
-
-      {/* Input fields */}
-      <div style={inputs}>
-        <Form>
-          <Form.Group as={Row} controlId='Bios'>
-            <Form.Label column sm='2'>
-              Biography
-            </Form.Label>
-
-            <Col sm='8'>
-              <Form.Control
-                type='text'
-                as='textarea'
-                placeholder='About Yourself'
-                value={bios}
-                onChange={handleChangeB}
-                rows={3}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} controlId='Achievement'>
-            <Form.Label column sm='2'>
-              Achievements
-            </Form.Label>
-
-            <Col sm='8'>
-              <Form.Control
-                type='text'
-                as='textarea'
-                placeholder='Your Achievements'
-                value={achieve}
-                onChange={handleChangeA}
-                rows={3}
-              />
-            </Col>
-          </Form.Group>
-
-          <Button onClick={handleSubmit}> Save </Button>
-        </Form>
-      </div>
+      {/* Display different states */}
+      {page}
     </div>
   )
 }
