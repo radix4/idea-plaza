@@ -1,0 +1,10 @@
+PATCH http://localhost:3001/api/users/60684c5dcae3555ae8632a99
+Content-Type: application/json
+
+{
+    "firstName": "newtest3",
+    "lastName": "newtest1",
+    "email": "newtest3",
+    "password": "newtest1",
+    "biography": "My biography is updated"
+}

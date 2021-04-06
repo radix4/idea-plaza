@@ -19,10 +19,10 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // TODO: make email address to be unique
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -47,7 +47,7 @@ const userSchema = new mongoose.Schema({
 /* 
 This function reformats mongo's id and versioning field.
 Mongo's id field looks like a string, but it's an object (watch out!) and
-    the toJSON method here takes care of it just in case.
+the toJSON method here takes care of it just in case.
 */
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {
