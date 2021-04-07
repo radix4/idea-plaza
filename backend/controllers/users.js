@@ -18,6 +18,15 @@ usersRouter.get('/:id', async (request, response) => {
 })
 
 /**
+ * This function renders all users from db.
+ */
+usersRouter.get('/', async (request, response) => {
+  await User.find({}).then((users) => {
+    response.json(users)
+  })
+})
+
+/**
  * This function adds a user to the database.
  */
 usersRouter.post('/', async (request, response) => {

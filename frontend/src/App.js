@@ -7,7 +7,7 @@ import Profile from './components/Profile'
 import ProfileEditor from './components/ProfileEditor'
 
 const App = () => {
-  return <ProfileEditor />
+  return <LoginPage />
 }
 
 export default App
