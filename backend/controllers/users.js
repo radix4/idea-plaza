@@ -1,3 +1,4 @@
+const jwt = require('jsonwebtoken')
 const usersRouter = require('express').Router()
 const User = require('../models/user') /* User automatically create 'users' collection in mongodb */
 
@@ -26,13 +27,51 @@ usersRouter.get('/', async (request, response) => {
   })
 })
 
+/* This function logs in the user. */
+usersRouter.post('/login', async (request, response) => {
+  console.log('controller/users.js: trying to login..')
+  const body = request.body
+
+  /* find user with same email */
+  const user = await User.findOne({ email: body.email })
+
+  let passwordCorrect = false
+
+  console.log('controller/users.js: ', body)
+
+  /* error checking when db could not find a match */
+  if (user === null) {
+    passwordCorrect = false
+  } else if (body.password === user.password) {
+    passwordCorrect = true
+  }
+
+  if (!(user && passwordCorrect)) {
+    return response.status(401).json({
+      error: 'controller/users.js: invalid email or password',
+    })
+  }
+
+  console.log('controller/users.js: logged in')
+
+  /* generate token for user */
+  const userForToken = {
+    email: user.email,
+    id: user._id,
+  }
+
+  /* sign token with jwt.sign() */
+  const token = jwt.sign(userForToken, process.env.SECRET)
+  response.status(200).send({ token, email: user.email })
+})
+
 /**
  * This function adds a user to the database.
  */
 usersRouter.post('/', async (request, response) => {
   const body = request.body
 
-  console.log(body)
+  console.log('controller/users.js: ', body)
 
   const user = new User({
     firstName: body.firstName,

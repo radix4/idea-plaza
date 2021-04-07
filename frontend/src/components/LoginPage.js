@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
+import userService from '../services/users'
 import backgroundImage from '../images/login.png'
 
 const LoginPage = () => {
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
   const backgroundImageStyle = {
     width: '100%',
     height: '946px',
@@ -16,6 +20,25 @@ const LoginPage = () => {
     padding: '30%',
   }
 
+  const handleEmailChange = (event) => setEmail(event.target.value)
+
+  const handlePasswordChange = (event) => setPassword(event.target.value)
+
+  const handleLogin = async (event) => {
+    event.preventDefault()
+
+    try {
+      const user = await userService.login({ email, password })
+      window.localStorage.setItem('loggedInUser', JSON.stringify(user))
+      setEmail('')
+      setPassword('')
+      document.getElementById('login-form').reset()
+      console.log('LoginPage: logged in')
+    } catch (exception) {
+      console.log('LoginPage: login fail, wrong credentials')
+    }
+  }
+
   return (
     <Container fluid>
       <Row className='align-items-center'>
@@ -23,9 +46,12 @@ const LoginPage = () => {
         <Col md={4}>
           <Row style={leftColStyle}>
             <h2>Login</h2>
-            <Form>
-              {/* =============USERNAME============= */}
-              <Form.Group as={Row} controlId='email'>
+            <Form id='login-form' onSubmit={handleLogin}>
+              {/* =============EMAIL============= */}
+              <Form.Group
+                as={Row}
+                controlId='email'
+                onChange={handleEmailChange}>
                 <Form.Label column md={4}>
                   Email
                 </Form.Label>
@@ -35,7 +61,10 @@ const LoginPage = () => {
               </Form.Group>
 
               {/* =============PASSWORD============= */}
-              <Form.Group as={Row} controlId='password'>
+              <Form.Group
+                as={Row}
+                controlId='password'
+                onChange={handlePasswordChange}>
                 <Form.Label column md={4}>
                   Password
                 </Form.Label>
