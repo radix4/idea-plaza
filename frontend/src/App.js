@@ -6,8 +6,27 @@ import IdeaPage from './components/IdeaPage'
 import Profile from './components/Profile'
 import ProfileEditor from './components/ProfileEditor'
 
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+
 const App = () => {
-  return <LoginPage />
+  return (
+    <Router>
+      <div>
+        <Switch>
+          {/* On Boot */}
+          <Route path='/' exact component={HomePage} />
+          {/* Other Site */}
+          <Route path='/Login' component={LoginPage} />
+          <Route path='/Registration' component={RegistrationPage} />
+          <Route path='/IdeaPage' component={IdeaPage} />
+          <Route path='/Profile' component={Profile} />
+          <Route path='/ProfileEditor' component={ProfileEditor} />
+          {/* Error Case */}
+          {/* <Route component={NoMatch} /> */}
+        </Switch>
+      </div>
+    </Router>
+  )
 }
 
 export default App
