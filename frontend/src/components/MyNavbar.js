@@ -7,6 +7,7 @@ import {
   FormControl,
   Button,
 } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import logoImage from '../images/logo_white.png'
 
 const MyNavbar = () => {
@@ -67,25 +68,25 @@ const MyNavbar = () => {
         </Nav>
         {/* ============= LOGIN ============= */}
         <Form className='mr-4'>
-          <a href='./Login'>
+          <Link to='./Login'>
             <Button
               variant='info'
               className='rounded-pill'
               style={loginButtonStyle}>
               Login
             </Button>
-          </a>
+          </Link>
         </Form>
         {/* ============= SIGN UP ============= */}
         <Form>
-          <a href='./Registration'>
+          <Link to='./Registration'>
             <Button
               variant='outline-light'
               className='rounded-pill'
               style={signupButtonStyle}>
               Sign Up
             </Button>
-          </a>
+          </Link>
         </Form>
       </Navbar.Collapse>
     </Navbar>
