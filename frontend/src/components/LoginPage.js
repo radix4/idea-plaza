@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import { generatePath, useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import userService from '../services/users'
 import backgroundImage from '../images/login.png'
 
@@ -87,7 +88,7 @@ const LoginPage = () => {
             {/* ===============LINK================ */}
             {/* modify with Link component later */}
             Don't have an account?
-            <a href='/Registration'>Create an account</a>
+            <Link to='./Registration'>Create an account</Link>
           </Row>
         </Col>
         {/* =================RIGHT COLUMN================ */}

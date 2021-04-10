@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import backgroundImage from '../images/registration.png'
 import userService from '../services/users'
 import { generatePath, useHistory } from 'react-router'
@@ -165,7 +166,7 @@ const RegistrationPage = () => {
               {/* modify with Link component later */}
               <div>Already have an account?</div>
               <div>
-                <a href='/Login'>Back to Login</a>
+                <Link to='./Login'>Login here</Link>
               </div>
             </Form>
           </Row>
