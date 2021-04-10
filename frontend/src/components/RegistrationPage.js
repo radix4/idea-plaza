@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import backgroundImage from '../images/registration.png'
 import userService from '../services/users'
+import { generatePath, useHistory } from 'react-router'
 
 const RegistrationPage = () => {
   const [firstName, setFirstName] = useState('')
@@ -9,6 +10,7 @@ const RegistrationPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  let history = useHistory()
 
   const backgroundImageStyle = {
     width: '100%',
@@ -53,6 +55,8 @@ const RegistrationPage = () => {
     try {
       await userService.create(newUser).then((returnedUser) => {
         console.log('create user success!')
+        //Redirects to Login
+        history.push('/Login')
       })
 
       setFirstName('')
@@ -161,7 +165,7 @@ const RegistrationPage = () => {
               {/* modify with Link component later */}
               <div>Already have an account?</div>
               <div>
-                <a href='/'>Back to Login</a>
+                <a href='/Login'>Back to Login</a>
               </div>
             </Form>
           </Row>

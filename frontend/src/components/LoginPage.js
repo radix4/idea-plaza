@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
+import { generatePath, useHistory } from 'react-router'
 import userService from '../services/users'
 import backgroundImage from '../images/login.png'
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  let history = useHistory()
 
   const backgroundImageStyle = {
     width: '100%',
@@ -34,6 +36,8 @@ const LoginPage = () => {
       setPassword('')
       document.getElementById('login-form').reset()
       console.log('LoginPage: logged in')
+      //Redirects to MainPage
+      history.push('/')
     } catch (exception) {
       console.log('LoginPage: login fail, wrong credentials')
     }
@@ -83,7 +87,7 @@ const LoginPage = () => {
             {/* ===============LINK================ */}
             {/* modify with Link component later */}
             Don't have an account?
-            <a href='/'>Create an account</a>
+            <a href='/Registration'>Create an account</a>
           </Row>
         </Col>
         {/* =================RIGHT COLUMN================ */}
