@@ -35,7 +35,7 @@ const LoginPage = () => {
       setEmail('')
       setPassword('')
       document.getElementById('login-form').reset()
-      console.log('LoginPage: logged in')
+      console.log('LoginPage: logged in', user)
       //Redirects to MainPage
       history.push('/')
     } catch (exception) {
