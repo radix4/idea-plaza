@@ -67,21 +67,25 @@ const MyNavbar = () => {
         </Nav>
         {/* ============= LOGIN ============= */}
         <Form className='mr-4'>
-          <Button
-            variant='info'
-            className='rounded-pill'
-            style={loginButtonStyle}>
-            Login
-          </Button>
+          <a href='./Login'>
+            <Button
+              variant='info'
+              className='rounded-pill'
+              style={loginButtonStyle}>
+              Login
+            </Button>
+          </a>
         </Form>
-        {/* ============= SING UP ============= */}
+        {/* ============= SIGN UP ============= */}
         <Form>
-          <Button
-            variant='outline-light'
-            className='rounded-pill'
-            style={signupButtonStyle}>
-            Sign Up
-          </Button>
+          <a href='./Registration'>
+            <Button
+              variant='outline-light'
+              className='rounded-pill'
+              style={signupButtonStyle}>
+              Sign Up
+            </Button>
+          </a>
         </Form>
       </Navbar.Collapse>
     </Navbar>
