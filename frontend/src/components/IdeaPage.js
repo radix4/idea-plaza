@@ -40,27 +40,32 @@ const IdeaPage = () => {
     downVote: undefined,
     questions: [],
     criticisms: [],
-    user: 'loading...'
+    user: 'loading'
   })
   const [content, setContent] = useState('')
-  const [replies, setReplies] = useState('')
+  // const [replies, setReplies] = useState('')
 
   // useEffect() is similar to componentDidMount()
   useEffect(() => {
-    axios.get(`/api/ideas/${ideaID}`)
-      .then(
-        (result) => {
-          setIdeaInfo(result.data)
-        },
-        (error) => {
-          console.log("error fetching idea info:", error.response || error)
-          // Update title on page
-          setIdeaInfo({
-            ...ideaInfo,
-            title: "Idea Not Found"
-          })
-        }
-      )
+    async function func() {
+      try {
+        const ideaResult = await axios.get(`/api/ideas/${ideaID}`)
+        const authorResult = await axios.get(`/api/users/${ideaResult.data.user}`)
+        setIdeaInfo({
+          ...ideaResult.data,
+          user: authorResult.data.id
+        })
+      } catch (error) {
+        console.log("error fetching idea info:", error.response || error)
+        // Update title on page
+        setIdeaInfo({
+          ...ideaInfo,
+          title: "Idea Not Found"
+        })
+      }
+    }
+
+    func()
   }, [])
 
 
@@ -147,7 +152,9 @@ const IdeaPage = () => {
           <div style={styles.circle} className='mb-3'></div>
           <Card>
             <Card.Header>Author</Card.Header>
-            <Card.Body>{ideaInfo.author}</Card.Body>
+            <Card.Body>
+              <a href={"/profile/"+ ideaInfo.user}>{ideaInfo.author}</a>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
