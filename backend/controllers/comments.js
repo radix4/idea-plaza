@@ -1,23 +1,28 @@
 const commentsRouter = require('express').Router()
-const Comment = require('../models/comment') /* User automatically create 'users' collection in mongodb */
+const Idea = require('../models/idea')
 
 /**
  * This function adds a comment to the database.
  */
 commentsRouter.post('/', async (request, response) => {
-  const body = request.body
+  if (request.body.content.length < 1) {
+    response.status(400).json({ error: "Empty content" })
+    return
+  }
+  // array name: "questions" or "criticisms"
+  const arrayName = request.body.type + 's'
+  const ideaID = request.body.idea
 
-  console.log(body)
+  try {
+    await Idea.findOneAndUpdate(
+      { _id: ideaID },
+      { $push: { [arrayName]: request.body.content } })
 
-  const comment = new Comment({
-    content: body.content,
-    replies: body.replies,
-    //idea: body.idea,
-  })
-
-  const savedComment = await comment.save()
-  response.json(savedComment)
-  console.log('Comment saved!')
+    response.status(200).json(request.body)
+  } catch (e) {
+    console.log("Error adding comment:", e)
+    response.status(500).end()
+  }
 })
 
 module.exports = commentsRouter

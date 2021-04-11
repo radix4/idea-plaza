@@ -18,7 +18,7 @@ const App = () => {
           {/* Other Site */}
           <Route path='/Login' component={LoginPage} />
           <Route path='/Registration' component={RegistrationPage} />
-          <Route path='/IdeaPage' component={IdeaPage} />
+          <Route path='/IdeaPage/:ideaID' component={IdeaPage} />
           <Route path='/Profile' component={Profile} />
           <Route path='/ProfileEditor' component={ProfileEditor} />
           {/* Error Case */}
