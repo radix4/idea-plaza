@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import AllProjects from './AllProjects'
-import profileImage from '../images/background.png'
+import profileImage from '../images/DefaultE.jpg'
 import MyNavbar from './MyNavbar'
 
 const Profile = () => {
@@ -10,17 +10,6 @@ const Profile = () => {
   const [achieve, setAchieve] = useState('My achievements')
 
   // Styles
-
-  //Placeholder for Navigation bar
-  const box = {
-    float: 'left',
-    height: '80px',
-    width: '100%',
-    marginBottom: '15px',
-    clear: 'both',
-
-    backgroundColor: '#2b7a98',
-  }
 
   /* display bios.. */
   const display = {
@@ -45,13 +34,13 @@ const Profile = () => {
   /* Location ProfilePic  */
   const container = {
     position: 'absolute',
-    top: '50px',
-    left: '100px',
+    top: '13%',
+    left: '12%',
   }
   // edits profile picture
   const clip = {
     position: 'absolute',
-    clipPath: 'circle(40%)',
+    clipPath: 'circle(50%)',
   }
 
   const EditPlacement = {
@@ -70,7 +59,7 @@ const Profile = () => {
   }
 
   return (
-    <div style={scrolling}>
+    <Container fluid style={scrolling}>
       {/* Navbar*/}
       <MyNavbar />
       {/* Button */}
@@ -79,7 +68,13 @@ const Profile = () => {
       </div>
       {/* ProfileImage */}
       <div style={container}>
-        <img src={profileImage} alt='Image_file' style={clip} />
+        <img
+          src={profileImage}
+          alt='Image_file'
+          style={clip}
+          width='300px'
+          height='300px'
+        />
       </div>
 
       {/* Input fields */}
@@ -98,7 +93,7 @@ const Profile = () => {
       <div style={cardPlacement}>
         <AllProjects />
       </div>
-    </div>
+    </Container>
   )
 }
 

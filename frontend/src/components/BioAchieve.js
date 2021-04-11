@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
-import profileImage from '../images/background.png'
+import profileImage from '../images/DefaultE.jpg'
 
 const BioAchieve = () => {
   const [bios, setBios] = useState('My bios')
@@ -50,13 +50,13 @@ const BioAchieve = () => {
   /* Location ProfilePic  */
   const container = {
     position: 'fixed',
-    top: '5.5%',
+    top: '10%',
     left: '40%',
   }
   // edits profile picture
   const clip = {
     position: 'absolute',
-    clipPath: 'circle(40%)',
+    clipPath: 'circle(50%)',
   }
   // Button to go back to Profile Page
   const EditPlacement = {
@@ -133,7 +133,13 @@ const BioAchieve = () => {
     <div>
       {/* ProfileImage */}
       <div style={container}>
-        <img src={profileImage} alt='Image_file' style={clip} />
+        <img
+          src={profileImage}
+          alt='Image_file'
+          style={clip}
+          width='300px'
+          height='300px'
+        />
       </div>
       {/* Go to Profile page button */}
       <div style={EditPlacement}>
