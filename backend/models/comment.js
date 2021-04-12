@@ -18,10 +18,10 @@ const commentSchema = new mongoose.Schema({
   //     ref: 'Reply',
   //   },
   // ],
-  // idea: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: 'Idea',
-  // },
+  idea: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Idea',
+  },
 })
 
 /* 

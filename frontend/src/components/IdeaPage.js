@@ -29,7 +29,7 @@ const IdeaPage = () => {
 
   // Define placeholders to be displayed until idea is retrieved
   const [ideaInfo, setIdeaInfo] = useState({
-    title: "Loading title...",
+    title: 'Loading title...',
     problemStatement: {
       domain: '',
       stateOfTheArt: '',
@@ -40,7 +40,7 @@ const IdeaPage = () => {
     downVote: undefined,
     questions: [],
     criticisms: [],
-    user: 'loading'
+    user: 'loading',
   })
   const [content, setContent] = useState('')
   // const [replies, setReplies] = useState('')
@@ -50,17 +50,19 @@ const IdeaPage = () => {
     async function func() {
       try {
         const ideaResult = await axios.get(`/api/ideas/${ideaID}`)
-        const authorResult = await axios.get(`/api/users/${ideaResult.data.user}`)
+        const authorResult = await axios.get(
+          `/api/users/${ideaResult.data.user}`
+        )
         setIdeaInfo({
           ...ideaResult.data,
-          user: authorResult.data.id
+          user: authorResult.data.id,
         })
       } catch (error) {
-        console.log("error fetching idea info:", error.response || error)
+        console.log('error fetching idea info:', error.response || error)
         // Update title on page
         setIdeaInfo({
           ...ideaInfo,
-          title: "Idea Not Found"
+          title: 'Idea Not Found',
         })
       }
     }
@@ -68,31 +70,54 @@ const IdeaPage = () => {
     func()
   }, [])
 
-
   const handleContentChange = (event) => {
     setContent(event.target.value)
   }
 
-  const addComment = async (event, type) => {
+  const addQuestion = async (event, type) => {
     event.preventDefault()
-    document.querySelectorAll('button[type=submit]').forEach(elem => {
-      elem.disabled = true;
+    document.querySelectorAll('button[type=submit]').forEach((elem) => {
+      elem.disabled = true
     })
 
-    const newComment = {
-      type: type,
+    const newQuestion = {
+      type: 'question',
       content: content,
-      idea: ideaID
+      idea: ideaID,
     }
 
     try {
-      await commentService.create(newComment)
+      await commentService.create(newQuestion)
+      console.log('addQuestion')
+      window.location.reload()
+    } catch (error) {
+      console.log('Create question fail\n', error.response || error)
+      document.querySelectorAll('button[type=submit]').forEach((elem) => {
+        elem.disabled = false
+      })
+    }
+  }
+
+  const addCriticism = async (event, type) => {
+    event.preventDefault()
+    document.querySelectorAll('button[type=submit]').forEach((elem) => {
+      elem.disabled = true
+    })
+
+    const newCriticism = {
+      type: 'criticism',
+      content: content,
+      idea: ideaID,
+    }
+
+    try {
+      await commentService.create(newCriticism)
 
       window.location.reload()
     } catch (error) {
-      console.log('Create comment fail\n', error.response || error)
-      document.querySelectorAll('button[type=submit]').forEach(elem => {
-        elem.disabled = false;
+      console.log('Create criticism fail\n', error.response || error)
+      document.querySelectorAll('button[type=submit]').forEach((elem) => {
+        elem.disabled = false
       })
     }
   }
@@ -119,9 +144,16 @@ const IdeaPage = () => {
           <Card>
             <Card.Header as='h2'>{ideaInfo.title}</Card.Header>
             <Card.Body>
-              <Card.Text><b>Domain</b>: {ideaInfo.problemStatement.domain}</Card.Text>
-              <Card.Text><b>State of the art</b>: {ideaInfo.problemStatement.stateOfTheArt}</Card.Text>
-              <Card.Text><b>Solution</b>: {ideaInfo.problemStatement.solution}</Card.Text>
+              <Card.Text>
+                <b>Domain</b>: {ideaInfo.problemStatement.domain}
+              </Card.Text>
+              <Card.Text>
+                <b>State of the art</b>:{' '}
+                {ideaInfo.problemStatement.stateOfTheArt}
+              </Card.Text>
+              <Card.Text>
+                <b>Solution</b>: {ideaInfo.problemStatement.solution}
+              </Card.Text>
             </Card.Body>
           </Card>
         </Col>
@@ -132,13 +164,17 @@ const IdeaPage = () => {
             <Card.Body>
               <div className='col text-center'>
                 <div className='row mb-1'>
-                  <Button variant='link' onClick={(e) => addRating(e, 'upVote')}>
+                  <Button
+                    variant='link'
+                    onClick={(e) => addRating(e, 'upVote')}>
                     <img src={upvoteActiveImage} width='30' height='30' />
                   </Button>
                   <h6 className='mt-3'>{ideaInfo.upVote || '--'}</h6>
                 </div>
                 <div className='row mb-1'>
-                  <Button variant='link' onClick={(e) => addRating(e, 'downVote')}>
+                  <Button
+                    variant='link'
+                    onClick={(e) => addRating(e, 'downVote')}>
                     <img src={downvoteActiveImage} width='30' height='30' />
                   </Button>
                   <h6 className='mt-2'>{ideaInfo.downVote || '--'}</h6>
@@ -153,7 +189,7 @@ const IdeaPage = () => {
           <Card>
             <Card.Header>Author</Card.Header>
             <Card.Body>
-              <a href={"/profile/"+ ideaInfo.user}>{ideaInfo.author}</a>
+              <a href={'/profile/' + ideaInfo.user}>{ideaInfo.author}</a>
             </Card.Body>
           </Card>
         </Col>
@@ -166,7 +202,7 @@ const IdeaPage = () => {
           <Card>
             <Card.Header> Questions</Card.Header>
             <Card.Body>
-              <Form id='question' onSubmit={(e) => addComment(e, 'question')}>
+              <Form id='question' onSubmit={(e) => addQuestion(e, 'question')}>
                 <Form.Group
                   as={Row}
                   controlId='content'
@@ -198,7 +234,9 @@ const IdeaPage = () => {
           <Card>
             <Card.Header> Criticisms</Card.Header>
             <Card.Body>
-              <Form id='criticism' onSubmit={(e) => addComment(e, 'criticism')}>
+              <Form
+                id='criticism'
+                onSubmit={(e) => addCriticism(e, 'criticism')}>
                 <Form.Group
                   as={Row}
                   controlId='content'

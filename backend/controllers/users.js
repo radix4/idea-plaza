@@ -14,7 +14,7 @@ usersRouter.get('/:id', async (request, response) => {
   } catch {
     response.status(404)
     response.json({ error: 'User does not exist' })
-    console.log('Error 404: User does not exist')
+    console.log('User get: Error 404: User does not exist')
   }
 })
 
@@ -132,7 +132,7 @@ usersRouter.patch('/:id', async (request, response) => {
   } catch {
     response.status(404)
     response.json({ error: 'User does not exist' })
-    console.log('Error 404: User does not exist')
+    console.log('User patch: Error 404: User does not exist')
   }
 })
 
@@ -153,7 +153,7 @@ usersRouter.delete('/:id', async (request, response) => {
   } catch {
     response.status(404)
     response.json({ error: 'User does not exist' })
-    console.log('Error 404: User does not exist')
+    console.log('User delete: Error 404: User does not exist')
   }
 })
 
