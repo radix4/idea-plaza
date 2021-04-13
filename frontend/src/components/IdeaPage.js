@@ -43,6 +43,7 @@ const IdeaPage = () => {
     user: 'loading',
   })
   const [content, setContent] = useState('')
+  //const [questions, setQuestions] = useState('')
   // const [replies, setReplies] = useState('')
 
   // useEffect() is similar to componentDidMount()
@@ -53,6 +54,7 @@ const IdeaPage = () => {
         const authorResult = await axios.get(
           `/api/users/${ideaResult.data.user}`
         )
+
         setIdeaInfo({
           ...ideaResult.data,
           user: authorResult.data.id,
@@ -127,7 +129,6 @@ const IdeaPage = () => {
 
     try {
       await axios.post(`/api/ideas/${ideaID}/rating`, { type: type })
-
       window.location.reload()
     } catch (error) {
       console.log('Send rating fail\n', error.response || error)
@@ -142,7 +143,12 @@ const IdeaPage = () => {
         <Col md={8}>
           {/* =================IDEA================ */}
           <Card>
-            <Card.Header as='h2'>{ideaInfo.title}</Card.Header>
+            <Card.Header as='h2'>
+              {ideaInfo.title}{' '}
+              <Button type='submit' size='sm' style={styles.buttonRight}>
+                Edit idea
+              </Button>
+            </Card.Header>
             <Card.Body>
               <Card.Text>
                 <b>Domain</b>: {ideaInfo.problemStatement.domain}
@@ -198,7 +204,7 @@ const IdeaPage = () => {
       {/* Bottom row */}
       <Row>
         <Col md={6}>
-          {/* =============COMMENTS============ */}
+          {/* =============QUESTIONS============ */}
           <Card>
             <Card.Header> Questions</Card.Header>
             <Card.Body>
@@ -221,7 +227,7 @@ const IdeaPage = () => {
                 <tbody>
                   {ideaInfo.questions.map((question, index) => (
                     <tr key={index}>
-                      <td>{question}</td>
+                      <td>{question} </td>
                     </tr>
                   ))}
                 </tbody>
