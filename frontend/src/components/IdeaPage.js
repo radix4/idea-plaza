@@ -83,7 +83,7 @@ const IdeaPage = () => {
     })
 
     const newQuestion = {
-      type: 'question',
+      feedbackType: 'question',
       content: content,
       idea: ideaID,
     }
@@ -107,7 +107,7 @@ const IdeaPage = () => {
     })
 
     const newCriticism = {
-      type: 'criticism',
+      feedbackType: 'criticism',
       content: content,
       idea: ideaID,
     }
@@ -227,7 +227,7 @@ const IdeaPage = () => {
                 <tbody>
                   {ideaInfo.questions.map((question, index) => (
                     <tr key={index}>
-                      <td>{question} </td>
+                      <td>{question.content} </td>
                     </tr>
                   ))}
                 </tbody>
@@ -261,7 +261,7 @@ const IdeaPage = () => {
                 <tbody>
                   {ideaInfo.criticisms.map((criticism, index) => (
                     <tr key={index}>
-                      <td>{criticism}</td>
+                      <td>{criticism.content}</td>
                     </tr>
                   ))}
                 </tbody>

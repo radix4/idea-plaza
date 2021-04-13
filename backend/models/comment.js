@@ -12,6 +12,11 @@ const commentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  // either question or criticism
+  feedbackType: {
+    type: String,
+    required: true,
+  },
   // replies: [
   //   {
   //     type: mongoose.Schema.Types.ObjectId,

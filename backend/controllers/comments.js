@@ -31,17 +31,18 @@ commentsRouter.post('/', async (request, response) => {
   }
 
   // array name: "questions" or "criticisms"
-  const arrayName = request.body.type + 's'
+  const arrayName = request.body.feedbackType + 's'
   const ideaID = request.body.idea
 
   const comment = new Comment({
     content: body.content,
+    feedbackType: body.feedbackType,
     idea: ideaID,
   })
 
   try {
     const savedComment = await comment.save()
-    console.log(request.body.type + 's saved:', savedComment.content)
+    console.log(request.body.feedbackType + ' saved:', savedComment.content)
 
     await Idea.findOneAndUpdate(
       { _id: ideaID },
