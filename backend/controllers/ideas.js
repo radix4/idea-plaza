@@ -46,6 +46,24 @@ ideasRouter.post('/', async (request, response) => {
   }
 })
 
+// This function saves changes to an existing idea
+ideasRouter.post('/edit/:id', async (request, response) => {
+  const ideaID = request.params.id
+  try {
+    // Save changes
+    const savedIdea = await Idea.findOneAndUpdate({ _id: ideaID }, {
+      title: request.body.title,
+      problemStatement: request.body.problemStatement
+    })
+    console.log('Changes to idea saved:', savedIdea.title)
+
+    response.json(savedIdea)
+  } catch (error) {
+    console.log('Could not save changes to idea:', error)
+    response.status(500).end()
+  }
+})
+
 // This function gets an idea from the database
 ideasRouter.get('/:id', async (request, response) => {
   const ideaID = request.params.id
@@ -60,8 +78,6 @@ ideasRouter.get('/:id', async (request, response) => {
       feedbackType: 'criticism',
     })
     response.json(idea)
-
-    console.log('Got the idea:\n' + idea)
   } catch {
     response.status(404).json({ error: 'Idea does not exist' })
     console.log('Could not find idea', ideaID)

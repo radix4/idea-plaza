@@ -3,6 +3,7 @@ import LoginPage from './components/LoginPage'
 import RegistrationPage from './components/RegistrationPage'
 import HomePage from './components/HomePage'
 import IdeaPage from './components/IdeaPage'
+import IdeaEditor from './components/IdeaEditor'
 import Profile from './components/Profile'
 import ProfileEditor from './components/ProfileEditor'
 
@@ -19,6 +20,7 @@ const App = () => {
           <Route path='/Login' component={LoginPage} />
           <Route path='/Registration' component={RegistrationPage} />
           <Route path='/IdeaPage/:ideaID' component={IdeaPage} />
+          <Route path='/IdeaEditor/:ideaID' component={IdeaEditor} />
           <Route path='/Profile' component={Profile} />
           <Route path='/ProfileEditor' component={ProfileEditor} />
           {/* Error Case */}

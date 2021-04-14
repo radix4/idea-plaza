@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import { Card, Row, Col, Container, Button, Form, Table } from 'react-bootstrap'
 import MyNavbar from './MyNavbar'
 import upvoteActiveImage from '../images/upvote_active.png'
@@ -145,8 +145,8 @@ const IdeaPage = () => {
           <Card>
             <Card.Header as='h2'>
               {ideaInfo.title}{' '}
-              <Button type='submit' size='sm' style={styles.buttonRight}>
-                Edit idea
+              <Button size='sm' variant='link' style={styles.buttonRight}>
+                <Link to={`/IdeaEditor/${ideaInfo.id}`}>Edit idea</Link>
               </Button>
             </Card.Header>
             <Card.Body>
@@ -195,7 +195,7 @@ const IdeaPage = () => {
           <Card>
             <Card.Header>Author</Card.Header>
             <Card.Body>
-              <a href={'/profile/' + ideaInfo.user}>{ideaInfo.author}</a>
+              <Link to={`/profile/${ideaInfo.user}`}>{ideaInfo.author}</Link>
             </Card.Body>
           </Card>
         </Col>
@@ -226,9 +226,14 @@ const IdeaPage = () => {
               <Table bordered hover>
                 <tbody>
                   {ideaInfo.questions.map((question, index) => (
-                    <tr key={index}>
-                      <td>{question.content} </td>
-                    </tr>
+                    <React.Fragment>
+                      <tr key={index}>
+                        <td>{question.content} </td>
+                      </tr>
+                      <tr>
+                        <td><Form.Control type='text' size='sm' placeholder='Content...' /></td>
+                      </tr>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </Table>
