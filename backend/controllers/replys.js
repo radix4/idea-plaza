@@ -1,11 +1,13 @@
-const commentsRouter = require('express').Router()
+const replysRouter = require('express').Router()
 const Idea = require('../models/idea')
 const Comment = require('../models/comment')
+
+const Reply = require('../models/reply')
 
 /**
  * This function gets a comment from the database
  */
-commentsRouter.get('/:id', async (request, response) => {
+replysRouter.get('/:id', async (request, response) => {
   try {
     const commentID = request.params.id
     const comment = await Comment.findOne({ _id: commentID })
@@ -19,39 +21,34 @@ commentsRouter.get('/:id', async (request, response) => {
 })
 
 /**
- * This function adds a comment to the database.
+ * This function adds a reply to the database.
  */
-commentsRouter.post('/', async (request, response) => {
+replysRouter.post('/', async (request, response) => {
   const body = request.body
-  console.log(body)
+  console.log('replysRouter.post ' + body)
 
   if (request.body.content.length < 1) {
     response.status(400).json({ error: 'Empty content' })
     return
   }
+  const commentID = body.comment
 
-  // array name: "questions" or "criticisms"
-  const arrayName = request.body.feedbackType + 's'
-  const ideaID = request.body.idea
-
-  const comment = new Comment({
+  const reply = new Reply({
     content: body.content,
-    feedbackType: body.feedbackType,
-    replies: [],
-    idea: ideaID,
+    comment: commentID,
   })
 
   try {
-    const savedComment = await comment.save()
-    console.log(request.body.feedbackType + ' saved:', savedComment.content)
+    const savedReply = await reply.save()
+    console.log(request.body + ' saved:', savedReply.content)
 
-    await Idea.findOneAndUpdate({ _id: ideaID }, { $push: { [arrayName + 's']: comment._id } })
+    await Comment.findOneAndUpdate({ _id: commentID }, { $push: { replies: reply._id } })
 
     response.status(200).json(request.body)
   } catch (e) {
-    console.log('Error adding comment:', e)
+    console.log('Error adding reply:', e)
     response.status(500).end()
   }
 })
 
-module.exports = commentsRouter
+module.exports = replysRouter

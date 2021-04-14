@@ -26,10 +26,12 @@ mongoose
 const usersRouter = require('./controllers/users')
 const ideasRouter = require('./controllers/ideas')
 const commentsRouter = require('./controllers/comments')
+const replysRouter = require('./controllers/replys')
 
 app.use('/api/users', usersRouter)
 app.use('/api/ideas', ideasRouter)
 app.use('/api/comments', commentsRouter)
+app.use('/api/replys', replysRouter)
 
 /* opens port on the browser */
 const PORT = process.env.PORT || 3001
