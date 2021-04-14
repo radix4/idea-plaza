@@ -2,6 +2,21 @@ const usersRouter = require('express').Router()
 const User = require('../models/user') /* User automatically create 'users' collection in mongodb */
 
 /**
+ * This function gets users from the database
+ */
+usersRouter.get('/', async (request, response) => {
+  try {
+    const users = await User.find()
+    response.json(users)
+    console.log('Got the users:\n' + user)
+  } catch {
+    response.status(404)
+    response.json({ error: 'Users do not exist' })
+    console.log('Error 404: Users do not exist')
+  }
+})
+
+/**
  * This function gets the user from the database
  */
 usersRouter.get('/:id', async (request, response) => {
