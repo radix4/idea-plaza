@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams, Link } from 'react-router-dom'
 import { Card, Row, Col, Container, Button, Form, Table } from 'react-bootstrap'
 import MyNavbar from './MyNavbar'
 import upvoteActiveImage from '../images/upvote_active.png'
 import downvoteActiveImage from '../images/downvote_active.png'
 import commentService from '../services/comments'
+import axios from 'axios'
 
 const styles = {
   circle: {
@@ -23,33 +25,113 @@ const styles = {
 }
 
 const IdeaPage = () => {
+  const { ideaID } = useParams()
+
+  // Define placeholders to be displayed until idea is retrieved
+  const [ideaInfo, setIdeaInfo] = useState({
+    title: 'Loading title...',
+    problemStatement: {
+      domain: '',
+      stateOfTheArt: '',
+      solution: '',
+    },
+    author: 'loading...',
+    upVote: undefined,
+    downVote: undefined,
+    questions: [],
+    criticisms: [],
+    user: 'loading',
+  })
   const [content, setContent] = useState('')
-  const [replies, setReplies] = useState('')
+  //const [questions, setQuestions] = useState('')
+  // const [replies, setReplies] = useState('')
+
+  // useEffect() is similar to componentDidMount()
+  useEffect(() => {
+    async function func() {
+      try {
+        const ideaResult = await axios.get(`/api/ideas/${ideaID}`)
+        const authorResult = await axios.get(
+          `/api/users/${ideaResult.data.user}`
+        )
+
+        setIdeaInfo({
+          ...ideaResult.data,
+          user: authorResult.data.id,
+        })
+      } catch (error) {
+        console.log('error fetching idea info:', error.response || error)
+        // Update title on page
+        setIdeaInfo({
+          ...ideaInfo,
+          title: 'Idea Not Found',
+        })
+      }
+    }
+
+    func()
+  }, [])
 
   const handleContentChange = (event) => {
     setContent(event.target.value)
   }
 
-  const addComment = async (event) => {
+  const addQuestion = async (event, type) => {
     event.preventDefault()
+    document.querySelectorAll('button[type=submit]').forEach((elem) => {
+      elem.disabled = true
+    })
 
-    const newComment = {
+    const newQuestion = {
+      feedbackType: 'question',
       content: content,
-      replies: replies,
+      idea: ideaID,
     }
 
     try {
-      await commentService.create(newComment).then((returnedComment) => {
-        console.log('create comment success!')
+      await commentService.create(newQuestion)
+      console.log('addQuestion')
+      window.location.reload()
+    } catch (error) {
+      console.log('Create question fail\n', error.response || error)
+      document.querySelectorAll('button[type=submit]').forEach((elem) => {
+        elem.disabled = false
       })
+    }
+  }
 
-      setContent('')
-      setReplies('')
+  const addCriticism = async (event, type) => {
+    event.preventDefault()
+    document.querySelectorAll('button[type=submit]').forEach((elem) => {
+      elem.disabled = true
+    })
 
-      // clear react bootstrap form
-      //document.getElementById('create-user-form').reset()
-    } catch (exception) {
-      console.log('Create comment fail')
+    const newCriticism = {
+      feedbackType: 'criticism',
+      content: content,
+      idea: ideaID,
+    }
+
+    try {
+      await commentService.create(newCriticism)
+
+      window.location.reload()
+    } catch (error) {
+      console.log('Create criticism fail\n', error.response || error)
+      document.querySelectorAll('button[type=submit]').forEach((elem) => {
+        elem.disabled = false
+      })
+    }
+  }
+
+  const addRating = async (event, type) => {
+    event.preventDefault()
+
+    try {
+      await axios.post(`/api/ideas/${ideaID}/rating`, { type: type })
+      window.location.reload()
+    } catch (error) {
+      console.log('Send rating fail\n', error.response || error)
     }
   }
 
@@ -61,19 +143,22 @@ const IdeaPage = () => {
         <Col md={8}>
           {/* =================IDEA================ */}
           <Card>
-            {/* Will replace with actual title later */}
-            <Card.Header as='h2'>Title of idea</Card.Header>
+            <Card.Header as='h2'>
+              {ideaInfo.title}{' '}
+              <Button size='sm' variant='link' style={styles.buttonRight}>
+                <Link to={`/IdeaEditor/${ideaInfo.id}`}>Edit idea</Link>
+              </Button>
+            </Card.Header>
             <Card.Body>
               <Card.Text>
-                This is where the description of the idea will go. Lorem ipsum
-                dolor sit amet, consectetur adipiscing elit. Mauris tortor leo,
-                volutpat id ex sit amet, pretium lobortis lorem. Nunc mi nunc,
-                mollis bibendum tincidunt ac, euismod et lorem. Donec ornare
-                suscipit ex, at porttitor mauris ullamcorper a. Aliquam
-                ullamcorper vestibulum ultricies. Nam at ornare turpis. In
-                iaculis ex feugiat pulvinar feugiat. Donec ornare vel eros ut
-                faucibus. Sed non orci at augue vehicula efficitur eget at
-                magna.
+                <b>Domain</b>: {ideaInfo.problemStatement.domain}
+              </Card.Text>
+              <Card.Text>
+                <b>State of the art</b>:{' '}
+                {ideaInfo.problemStatement.stateOfTheArt}
+              </Card.Text>
+              <Card.Text>
+                <b>Solution</b>: {ideaInfo.problemStatement.solution}
               </Card.Text>
             </Card.Body>
           </Card>
@@ -81,20 +166,24 @@ const IdeaPage = () => {
         <Col md={2}>
           {/* =============POPULARITY============ */}
           <Card>
-            <Card.Header> Popularity</Card.Header>
+            <Card.Header>Popularity</Card.Header>
             <Card.Body>
               <div className='col text-center'>
                 <div className='row mb-1'>
-                  <Button variant='link'>
+                  <Button
+                    variant='link'
+                    onClick={(e) => addRating(e, 'upVote')}>
                     <img src={upvoteActiveImage} width='30' height='30' />
                   </Button>
-                  <h6 className='mt-3'>420</h6>
+                  <h6 className='mt-3'>{ideaInfo.upVote || '--'}</h6>
                 </div>
                 <div className='row mb-1'>
-                  <Button variant='link'>
+                  <Button
+                    variant='link'
+                    onClick={(e) => addRating(e, 'downVote')}>
                     <img src={downvoteActiveImage} width='30' height='30' />
                   </Button>
-                  <h6 className='mt-2'>69</h6>
+                  <h6 className='mt-2'>{ideaInfo.downVote || '--'}</h6>
                 </div>
               </div>
             </Card.Body>
@@ -104,8 +193,10 @@ const IdeaPage = () => {
         <Col md={2}>
           <div style={styles.circle} className='mb-3'></div>
           <Card>
-            <Card.Header>Bio</Card.Header>
-            <Card.Body>Text</Card.Body>
+            <Card.Header>Author</Card.Header>
+            <Card.Body>
+              <Link to={`/profile/${ideaInfo.user}`}>{ideaInfo.author}</Link>
+            </Card.Body>
           </Card>
         </Col>
       </Row>
@@ -113,11 +204,11 @@ const IdeaPage = () => {
       {/* Bottom row */}
       <Row>
         <Col md={6}>
-          {/* =============COMMENTS============ */}
+          {/* =============QUESTIONS============ */}
           <Card>
             <Card.Header> Questions</Card.Header>
             <Card.Body>
-              <Form id='question' onSubmit={addComment}>
+              <Form id='question' onSubmit={(e) => addQuestion(e, 'question')}>
                 <Form.Group
                   as={Row}
                   controlId='content'
@@ -131,23 +222,20 @@ const IdeaPage = () => {
                     </Button>
                   </Col>
                 </Form.Group>
-                <Form.Group as={Row}></Form.Group>
               </Form>
               <Table bordered hover>
                 <tbody>
-                  <tr>
-                    <td style={{ padding: 20 }}>new question</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: 20 }}>new question</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: 20 }}>new question</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: 20 }}>new question</td>
-                  </tr>{' '}
-                </tbody>{' '}
+                  {ideaInfo.questions.map((question, index) => (
+                    <React.Fragment>
+                      <tr key={index}>
+                        <td>{question.content} </td>
+                      </tr>
+                      <tr>
+                        <td><Form.Control type='text' size='sm' placeholder='Content...' /></td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
               </Table>
             </Card.Body>
           </Card>
@@ -157,7 +245,9 @@ const IdeaPage = () => {
           <Card>
             <Card.Header> Criticisms</Card.Header>
             <Card.Body>
-              <Form id='criticism' onSubmit={addComment}>
+              <Form
+                id='criticism'
+                onSubmit={(e) => addCriticism(e, 'criticism')}>
                 <Form.Group
                   as={Row}
                   controlId='content'
@@ -171,22 +261,14 @@ const IdeaPage = () => {
                     </Button>
                   </Col>
                 </Form.Group>
-                <Form.Group as={Row}></Form.Group>
               </Form>
               <Table bordered hover>
                 <tbody>
-                  <tr>
-                    <td style={{ padding: 20 }}>new criticism</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: 20 }}>new criticism</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: 20 }}>new criticism</td>
-                  </tr>
-                  <tr>
-                    <td style={{ padding: 20 }}>new criticism</td>
-                  </tr>{' '}
+                  {ideaInfo.criticisms.map((criticism, index) => (
+                    <tr key={index}>
+                      <td>{criticism.content}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </Card.Body>

@@ -1,9 +1,21 @@
 import { Button } from 'react-bootstrap'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Idea from './Idea'
 import MyNavbar from './MyNavbar'
 
 const HomePage = () => {
+  const [user, setUser] = useState()
+
+  /* This function checks if the user is already logged in. */
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      console.log('front/component/HomePage.js: logged in user found', user)
+    }
+  }, [])
+
   return (
     <div>
       <MyNavbar />

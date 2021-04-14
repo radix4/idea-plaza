@@ -2,9 +2,9 @@ POST http://localhost:3001/api/users/
 Content-Type: application/json
 
 {
-    "firstName": "Test4",
-    "lastName": "Test4",
-    "email": "test4@example.com",
-    "password": "password",
-    "biography": "My name is Test4, and I am the fastest man alive"
+    "firstName": "Joie",
+    "lastName": "de",
+    "email": "vivre@gmail.com",
+    "password": "pass",
+    "biography": "it will pass"
 }

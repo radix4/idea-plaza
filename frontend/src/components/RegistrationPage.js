@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 import backgroundImage from '../images/registration.png'
 import userService from '../services/users'
+import { generatePath, useHistory } from 'react-router'
 
 const RegistrationPage = () => {
   const [firstName, setFirstName] = useState('')
@@ -9,6 +11,7 @@ const RegistrationPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  let history = useHistory()
 
   const backgroundImageStyle = {
     width: '100%',
@@ -29,25 +32,16 @@ const RegistrationPage = () => {
     marginTop: '30px',
   }
 
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value)
-  }
+  const handleFirstNameChange = (event) => setFirstName(event.target.value)
 
-  const handleLastNameChange = (event) => {
-    setLastName(event.target.value)
-  }
+  const handleLastNameChange = (event) => setLastName(event.target.value)
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value)
-  }
+  const handleEmailChange = (event) => setEmail(event.target.value)
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value)
-  }
+  const handlePasswordChange = (event) => setPassword(event.target.value)
 
-  const handleConfirmPasswordChange = (event) => {
+  const handleConfirmPasswordChange = (event) =>
     setConfirmPassword(event.target.value)
-  }
 
   const addUser = async (event) => {
     event.preventDefault()
@@ -62,6 +56,8 @@ const RegistrationPage = () => {
     try {
       await userService.create(newUser).then((returnedUser) => {
         console.log('create user success!')
+        //Redirects to Login
+        history.push('/Login')
       })
 
       setFirstName('')
@@ -170,7 +166,7 @@ const RegistrationPage = () => {
               {/* modify with Link component later */}
               <div>Already have an account?</div>
               <div>
-                <a href='/'>Back to Login</a>
+                <Link to='./Login'>Login here</Link>
               </div>
             </Form>
           </Row>

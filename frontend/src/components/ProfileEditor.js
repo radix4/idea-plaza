@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import BioAchieve from './BioAchieve'
 import ContactInfo from './ContactInfo'
 import Password from './Password'
@@ -23,8 +23,6 @@ const ProfileEditor = () => {
     top: '30%',
   }
 
-  var thePage = 'hello'
-
   const goBioAchieve = () => {
     setPage(<BioAchieve />)
   }
@@ -38,7 +36,7 @@ const ProfileEditor = () => {
   }
 
   return (
-    <div style={scrolling}>
+    <Container fluid style={scrolling}>
       {/* Navbar*/}
       <MyNavbar />
 
@@ -56,7 +54,7 @@ const ProfileEditor = () => {
 
       {/* Display different states */}
       {page}
-    </div>
+    </Container>
   )
 }
 
