@@ -7,3 +7,4 @@
 5. npm install dotenv
 6. npm install cors
 7. npm install jsonwebtoken
+8. npm install express-async-errors
