@@ -2,6 +2,7 @@ const ideasRouter = require('express').Router()
 const Idea = require('../models/idea') /* User automatically create 'users' collection in mongodb */
 const User = require('../models/user')
 const Comment = require('../models/comment')
+const Reply = require('../models/reply')
 
 /**
  * This function adds an idea to the database.
@@ -76,14 +77,20 @@ ideasRouter.get('/:id', async (request, response) => {
       idea: ideaID,
       feedbackType: 'question',
     })
+    for (let i = 0; i < idea.questions.length; i++) {
+      idea.questions[i].replies = await Reply.find({ comment: idea.questions[i].id })
+    }
     idea.criticisms = await Comment.find({
       idea: ideaID,
       feedbackType: 'criticism',
     })
+    for (let i = 0; i < idea.criticisms.length; i++) {
+      idea.criticisms[i].replies = await Reply.find({ comment: idea.criticisms[i].id })
+    }
     response.json(idea)
-  } catch {
+  } catch (error) {
     response.status(404).json({ error: 'Idea does not exist' })
-    console.log('Could not find idea', ideaID)
+    console.log('Could not find idea', ideaID, error)
   }
 })
 
