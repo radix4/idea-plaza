@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
-import { generatePath, useHistory } from 'react-router'
+import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
 import userService from '../services/users'
+import Notification from './Notification'
 import backgroundImage from '../images/login.png'
 
 const LoginPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+
   let history = useHistory()
 
   const backgroundImageStyle = {
@@ -37,10 +40,17 @@ const LoginPage = () => {
       setPassword('')
       document.getElementById('login-form').reset()
       console.log('LoginPage: logged in', user)
-      //Redirects to MainPage
+
+      /* redirect to HomePage */
       history.push('/')
     } catch (exception) {
       console.log('LoginPage: login fail, wrong credentials')
+
+      /* error message appears for 5s, then disappears */
+      setErrorMessage('Oh no, wrong credentials! Please try again.')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -50,6 +60,7 @@ const LoginPage = () => {
         {/* =================LEFT COLUMN================ */}
         <Col md={4}>
           <Row style={leftColStyle}>
+            <Notification message={errorMessage} />
             <h2>Login</h2>
             <Form id='login-form' onSubmit={handleLogin}>
               {/* =============EMAIL============= */}

@@ -3,7 +3,8 @@ import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import backgroundImage from '../images/registration.png'
 import userService from '../services/users'
-import { generatePath, useHistory } from 'react-router'
+import { useHistory } from 'react-router'
+import Notification from './Notification'
 
 const RegistrationPage = () => {
   const [firstName, setFirstName] = useState('')
@@ -11,6 +12,8 @@ const RegistrationPage = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
+  const [errorMessage, setErrorMessage] = useState(null)
+
   let history = useHistory()
 
   const backgroundImageStyle = {
@@ -46,6 +49,17 @@ const RegistrationPage = () => {
   const addUser = async (event) => {
     event.preventDefault()
 
+    if (password !== confirmPassword) {
+      /* error message appears for 5s, then disappears */
+      setErrorMessage(
+        'Invalid inputs or email already exists! Please try again.'
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      return
+    }
+
     const newUser = {
       firstName: firstName,
       lastName: lastName,
@@ -56,9 +70,14 @@ const RegistrationPage = () => {
     try {
       await userService.create(newUser).then((returnedUser) => {
         console.log('create user success!')
-        //Redirects to Login
-        history.push('/Login')
       })
+
+      setErrorMessage(
+        'Yay, account successfully created! Go to the login page to login.'
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
 
       setFirstName('')
       setLastName('')
@@ -67,9 +86,17 @@ const RegistrationPage = () => {
       setConfirmPassword('')
 
       // clear react bootstrap form
-      //document.getElementById('create-user-form').reset()
+      document.getElementById('registration').reset()
     } catch (exception) {
-      console.log('Create user fail')
+      console.log('RegistrationPage: create user fail')
+
+      /* error message appears for 5s, then disappears */
+      setErrorMessage(
+        'Invalid inputs or email already exists! Please try again.'
+      )
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
     }
   }
 
@@ -85,6 +112,7 @@ const RegistrationPage = () => {
 
         <Col md={6}>
           <Row style={rightColStyle}>
+            <Notification message={errorMessage} />
             <h1>Registration</h1>
             <Form style={formStyle} id='registration' onSubmit={addUser}>
               {/* ============= FIRST NAME ============= */}
