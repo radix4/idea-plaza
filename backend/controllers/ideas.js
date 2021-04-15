@@ -51,10 +51,13 @@ ideasRouter.post('/edit/:id', async (request, response) => {
   const ideaID = request.params.id
   try {
     // Save changes
-    const savedIdea = await Idea.findOneAndUpdate({ _id: ideaID }, {
-      title: request.body.title,
-      problemStatement: request.body.problemStatement
-    })
+    const savedIdea = await Idea.findOneAndUpdate(
+      { _id: ideaID },
+      {
+        title: request.body.title,
+        problemStatement: request.body.problemStatement,
+      }
+    )
     console.log('Changes to idea saved:', savedIdea.title)
 
     response.json(savedIdea)
@@ -82,6 +85,12 @@ ideasRouter.get('/:id', async (request, response) => {
     response.status(404).json({ error: 'Idea does not exist' })
     console.log('Could not find idea', ideaID)
   }
+})
+
+ideasRouter.get('/', async (request, response) => {
+  await Idea.find({}).then((ideas) => {
+    response.json(ideas)
+  })
 })
 
 // This function adds an upvote/downvote rating to an idea
