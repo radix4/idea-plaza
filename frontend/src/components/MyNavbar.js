@@ -90,7 +90,7 @@ const MyNavbar = () => {
             className='mr-sm-4'
             style={searchFieldStyle}
           />
-          <Button variant='info' class='btn-info'>
+          <Button variant='info' className='btn-info'>
             Search
           </Button>
         </Form>

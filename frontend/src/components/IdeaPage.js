@@ -265,22 +265,28 @@ const IdeaPage = () => {
               </Form>
               <Table bordered hover>
                 <tbody>
-                  {ideaInfo.questions.map((question, index) => (
-                    <React.Fragment>
-                      <tr key={index}>
+                  {ideaInfo.questions.map((question) => (
+                    <React.Fragment key={question.id}>
+                      {/* Question */}
+                      <tr>
                         <td>{question.content}</td>
                       </tr>
+                      {/* Replies */}
+                      {question.replies.map(reply => (
+                        <tr key={reply.id}>
+                          <td style={{paddingLeft: '40px', fontSize: '.8rem'}}>{reply.content}</td>
+                        </tr>
+                      ))}
+                      {/* Add reply */}
                       <tr>
-                        <td>
+                        <td style={{paddingLeft: '40px'}}>
                           <Form id='reply-question' onSubmit={(e) => addReply(e, question.id)}>
-                            <Form.Group as={Row} controlId='content' onChange={handleContentChange}>
+                            <Form.Group as={Row} className='mb-0' controlId='content' onChange={handleContentChange}>
                               <Col md={9}>
-                                <Form.Control type='text' placeholder='Content...' />
+                                <Form.Control type='text' size='sm' placeholder='Content...' />
                               </Col>
                               <Col>
-                                <Button type='Submit' style={styles.buttonRight}>
-                                  Reply
-                                </Button>
+                                <Button type='Submit' style={styles.buttonRight}>Reply</Button>
                               </Col>
                             </Form.Group>
                           </Form>
