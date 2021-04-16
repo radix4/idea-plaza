@@ -44,11 +44,24 @@ const IdeaPage = () => {
     user: 'loading',
   })
   const [content, setContent] = useState('')
+  const [visible, setVisible] = useState(true)
   //const [questions, setQuestions] = useState('')
   // const [replies, setReplies] = useState('')
 
   // useEffect() is similar to componentDidMount()
   useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setVisible(true)
+      console.log('front/component/IdeaPage.js: visible', visible)
+      console.log('front/component/IdeaPage.js: logged in user found', user)
+    } else {
+      const user = JSON.parse(loggedUserJSON)
+      setVisible(false)
+      console.log('front/component/IdeaPage.js: visible', visible)
+      console.log('front/component/IdeaPage.js: logged in user found', user)
+    }
     async function func() {
       try {
         const ideaResult = await axios.get(`/api/ideas/${ideaID}`)
@@ -70,6 +83,10 @@ const IdeaPage = () => {
 
     func()
   }, [])
+
+  const commentAreaStyle = {
+    display: visible ? '' : 'none',
+  }
 
   const handleContentChange = (event) => {
     setContent(event.target.value)
@@ -94,54 +111,6 @@ const IdeaPage = () => {
       window.location.reload()
     } catch (error) {
       console.log('Create question fail\n', error.response || error)
-      document.querySelectorAll('button[type=submit]').forEach((elem) => {
-        elem.disabled = false
-      })
-    }
-  }
-
-  const addQuestion = async (event, type) => {
-    event.preventDefault()
-    document.querySelectorAll('button[type=submit]').forEach((elem) => {
-      elem.disabled = true
-    })
-
-    const newQuestion = {
-      feedbackType: 'question',
-      content: content,
-      idea: ideaID,
-    }
-
-    try {
-      await commentService.create(newQuestion)
-      console.log('addQuestion')
-      window.location.reload()
-    } catch (error) {
-      console.log('Create question fail\n', error.response || error)
-      document.querySelectorAll('button[type=submit]').forEach((elem) => {
-        elem.disabled = false
-      })
-    }
-  }
-
-  const addCriticism = async (event, type) => {
-    event.preventDefault()
-    document.querySelectorAll('button[type=submit]').forEach((elem) => {
-      elem.disabled = true
-    })
-
-    const newCriticism = {
-      feedbackType: 'criticism',
-      content: content,
-      idea: ideaID,
-    }
-
-    try {
-      await commentService.create(newCriticism)
-
-      window.location.reload()
-    } catch (error) {
-      console.log('Create criticism fail\n', error.response || error)
       document.querySelectorAll('button[type=submit]').forEach((elem) => {
         elem.disabled = false
       })
@@ -251,7 +220,10 @@ const IdeaPage = () => {
           <Card>
             <Card.Header> Questions</Card.Header>
             <Card.Body>
-              <Form id='question' onSubmit={(e) => addComment(e, 'question')}>
+              <Form
+                id='question'
+                style={commentAreaStyle}
+                onSubmit={(e) => addComment(e, 'question')}>
                 <Form.Group as={Row} controlId='content' onChange={handleContentChange}>
                   <Col md={9}>
                     <Form.Control type='text' placeholder='Content...' />
@@ -272,21 +244,32 @@ const IdeaPage = () => {
                         <td>{question.content}</td>
                       </tr>
                       {/* Replies */}
-                      {question.replies.map(reply => (
+                      {question.replies.map((reply) => (
                         <tr key={reply.id}>
-                          <td style={{paddingLeft: '40px', fontSize: '.8rem'}}>{reply.content}</td>
+                          <td style={{ paddingLeft: '40px', fontSize: '.8rem' }}>
+                            {reply.content}
+                          </td>
                         </tr>
                       ))}
                       {/* Add reply */}
                       <tr>
-                        <td style={{paddingLeft: '40px'}}>
-                          <Form id='reply-question' onSubmit={(e) => addReply(e, question.id)}>
-                            <Form.Group as={Row} className='mb-0' controlId='content' onChange={handleContentChange}>
+                        <td style={{ paddingLeft: '40px' }}>
+                          <Form
+                            id='reply-question'
+                            style={commentAreaStyle}
+                            onSubmit={(e) => addReply(e, question.id)}>
+                            <Form.Group
+                              as={Row}
+                              className='mb-0'
+                              controlId='content'
+                              onChange={handleContentChange}>
                               <Col md={9}>
                                 <Form.Control type='text' size='sm' placeholder='Content...' />
                               </Col>
                               <Col>
-                                <Button type='Submit' style={styles.buttonRight}>Reply</Button>
+                                <Button type='Submit' style={styles.buttonRight}>
+                                  Reply
+                                </Button>
                               </Col>
                             </Form.Group>
                           </Form>
@@ -304,7 +287,10 @@ const IdeaPage = () => {
           <Card>
             <Card.Header> Criticisms</Card.Header>
             <Card.Body>
-              <Form id='criticism' onSubmit={(e) => addComment(e, 'criticism')}>
+              <Form
+                id='criticism'
+                style={commentAreaStyle}
+                onSubmit={(e) => addComment(e, 'criticism')}>
                 <Form.Group as={Row} controlId='content' onChange={handleContentChange}>
                   <Col md={9}>
                     <Form.Control type='text' placeholder='Content...' />
