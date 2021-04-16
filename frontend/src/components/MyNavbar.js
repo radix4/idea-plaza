@@ -1,12 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Navbar,
-  Nav,
-  NavDropdown,
-  Form,
-  FormControl,
-  Button,
-} from 'react-bootstrap'
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import logoImage from '../images/logo_white.png'
 
@@ -72,13 +65,7 @@ const MyNavbar = () => {
       {/* ============= LOGO ============= */}
       <Link to='./'>
         <Navbar.Brand>
-          <img
-            src={logoImage}
-            width='120'
-            height='30'
-            alt='Idea Plaza'
-            className='mb-0.5 mr-2'
-          />
+          <img src={logoImage} width='120' height='30' alt='Idea Plaza' className='mb-0.5 mr-2' />
         </Navbar.Brand>
       </Link>
 
@@ -105,22 +92,16 @@ const MyNavbar = () => {
         </Nav>
         {/* ============= LOGIN ============= */}
         <Form className='mr-4'>
-          <Link to='./Login'>
-            <Button
-              variant='info'
-              className='rounded-pill'
-              style={loginButtonStyle}>
+          <Link to='/Login'>
+            <Button variant='info' className='rounded-pill' style={loginButtonStyle}>
               Login
             </Button>
           </Link>
         </Form>
         {/* ============= SIGN UP ============= */}
         <Form>
-          <Link to='./Registration'>
-            <Button
-              variant='outline-light'
-              className='rounded-pill'
-              style={signupButtonStyle}>
+          <Link to='/Registration'>
+            <Button variant='outline-light' className='rounded-pill' style={signupButtonStyle}>
               Sign Up
             </Button>
           </Link>
@@ -133,11 +114,8 @@ const MyNavbar = () => {
               {firstName} {lastName}
             </b>{' '}
           </>{' '}
-          <Link to='./Profile'>
-            <Button
-              variant='info'
-              className='rounded-pill'
-              style={logoutButtonStyle}>
+          <Link to='/Profile'>
+            <Button variant='info' className='rounded-pill' style={logoutButtonStyle}>
               Account
             </Button>
           </Link>
