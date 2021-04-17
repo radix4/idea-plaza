@@ -231,7 +231,13 @@ const IdeaPage = () => {
                         <td>{question.content} </td>
                       </tr>
                       <tr>
-                        <td><Form.Control type='text' size='sm' placeholder='Content...' /></td>
+                        <td>
+                          <Form.Control
+                            type='text'
+                            size='sm'
+                            placeholder='Content...'
+                          />
+                        </td>
                       </tr>
                     </React.Fragment>
                   ))}
