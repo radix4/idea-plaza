@@ -13,6 +13,11 @@ const replySchema = new mongoose.Schema({
   comment: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment',
+    required: true,
+  },
+  author: {
+    type: String,
+    required: true,
   },
 })
 

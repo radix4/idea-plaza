@@ -25,33 +25,33 @@ commentsRouter.post('/', async (request, response) => {
   const body = request.body
   console.log(body)
 
-  if (request.body.content.length < 1) {
+  if (body.content.length < 1) {
     response.status(400).json({ error: 'Empty content' })
     return
   }
 
   // array name: "questions" or "criticisms"
-  const arrayName = request.body.feedbackType + 's'
-  const ideaID = request.body.idea
+  const arrayName = body.feedbackType + 's'
+  const ideaID = body.idea
 
   const comment = new Comment({
     content: body.content,
     feedbackType: body.feedbackType,
+    replies: [],
+    author: body.author,
     idea: ideaID,
   })
 
   try {
     const savedComment = await comment.save()
-    console.log(request.body.feedbackType + ' saved:', savedComment.content)
+    console.log(body.feedbackType + ' saved:', savedComment.content)
 
-    await Idea.findOneAndUpdate(
-      { _id: ideaID },
-      { $push: { [arrayName]: comment._id } }
-    )
+    await Idea.findOneAndUpdate({ _id: ideaID }, { $push: { [arrayName + 's']: comment._id } })
 
-    response.status(200).json(request.body)
+    response.status(200).json(body)
   } catch (e) {
     console.log('Error adding comment:', e)
+    console.log(body)
     response.status(500).end()
   }
 })

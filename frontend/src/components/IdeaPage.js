@@ -5,6 +5,7 @@ import MyNavbar from './MyNavbar'
 import upvoteActiveImage from '../images/upvote_active.png'
 import downvoteActiveImage from '../images/downvote_active.png'
 import commentService from '../services/comments'
+import repliesService from '../services/replies'
 import axios from 'axios'
 
 const styles = {
@@ -42,18 +43,35 @@ const IdeaPage = () => {
     criticisms: [],
     user: 'loading',
   })
+  const [user, setUser] = useState()
+  const [firstName, setFirstName] = useState()
+  const [lastName, setLastName] = useState()
   const [content, setContent] = useState('')
+  const [visible, setVisible] = useState(true)
   //const [questions, setQuestions] = useState('')
   // const [replies, setReplies] = useState('')
 
   // useEffect() is similar to componentDidMount()
   useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setVisible(true)
+      setUser(user)
+      setFirstName(user.firstName)
+      setLastName(user.lastName)
+      console.log('front/component/IdeaPage.js: visible', visible)
+      console.log('front/component/IdeaPage.js: logged in user found', user)
+    } else {
+      const user = JSON.parse(loggedUserJSON)
+      setVisible(false)
+      console.log('front/component/IdeaPage.js: visible', visible)
+      console.log('front/component/IdeaPage.js: logged in user found', user)
+    }
     async function func() {
       try {
         const ideaResult = await axios.get(`/api/ideas/${ideaID}`)
-        const authorResult = await axios.get(
-          `/api/users/${ideaResult.data.user}`
-        )
+        const authorResult = await axios.get(`/api/users/${ideaResult.data.user}`)
 
         setIdeaInfo({
           ...ideaResult.data,
@@ -72,25 +90,31 @@ const IdeaPage = () => {
     func()
   }, [])
 
+  const commentAreaStyle = {
+    display: visible ? '' : 'none',
+  }
+
   const handleContentChange = (event) => {
     setContent(event.target.value)
   }
 
-  const addQuestion = async (event, type) => {
+  const addComment = async (event, type) => {
     event.preventDefault()
     document.querySelectorAll('button[type=submit]').forEach((elem) => {
       elem.disabled = true
     })
 
-    const newQuestion = {
-      feedbackType: 'question',
+    const newComment = {
+      feedbackType: type,
       content: content,
+      replies: [],
+      author: firstName + ' ' + lastName,
       idea: ideaID,
     }
 
     try {
-      await commentService.create(newQuestion)
-      console.log('addQuestion')
+      await commentService.create(newComment)
+      console.log('addComment')
       window.location.reload()
     } catch (error) {
       console.log('Create question fail\n', error.response || error)
@@ -100,24 +124,25 @@ const IdeaPage = () => {
     }
   }
 
-  const addCriticism = async (event, type) => {
+  const addReply = async (event, commentID) => {
     event.preventDefault()
     document.querySelectorAll('button[type=submit]').forEach((elem) => {
       elem.disabled = true
     })
 
-    const newCriticism = {
-      feedbackType: 'criticism',
+    const newReply = {
       content: content,
-      idea: ideaID,
+      comment: commentID,
+      author: firstName + ' ' + lastName,
     }
+    console.log('addReply comment: ' + commentID)
 
     try {
-      await commentService.create(newCriticism)
+      await repliesService.create(newReply)
 
       window.location.reload()
     } catch (error) {
-      console.log('Create criticism fail\n', error.response || error)
+      console.log('Create reply fail\n', error.response || error)
       document.querySelectorAll('button[type=submit]').forEach((elem) => {
         elem.disabled = false
       })
@@ -145,17 +170,18 @@ const IdeaPage = () => {
           <Card>
             <Card.Header as='h2'>
               {ideaInfo.title}{' '}
-              <Button size='sm' variant='link' style={styles.buttonRight}>
-                <Link to={`/IdeaEditor/${ideaInfo.id}`}>Edit idea</Link>
-              </Button>
+              <Link to={`/IdeaEditor/${ideaInfo.id}`}>
+                <Button size='sm' variant='primary' style={styles.buttonRight}>
+                  Edit idea
+                </Button>
+              </Link>
             </Card.Header>
             <Card.Body>
               <Card.Text>
                 <b>Domain</b>: {ideaInfo.problemStatement.domain}
               </Card.Text>
               <Card.Text>
-                <b>State of the art</b>:{' '}
-                {ideaInfo.problemStatement.stateOfTheArt}
+                <b>State of the art</b>: {ideaInfo.problemStatement.stateOfTheArt}
               </Card.Text>
               <Card.Text>
                 <b>Solution</b>: {ideaInfo.problemStatement.solution}
@@ -170,17 +196,13 @@ const IdeaPage = () => {
             <Card.Body>
               <div className='col text-center'>
                 <div className='row mb-1'>
-                  <Button
-                    variant='link'
-                    onClick={(e) => addRating(e, 'upVote')}>
+                  <Button variant='link' onClick={(e) => addRating(e, 'upVote')}>
                     <img src={upvoteActiveImage} width='30' height='30' />
                   </Button>
                   <h6 className='mt-3'>{ideaInfo.upVote || '--'}</h6>
                 </div>
                 <div className='row mb-1'>
-                  <Button
-                    variant='link'
-                    onClick={(e) => addRating(e, 'downVote')}>
+                  <Button variant='link' onClick={(e) => addRating(e, 'downVote')}>
                     <img src={downvoteActiveImage} width='30' height='30' />
                   </Button>
                   <h6 className='mt-2'>{ideaInfo.downVote || '--'}</h6>
@@ -208,11 +230,11 @@ const IdeaPage = () => {
           <Card>
             <Card.Header> Questions</Card.Header>
             <Card.Body>
-              <Form id='question' onSubmit={(e) => addQuestion(e, 'question')}>
-                <Form.Group
-                  as={Row}
-                  controlId='content'
-                  onChange={handleContentChange}>
+              <Form
+                id='question'
+                style={commentAreaStyle}
+                onSubmit={(e) => addComment(e, 'question')}>
+                <Form.Group as={Row} controlId='content' onChange={handleContentChange}>
                   <Col md={9}>
                     <Form.Control type='text' placeholder='Content...' />
                   </Col>
@@ -225,18 +247,57 @@ const IdeaPage = () => {
               </Form>
               <Table bordered hover>
                 <tbody>
-                  {ideaInfo.questions.map((question, index) => (
-                    <React.Fragment>
-                      <tr key={index}>
-                        <td>{question.content} </td>
-                      </tr>
+                  {ideaInfo.questions.map((question) => (
+                    <React.Fragment key={question.id}>
+                      {/* Question */}
                       <tr>
+                        <td width='75%'>{question.content}</td>
+                        <td width='15%' style={{ fontSize: '.7rem' }}>
+                          <b>{question.author}</b>
+                        </td>
+                      </tr>
+                      {/* Replies */}
+                      {question.replies.map((reply) => (
+                        <tr key={reply.id}>
+                          <td width='25%' style={{ paddingLeft: '40px', fontSize: '.8rem' }}>
+                            {reply.content}
+                          </td>
+                          <td width='15%' style={{ fontSize: '.7rem' }}>
+                            <b>{reply.author}</b>
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Add reply */}
+                      <tr>
+<<<<<<< HEAD
                         <td>
                           <Form.Control
                             type='text'
                             size='sm'
                             placeholder='Content...'
                           />
+=======
+                        <td width='10%' style={{ paddingLeft: '40px' }}>
+                          <Form
+                            id='reply-question'
+                            style={commentAreaStyle}
+                            onSubmit={(e) => addReply(e, question.id)}>
+                            <Form.Group
+                              as={Row}
+                              className='mb-0'
+                              controlId='content'
+                              onChange={handleContentChange}>
+                              <Col md={9}>
+                                <Form.Control type='text' size='sm' placeholder='Content...' />
+                              </Col>
+                              <Col>
+                                <Button type='Submit' style={styles.buttonRight}>
+                                  Reply
+                                </Button>
+                              </Col>
+                            </Form.Group>
+                          </Form>
+>>>>>>> b4e7a4069d1a571d9c160a1984b7d1fe69968d88
                         </td>
                       </tr>
                     </React.Fragment>
@@ -253,11 +314,9 @@ const IdeaPage = () => {
             <Card.Body>
               <Form
                 id='criticism'
-                onSubmit={(e) => addCriticism(e, 'criticism')}>
-                <Form.Group
-                  as={Row}
-                  controlId='content'
-                  onChange={handleContentChange}>
+                style={commentAreaStyle}
+                onSubmit={(e) => addComment(e, 'criticism')}>
+                <Form.Group as={Row} controlId='content' onChange={handleContentChange}>
                   <Col md={9}>
                     <Form.Control type='text' placeholder='Content...' />
                   </Col>
@@ -270,10 +329,51 @@ const IdeaPage = () => {
               </Form>
               <Table bordered hover>
                 <tbody>
-                  {ideaInfo.criticisms.map((criticism, index) => (
-                    <tr key={index}>
-                      <td>{criticism.content}</td>
-                    </tr>
+                  {ideaInfo.criticisms.map((criticism) => (
+                    <React.Fragment key={criticism.id}>
+                      {/* Criticism */}
+                      <tr>
+                        <td>{criticism.content}</td>
+                        <td style={{ fontSize: '.7rem' }}>
+                          <b>{criticism.author}</b>
+                        </td>
+                      </tr>
+                      {/* Replies */}
+                      {criticism.replies.map((reply) => (
+                        <tr key={reply.id}>
+                          <td style={{ paddingLeft: '40px', fontSize: '.8rem' }}>
+                            {reply.content}
+                          </td>
+                          <td style={{ fontSize: '.7rem' }}>
+                            <b>{reply.author}</b>
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Add reply */}
+                      <tr>
+                        <td style={{ paddingLeft: '40px' }}>
+                          <Form
+                            id='reply-question'
+                            style={commentAreaStyle}
+                            onSubmit={(e) => addReply(e, criticism.id)}>
+                            <Form.Group
+                              as={Row}
+                              className='mb-0'
+                              controlId='content'
+                              onChange={handleContentChange}>
+                              <Col sm={6}>
+                                <Form.Control type='text' size='sm' placeholder='Content...' />
+                              </Col>
+                              <Col>
+                                <Button type='Submit' style={styles.buttonRight}>
+                                  Reply
+                                </Button>
+                              </Col>
+                            </Form.Group>
+                          </Form>
+                        </td>
+                      </tr>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </Table>
