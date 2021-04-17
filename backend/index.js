@@ -27,14 +27,14 @@ mongoose
 const usersRouter = require('./controllers/users')
 const ideasRouter = require('./controllers/ideas')
 const commentsRouter = require('./controllers/comments')
-const replysRouter = require('./controllers/replys')
+const replysRouter = require('./controllers/replies')
 
 const middleware = require('./utils/middleware')
 
 app.use('/api/users', usersRouter)
 app.use('/api/ideas', ideasRouter)
 app.use('/api/comments', commentsRouter)
-app.use('/api/replys', replysRouter)
+app.use('/api/replies', replysRouter)
 
 /* error handlers */
 app.use(middleware.unknownEndpoint)

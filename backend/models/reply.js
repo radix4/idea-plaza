@@ -15,6 +15,10 @@ const replySchema = new mongoose.Schema({
     ref: 'Comment',
     required: true,
   },
+  author: {
+    type: String,
+    required: true,
+  },
 })
 
 /* 

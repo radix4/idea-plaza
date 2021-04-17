@@ -63,7 +63,7 @@ const MyNavbar = () => {
   return (
     <Navbar expand='lg' className='fixed-top' style={navbarStyle}>
       {/* ============= LOGO ============= */}
-      <Link to='./'>
+      <Link to='/'>
         <Navbar.Brand>
           <img src={logoImage} width='120' height='30' alt='Idea Plaza' className='mb-0.5 mr-2' />
         </Navbar.Brand>

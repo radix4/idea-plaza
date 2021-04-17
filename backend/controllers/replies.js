@@ -1,4 +1,4 @@
-const replysRouter = require('express').Router()
+const repliesRouter = require('express').Router()
 const Idea = require('../models/idea')
 const Comment = require('../models/comment')
 
@@ -7,7 +7,7 @@ const Reply = require('../models/reply')
 /**
  * This function gets a comment from the database
  */
-replysRouter.get('/:id', async (request, response) => {
+repliesRouter.get('/:id', async (request, response) => {
   try {
     const commentID = request.params.id
     const comment = await Comment.findOne({ _id: commentID })
@@ -23,7 +23,7 @@ replysRouter.get('/:id', async (request, response) => {
 /**
  * This function adds a reply to the database.
  */
-replysRouter.post('/', async (request, response) => {
+repliesRouter.post('/', async (request, response) => {
   const body = request.body
   console.log('replysRouter.post ' + body)
 
@@ -36,6 +36,7 @@ replysRouter.post('/', async (request, response) => {
   const reply = new Reply({
     content: body.content,
     comment: commentID,
+    author: body.author,
   })
 
   try {
@@ -47,8 +48,9 @@ replysRouter.post('/', async (request, response) => {
     response.status(200).json(request.body)
   } catch (e) {
     console.log('Error adding reply:', e)
+    console.log(body)
     response.status(500).end()
   }
 })
 
-module.exports = replysRouter
+module.exports = repliesRouter

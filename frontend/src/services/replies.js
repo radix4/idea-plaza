@@ -1,6 +1,6 @@
 /* This file is responsible for sending comments to the server */
 import axios from 'axios'
-const baseUrl = '/api/replys'
+const baseUrl = '/api/replies'
 
 /* This method creates a new comment. */
 const create = async (newReplyObject) => {

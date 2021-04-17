@@ -5,7 +5,7 @@ import MyNavbar from './MyNavbar'
 import upvoteActiveImage from '../images/upvote_active.png'
 import downvoteActiveImage from '../images/downvote_active.png'
 import commentService from '../services/comments'
-import repliesService from '../services/replys'
+import repliesService from '../services/replies'
 import axios from 'axios'
 
 const styles = {
@@ -43,6 +43,9 @@ const IdeaPage = () => {
     criticisms: [],
     user: 'loading',
   })
+  const [user, setUser] = useState()
+  const [firstName, setFirstName] = useState()
+  const [lastName, setLastName] = useState()
   const [content, setContent] = useState('')
   const [visible, setVisible] = useState(true)
   //const [questions, setQuestions] = useState('')
@@ -54,6 +57,9 @@ const IdeaPage = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setVisible(true)
+      setUser(user)
+      setFirstName(user.firstName)
+      setLastName(user.lastName)
       console.log('front/component/IdeaPage.js: visible', visible)
       console.log('front/component/IdeaPage.js: logged in user found', user)
     } else {
@@ -102,6 +108,7 @@ const IdeaPage = () => {
       feedbackType: type,
       content: content,
       replies: [],
+      author: firstName + ' ' + lastName,
       idea: ideaID,
     }
 
@@ -126,6 +133,7 @@ const IdeaPage = () => {
     const newReply = {
       content: content,
       comment: commentID,
+      author: firstName + ' ' + lastName,
     }
     console.log('addReply comment: ' + commentID)
 
@@ -162,9 +170,11 @@ const IdeaPage = () => {
           <Card>
             <Card.Header as='h2'>
               {ideaInfo.title}{' '}
-              <Button size='sm' variant='link' style={styles.buttonRight}>
-                <Link to={`/IdeaEditor/${ideaInfo.id}`}>Edit idea</Link>
-              </Button>
+              <Link to={`/IdeaEditor/${ideaInfo.id}`}>
+                <Button size='sm' variant='primary' style={styles.buttonRight}>
+                  Edit idea
+                </Button>
+              </Link>
             </Card.Header>
             <Card.Body>
               <Card.Text>
@@ -241,19 +251,25 @@ const IdeaPage = () => {
                     <React.Fragment key={question.id}>
                       {/* Question */}
                       <tr>
-                        <td>{question.content}</td>
+                        <td width='75%'>{question.content}</td>
+                        <td width='15%' style={{ fontSize: '.7rem' }}>
+                          <b>{question.author}</b>
+                        </td>
                       </tr>
                       {/* Replies */}
                       {question.replies.map((reply) => (
                         <tr key={reply.id}>
-                          <td style={{ paddingLeft: '40px', fontSize: '.8rem' }}>
+                          <td width='25%' style={{ paddingLeft: '40px', fontSize: '.8rem' }}>
                             {reply.content}
+                          </td>
+                          <td width='15%' style={{ fontSize: '.7rem' }}>
+                            <b>{reply.author}</b>
                           </td>
                         </tr>
                       ))}
                       {/* Add reply */}
                       <tr>
-                        <td style={{ paddingLeft: '40px' }}>
+                        <td width='10%' style={{ paddingLeft: '40px' }}>
                           <Form
                             id='reply-question'
                             style={commentAreaStyle}
@@ -304,10 +320,51 @@ const IdeaPage = () => {
               </Form>
               <Table bordered hover>
                 <tbody>
-                  {ideaInfo.criticisms.map((criticism, index) => (
-                    <tr key={index}>
-                      <td>{criticism.content}</td>
-                    </tr>
+                  {ideaInfo.criticisms.map((criticism) => (
+                    <React.Fragment key={criticism.id}>
+                      {/* Criticism */}
+                      <tr>
+                        <td>{criticism.content}</td>
+                        <td style={{ fontSize: '.7rem' }}>
+                          <b>{criticism.author}</b>
+                        </td>
+                      </tr>
+                      {/* Replies */}
+                      {criticism.replies.map((reply) => (
+                        <tr key={reply.id}>
+                          <td style={{ paddingLeft: '40px', fontSize: '.8rem' }}>
+                            {reply.content}
+                          </td>
+                          <td style={{ fontSize: '.7rem' }}>
+                            <b>{reply.author}</b>
+                          </td>
+                        </tr>
+                      ))}
+                      {/* Add reply */}
+                      <tr>
+                        <td style={{ paddingLeft: '40px' }}>
+                          <Form
+                            id='reply-question'
+                            style={commentAreaStyle}
+                            onSubmit={(e) => addReply(e, criticism.id)}>
+                            <Form.Group
+                              as={Row}
+                              className='mb-0'
+                              controlId='content'
+                              onChange={handleContentChange}>
+                              <Col sm={6}>
+                                <Form.Control type='text' size='sm' placeholder='Content...' />
+                              </Col>
+                              <Col>
+                                <Button type='Submit' style={styles.buttonRight}>
+                                  Reply
+                                </Button>
+                              </Col>
+                            </Form.Group>
+                          </Form>
+                        </td>
+                      </tr>
+                    </React.Fragment>
                   ))}
                 </tbody>
               </Table>
