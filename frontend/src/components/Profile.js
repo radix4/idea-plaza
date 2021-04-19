@@ -1,15 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import AllProjects from './AllProjects'
 import profileImage from '../images/DefaultE.jpg'
 import MyNavbar from './MyNavbar'
+import axios from 'axios'
 
 const Profile = () => {
-  const [name, setName] = useState('Allen Baek')
-  const [bios, setBios] = useState('My bios')
-  const [achieve, setAchieve] = useState('My achievements')
+  const [bios, setBios] = useState()
+  const [achieve, setAchieve] = useState()
+  const [user, setUser] = useState()
+  const [first, setFirst] = useState()
+  const [last, setLast] = useState()
 
-  // Styles
+  /* This function checks if the user is already logged in. */
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      console.log('front/component/HomePage.js: logged in user found', user)
+
+      const getInfo = { email: user.email }
+
+      axios
+        .post('http://localhost:3001/api/users/getUser', getInfo)
+        .then((request) => {
+          console.log(request)
+          setFirst(request.data.firstName)
+          setLast(request.data.lastName)
+
+          setBios(request.data.biography)
+          setAchieve(request.data.achievements)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
+
+  // Styles ----------
 
   /* display bios.. */
   const display = {
@@ -43,13 +72,6 @@ const Profile = () => {
     clipPath: 'circle(50%)',
   }
 
-  const EditPlacement = {
-    position: 'absolute',
-
-    top: '20%',
-    left: '70%',
-  }
-
   const scrolling = {
     paddingBottom: 'auto',
     overflowY: 'scroll',
@@ -58,14 +80,13 @@ const Profile = () => {
     overflowX: 'hidden',
   }
 
+  const goProfileEdit = () => {}
+
   return (
     <Container fluid style={scrolling}>
       {/* Navbar*/}
       <MyNavbar />
-      {/* Button */}
-      <div style={EditPlacement}>
-        <Button>Edit</Button>
-      </div>
+
       {/* ProfileImage */}
       <div style={container}>
         <img
@@ -79,7 +100,9 @@ const Profile = () => {
 
       {/* Input fields */}
       <div style={display}>
-        <div style={{ fontSize: '40px' }}>{name}</div>
+        <div style={{ fontSize: '40px' }}>
+          {first} {last}
+        </div>
 
         <br />
         <div style={{ fontWeight: 'bold' }}>Bios</div>
@@ -88,6 +111,10 @@ const Profile = () => {
         <br />
         <div style={{ fontWeight: 'bold' }}>Achievements</div>
         <div>{achieve}</div>
+        <br />
+        <div>
+          <Button onClick={goProfileEdit}>Edit Profile</Button>
+        </div>
       </div>
       {/* displays list of projects */}
       <div style={cardPlacement}>

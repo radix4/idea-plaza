@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Container } from 'react-bootstrap'
 import BioAchieve from './BioAchieve'
 import ContactInfo from './ContactInfo'
@@ -7,6 +7,17 @@ import MyNavbar from './MyNavbar'
 
 const ProfileEditor = () => {
   const [page, setPage] = useState(<BioAchieve />)
+  const [user, setUser] = useState()
+
+  /* This function checks if the user is already logged in. */
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      console.log('front/component/HomePage.js: logged in user found', user)
+    }
+  }, [])
 
   //Style
   const scrolling = {
@@ -24,7 +35,7 @@ const ProfileEditor = () => {
   }
 
   const goBioAchieve = () => {
-    setPage(<BioAchieve />)
+    setPage(<BioAchieve user={user} />)
   }
 
   const goContactInfo = () => {

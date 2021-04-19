@@ -1,0 +1,6 @@
+POST http://localhost:3001/api/users/getUser/
+Content-Type: application/json
+
+{
+    "email":"1@1.com"
+}

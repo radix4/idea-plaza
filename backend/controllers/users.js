@@ -18,6 +18,19 @@ usersRouter.get('/:id', async (request, response) => {
   }
 })
 
+usersRouter.post('/getUser', async (request, response) => {
+  try {
+    const body = request.body
+    const user = await User.findOne({ email: body.email })
+    response.json(user)
+    console.log('Got the user:\n' + user)
+  } catch {
+    response.status(404)
+    response.json({ error: 'User does not exist' })
+    console.log('User get: Error 404: User does not exist ')
+  }
+})
+
 /**
  * This function renders all users from db.
  */
