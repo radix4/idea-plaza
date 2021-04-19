@@ -4,10 +4,15 @@ import BioAchieve from './BioAchieve'
 import ContactInfo from './ContactInfo'
 import Password from './Password'
 import MyNavbar from './MyNavbar'
+import axios from 'axios'
+import { useHistory } from 'react-router'
 
 const ProfileEditor = () => {
   const [page, setPage] = useState(<BioAchieve />)
   const [user, setUser] = useState()
+
+  // Redirect
+  let history = useHistory()
 
   /* This function checks if the user is already logged in. */
   useEffect(() => {
@@ -42,8 +47,8 @@ const ProfileEditor = () => {
     setPage(<ContactInfo />)
   }
 
-  const goPassword = () => {
-    setPage(<Password />)
+  const goProfile = () => {
+    history.push('/Profile')
   }
 
   return (
@@ -60,7 +65,7 @@ const ProfileEditor = () => {
         <Button onClick={goContactInfo}>View Contact Info.</Button>
         <br />
         <br />
-        <Button onClick={goPassword}>Change Password</Button>
+        <Button onClick={goProfile}>My Profile</Button>
       </a>
 
       {/* Display different states */}
