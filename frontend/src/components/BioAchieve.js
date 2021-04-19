@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import profileImage from '../images/DefaultE.jpg'
 
@@ -6,6 +6,17 @@ const BioAchieve = () => {
   const [bios, setBios] = useState('My bios')
   const [achieve, setAchieve] = useState('My Achievements')
   const [edit, setEdit] = useState(false)
+  const [user, setUser] = useState()
+
+  /* This function checks if the user is already logged in. */
+  useEffect(() => {
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      console.log('front/component/HomePage.js: logged in user found', user)
+    }
+  }, [])
 
   // updates on input
   const handleChangeB = ({ target }) => {
