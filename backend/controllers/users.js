@@ -17,7 +17,7 @@ usersRouter.get('/:id', async (request, response) => {
     console.log('User get: Error 404: User does not exist')
   }
 })
-
+// Searches user by Email
 usersRouter.post('/getUser', async (request, response) => {
   try {
     const body = request.body
@@ -96,6 +96,8 @@ usersRouter.post('/', async (request, response) => {
     lastName: body.lastName,
     email: body.email,
     password: body.password,
+    biography: 'none',
+    achievements: 'none',
   })
 
   const savedUser = await user.save()
