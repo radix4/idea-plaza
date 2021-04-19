@@ -4,13 +4,18 @@ import AllProjects from './AllProjects'
 import profileImage from '../images/DefaultE.jpg'
 import MyNavbar from './MyNavbar'
 import axios from 'axios'
+import { useHistory } from 'react-router'
 
 const Profile = () => {
   const [bios, setBios] = useState()
   const [achieve, setAchieve] = useState()
   const [user, setUser] = useState()
+  // First and Last Name
   const [first, setFirst] = useState()
   const [last, setLast] = useState()
+
+  // Redirect
+  let history = useHistory()
 
   /* This function checks if the user is already logged in. */
   useEffect(() => {
@@ -80,7 +85,9 @@ const Profile = () => {
     overflowX: 'hidden',
   }
 
-  const goProfileEdit = () => {}
+  const goProfileEdit = () => {
+    history.push('/ProfileEditor')
+  }
 
   return (
     <Container fluid style={scrolling}>
