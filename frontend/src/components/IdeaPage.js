@@ -55,47 +55,50 @@ const IdeaPage = () => {
 
 	// useEffect() is similar to componentDidMount()
 	useEffect(() => {
-		const loggedUserJSON = window.localStorage.getItem('loggedInUser')
-		if (loggedUserJSON) {
-			const user = JSON.parse(loggedUserJSON)
-			console.log('user is ' + loggedUserJSON)
-
-			setVisible(true)
-			setUser(user)
-			setFirstName(user.firstName)
-			setLastName(user.lastName)
-			setLoggedInEmail(user.email)
-			console.log('front/component/IdeaPage.js: visible', visible)
-			console.log('front/component/IdeaPage.js: logged in user found', user)
-			console.log('logged in email is ' + user.email)
-			console.log('setEmailAddress is ' + loggedInEmail)
-		} else {
-			const user = JSON.parse(loggedUserJSON)
-			setVisible(false)
-			setIsAuthor(false)
-			setLoggedInEmail('N/A')
-			console.log('front/component/IdeaPage.js: visible', visible)
-			console.log('front/component/IdeaPage.js: logged in user found', user)
-		}
 		async function func() {
+			const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+			if (loggedUserJSON) {
+				const user = JSON.parse(loggedUserJSON)
+				console.log('user is ' + loggedUserJSON)
+
+				setVisible(true)
+				setUser(user)
+				setFirstName(user.firstName)
+				setLastName(user.lastName)
+				setLoggedInEmail(user.email)
+				console.log('front/component/IdeaPage.js: visible', visible)
+				console.log('front/component/IdeaPage.js: logged in user found', user)
+				console.log('logged in email is ' + user.email)
+				console.log('setEmailAddress is ' + loggedInEmail)
+			} else {
+				const user = JSON.parse(loggedUserJSON)
+				setVisible(false)
+				setIsAuthor(false)
+
+				console.log('front/component/IdeaPage.js: visible', visible)
+				console.log('front/component/IdeaPage.js: logged in user found', user)
+			}
+
 			try {
 				const ideaResult = await axios.get(`/api/ideas/${ideaID}`)
 				const authorResult = await axios.get(`/api/users/${ideaResult.data.user}`)
 				const authorEmailAddress = authorResult.data.email
-
+				const user = JSON.parse(loggedUserJSON)
 				setIdeaInfo({
 					...ideaResult.data,
 					user: authorResult.data.id,
 				})
-				console.log(
-					'Author email: ' +
-						authorEmailAddress +
-						' Logged in email: ' +
-						loggedInEmail
-				)
-				if (visible) {
-					if (authorEmailAddress === loggedInEmail) {
+
+				if (user) {
+					if (authorEmailAddress === user.email) {
+						console.log(
+							'Author email: ' + authorEmailAddress + ' Logged in email: ' + user.email
+						)
+						console.log('before setting author: visible is ' + visible)
+						console.log(firstName + ' ' + lastName + ' ' + user.email)
 						setIsAuthor(true)
+						document.getElementById('editIdeaBtn').style.display = 'block'
+						console.log('email addresses are equal')
 					} else {
 						setIsAuthor(false)
 					}
@@ -200,7 +203,11 @@ const IdeaPage = () => {
 						<Card.Header as='h2'>
 							{ideaInfo.title}{' '}
 							<Link to={`/IdeaEditor/${ideaInfo.id}`}>
-								<Button size='sm' variant='primary' style={editButtonStyle}>
+								<Button
+									id='editIdeaBtn'
+									size='sm'
+									variant='primary'
+									style={editButtonStyle}>
 									Edit idea
 								</Button>
 							</Link>
@@ -244,7 +251,7 @@ const IdeaPage = () => {
 				<Col md={2}>
 					<div style={styles.circle} className='mb-3'></div>
 					<Card>
-						<Card.Header>Author</Card.Header>
+						<Card.Header>Authorr</Card.Header>
 						<Card.Body>
 							<Link to={`/profile/${ideaInfo.user}`}>{ideaInfo.author}</Link>
 						</Card.Body>
