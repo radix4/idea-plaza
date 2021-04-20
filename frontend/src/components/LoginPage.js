@@ -33,6 +33,16 @@ const LoginPage = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
 
+    if (email === '' || password === '') {
+      /* error message appears for 5s, then disappears */
+      setErrorMessage('Oh no, fields cannot be empty! Please try again.')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
+      return
+    }
+
     try {
       const user = await userService.login({ email, password })
       window.localStorage.setItem('loggedInUser', JSON.stringify(user))

@@ -8,11 +8,10 @@ import axios from 'axios'
 import { useHistory } from 'react-router'
 
 const ProfileEditor = () => {
-  const [page, setPage] = useState(<BioAchieve />)
   const [user, setUser] = useState()
-
-  // Redirect
-  let history = useHistory()
+  const [bios, setBios] = useState('')
+  const [achieve, setAchieve] = useState('')
+  const [page, setPage] = useState(<BioAchieve bios={bios} achieve={achieve} />)
 
   /* This function checks if the user is already logged in. */
   useEffect(() => {
@@ -21,8 +20,24 @@ const ProfileEditor = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       console.log('front/component/HomePage.js: logged in user found', user)
+
+      const getInfo = { email: user.email }
+
+      axios
+        .post('http://localhost:3001/api/users/getUser', getInfo)
+        .then((request) => {
+          console.log(request)
+          setBios(request.data.biography)
+          setAchieve(request.data.achievements)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
-  }, [])
+  }, [bios, achieve])
+
+  // Redirect
+  let history = useHistory()
 
   //Style
   const scrolling = {
@@ -40,7 +55,7 @@ const ProfileEditor = () => {
   }
 
   const goBioAchieve = () => {
-    setPage(<BioAchieve user={user} />)
+    // setPage(<BioAchieve />)
   }
 
   const goContactInfo = () => {

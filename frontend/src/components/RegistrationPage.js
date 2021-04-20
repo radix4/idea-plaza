@@ -3,7 +3,6 @@ import { Col, Row, Container, Image, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import backgroundImage from '../images/registration.png'
 import userService from '../services/users'
-import { useHistory } from 'react-router'
 import Notification from './Notification'
 
 const RegistrationPage = () => {
@@ -13,8 +12,6 @@ const RegistrationPage = () => {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
-
-  let history = useHistory()
 
   const backgroundImageStyle = {
     width: '100%',
@@ -49,11 +46,24 @@ const RegistrationPage = () => {
   const addUser = async (event) => {
     event.preventDefault()
 
+    if (
+      firstName === '' ||
+      lastName === '' ||
+      email === '' ||
+      password === '' ||
+      confirmPassword === ''
+    ) {
+      /* error message appears for 5s, then disappears */
+      setErrorMessage('You cannot leave any fields blank! Please try again.')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+      return
+    }
+
     if (password !== confirmPassword) {
       /* error message appears for 5s, then disappears */
-      setErrorMessage(
-        'Invalid inputs or email already exists! Please try again.'
-      )
+      setErrorMessage('Passwords do not match. Please try again.')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -79,21 +89,13 @@ const RegistrationPage = () => {
         setErrorMessage(null)
       }, 5000)
 
-      setFirstName('')
-      setLastName('')
-      setEmail('')
-      setPassword('')
-      setConfirmPassword('')
-
       // clear react bootstrap form
       document.getElementById('registration').reset()
     } catch (exception) {
       console.log('RegistrationPage: create user fail')
 
       /* error message appears for 5s, then disappears */
-      setErrorMessage(
-        'Invalid inputs or email already exists! Please try again.'
-      )
+      setErrorMessage('Email already exists! Please use another email.')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)

@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import profileImage from '../images/DefaultE.jpg'
 
-const BioAchieve = () => {
-  const [bios, setBios] = useState('My bios')
-  const [achieve, setAchieve] = useState('My Achievements')
+const BioAchieve = (props) => {
+  const [bios, setBios] = useState(props.bios)
+  const [achieve, setAchieve] = useState(props.achieve)
   const [edit, setEdit] = useState(false)
+
+  useEffect(() => {
+    setBios(props.bios)
+    setAchieve(props.achieve)
+  }, [props.bios, props.achieve])
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -57,13 +62,6 @@ const BioAchieve = () => {
   const clip = {
     position: 'absolute',
     clipPath: 'circle(50%)',
-  }
-  // Button to go back to Profile Page
-  const EditPlacement = {
-    position: 'absolute',
-
-    top: '20%',
-    left: '70%',
   }
 
   //For Bios and Achievement access
@@ -140,10 +138,6 @@ const BioAchieve = () => {
           width='300px'
           height='300px'
         />
-      </div>
-      {/* Go to Profile page button */}
-      <div style={EditPlacement}>
-        <Button>Profile</Button>
       </div>
 
       <div style={inputs}>
