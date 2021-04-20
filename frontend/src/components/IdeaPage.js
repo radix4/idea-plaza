@@ -116,6 +116,16 @@ const IdeaPage = () => {
 		func()
 	}, [])
 
+	const deleteIdea = async (event) => {
+		event.preventDefault()
+
+		try {
+			await axios.delete(`/api/ideas/${ideaID}`)
+		} catch (error) {
+			console.log('Deleting idea failedn', error.response || error)
+		}
+	}
+
 	const commentAreaStyle = {
 		display: visible ? '' : 'none',
 	}
@@ -126,6 +136,11 @@ const IdeaPage = () => {
 		fontSize: 14,
 	}
 
+	const deleteButtonStyle = {
+		display: isAuthor ? '' : 'none',
+		float: 'right',
+		fontSize: 14,
+	}
 	const handleContentChange = (event) => {
 		setContent(event.target.value)
 	}
@@ -201,7 +216,7 @@ const IdeaPage = () => {
 					{/* =================IDEA================ */}
 					<Card>
 						<Card.Header as='h2'>
-							{ideaInfo.title}{' '}
+							{ideaInfo.title}
 							<Link to={`/IdeaEditor/${ideaInfo.id}`}>
 								<Button
 									id='editIdeaBtn'
@@ -211,6 +226,15 @@ const IdeaPage = () => {
 									Edit idea
 								</Button>
 							</Link>
+							<t />
+							<Button
+								id='deleteIdeaBtn'
+								size='sm'
+								variant='danger'
+								style={deleteButtonStyle}
+								onClick={deleteIdea}>
+								Delete idea
+							</Button>
 						</Card.Header>
 						<Card.Body>
 							<Card.Text>
@@ -251,7 +275,7 @@ const IdeaPage = () => {
 				<Col md={2}>
 					<div style={styles.circle} className='mb-3'></div>
 					<Card>
-						<Card.Header>Authorr</Card.Header>
+						<Card.Header>Author</Card.Header>
 						<Card.Body>
 							<Link to={`/profile/${ideaInfo.user}`}>{ideaInfo.author}</Link>
 						</Card.Body>

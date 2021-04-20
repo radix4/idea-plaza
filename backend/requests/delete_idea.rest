@@ -1,0 +1,6 @@
+DELETE http://localhost:3001/api/ideas/6065155676987a1ec061bfec
+Content-Type: application/json
+
+{
+    //
+}
