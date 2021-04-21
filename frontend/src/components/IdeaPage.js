@@ -180,6 +180,7 @@ const IdeaPage = () => {
 		const newReply = {
 			content: content,
 			comment: commentID,
+			idea: ideaID,
 			author: firstName + ' ' + lastName,
 		}
 		console.log('addReply comment: ' + commentID)

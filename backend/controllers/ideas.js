@@ -3,6 +3,7 @@ const Idea = require('../models/idea') /* User automatically create 'users' coll
 const User = require('../models/user')
 const Comment = require('../models/comment')
 const Reply = require('../models/reply')
+const reply = require('../models/reply')
 
 /**
  * This function adds an idea to the database.
@@ -108,6 +109,8 @@ ideasRouter.get('/', async (request, response) => {
 ideasRouter.post('/:id/rating', async (request, response) => {
 	// type should be upVote or downVote
 	const type = request.body.type
+
+	console.log('type ' + type)
 	try {
 		const ideaID = request.params.id
 		await Idea.findOneAndUpdate({ _id: ideaID }, { $inc: { [type]: 1 } })
@@ -125,14 +128,38 @@ ideasRouter.post('/:id/rating', async (request, response) => {
 ideasRouter.delete('/:id', async (request, response) => {
 	try {
 		const ideaId = request.params.id
-		const body = request.body
-		console.log(body)
 
 		const deletedIdea = await Idea.findOne({ _id: ideaId })
+		const userId = deletedIdea.user
+		console.log(userId)
+
+		const author = User.findOne({ _id: userId })
+		console.log('author email ' + author.email)
+		User.findOneAndUpdate({ _id: userId }, { $pull: { ideas: ideaId } })
+		const ideasArray = author.ideas
+		console.log(ideasArray)
+
+		console.log(userId)
 		await Idea.deleteOne({ _id: ideaId })
 		response.status(204).json()
 		console.log(deletedIdea)
 		console.log('Idea deleted!')
+
+		await Comment.deleteMany({ idea: ideaId })
+			.then(function () {
+				console.log('Comments deleted') // Success
+			})
+			.catch(function (error) {
+				console.log('Comment deletion ' + error) // Failure
+			})
+
+		await Reply.deleteMany({ idea: ideaId })
+			.then(function () {
+				console.log('Replies deleted') // Success
+			})
+			.catch(function (error) {
+				console.log('Reply deletion ' + error) // Failure
+			})
 	} catch {
 		response.status(404)
 		response.json({ error: 'Idea does not exist' })

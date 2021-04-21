@@ -2,13 +2,13 @@ POST http://localhost:3001/api/ideas/
 Content-Type: application/json
 
 {
-    "title": "An Idea", 
+    "title": "TBD", 
     "problemStatement": {
-        "domain": "dominion",
-        "stateOfTheArt": "stasis",
-        "solution": "solvent"
+        "domain": "tbd",
+        "stateOfTheArt": "tbd",
+        "solution": "tbd"
     },
-    "author": "flute",
+    "author": "Joie de",
     "upVote": 12,
     "downVote": 16,
     "questions": [],

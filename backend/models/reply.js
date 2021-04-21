@@ -6,19 +6,24 @@ const mongoose = require('mongoose')
  */
 
 const replySchema = new mongoose.Schema({
-  content: {
-    type: String,
-    required: true,
-  },
-  comment: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Comment',
-    required: true,
-  },
-  author: {
-    type: String,
-    required: true,
-  },
+	content: {
+		type: String,
+		required: true,
+	},
+	comment: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Comment',
+		required: true,
+	},
+	author: {
+		type: String,
+		required: true,
+	},
+	idea: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'Idea',
+		required: true,
+	},
 })
 
 /* 
@@ -27,11 +32,11 @@ Mongo's id field looks like a string, but it's an object (watch out!) and
     the toJSON method here takes care of it just in case.
 */
 replySchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  },
+	transform: (document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString()
+		delete returnedObject._id
+		delete returnedObject.__v
+	},
 })
 
 module.exports = mongoose.model('Reply', replySchema)
