@@ -7,10 +7,14 @@ import ideaService from '../services/ideas'
 
 const HomePage = () => {
   const [title, setTitle] = useState('')
+  const [domain, setDomain] = useState('')
+  const [stateOfTheArt, setStateOfTheArt] = useState('')
+  const [solution, setSolution] = useState('')
+
   const [problemStatement, setProblemStatement] = useState({
-    domain: '',
-    stateOfTheArt: '',
-    solution: '',
+    domain,
+    stateOfTheArt,
+    solution,
   })
   const [author, setAuthor] = useState('')
   const [upVote, setUpVote] = useState(0)
@@ -29,52 +33,20 @@ const HomePage = () => {
     }
   }, [])
 
-  /* OnChange event functions for creating idea */
-  const handleTitleChange = (event) => setTitle(event.target.value)
-  const handleProblemStatementChange = (event) =>
-    setProblemStatement(event.target.value)
-  const handleAuthor = (event) => setAuthor(event.target.value)
-
-  /* This function adds creates a new idea */
-  const addIdea = async (event) => {
-    event.preventDefault()
-
-    const newIdea = {
-      title: title,
-      problemStatement: problemStatement,
-      author: author,
-      upVote: upVote,
-      downVote: downVote,
-      questions: questions,
-      criticisms: criticisms,
-      user: user,
-    }
-
-    try {
-      await ideaService.create(newIdea).then((returnedIdea) => {
-        console.log('create idea success!')
-      })
-      setTitle('')
-      setProblemStatement()
-    } catch (error) {
-      console.log('create idea failed\n', error)
-    }
-  }
-
   return (
     <div>
       <MyNavbar />
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 pr-4'>
           {/* ============= CREATE NEW IDEA ============= */}
-          <Form className='border mt-4 p-3 border-info' onSubmit={addIdea}>
+          <Form className='border mt-4 p-3 border-info' onSubmit={}>
             <Form.Group controlId='formTitle'>
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter the title of your idea'
                 value={title}
-                onChange={handleTitleChange}
+                onChange={}
               />
             </Form.Group>
             <Form.Group controlId='formDomain'>
@@ -83,7 +55,7 @@ const HomePage = () => {
                 as='textarea'
                 placeholder='Enter the domain of your idea'
                 value={problemStatement.domain}
-                onChange={handleProblemStatementChange}
+                onChange={}
               />
             </Form.Group>
             <Form.Group controlId='formStateOfTheArt'>
@@ -92,7 +64,7 @@ const HomePage = () => {
                 as='textarea'
                 placeholder='Enter the state of the art'
                 value={problemStatement.stateOfTheArt}
-                onChange={handleProblemStatementChange}
+                onChange={}
               />
             </Form.Group>
             <Form.Group controlId='formSolution'>
@@ -101,17 +73,13 @@ const HomePage = () => {
                 as='textarea'
                 placeholder='Enter the solution'
                 value={problemStatement.solution}
-                onChange={handleProblemStatementChange}
+                onChange={}
               />
             </Form.Group>
             <Button variant='primary' type='submit'>
               Post Your Idea
             </Button>
           </Form>
-
-          {/* <Button variant='primary' className='btn-block mt-4'>
-            Create New Idea
-          </Button> */}
 
           {/* ============= IDEAS ============= */}
 

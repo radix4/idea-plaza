@@ -9,4 +9,10 @@ const create = async (newIdeaObject) => {
   return response.data
 }
 
-export default { create }
+/* This function renders all ideas*/
+const getAll = async () => {
+  const request = await axios.get(baseUrl)
+  return request.data
+}
+
+export default { create, getAll }
