@@ -11,7 +11,7 @@ const HomePage = () => {
   /* User state */
   const [user, setUser] = useState()
   const [userID, setUserID] = useState()
-
+  const [ideas, setIdeas] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
 
   /* Idea fields states */
@@ -44,8 +44,8 @@ const HomePage = () => {
       setAuthor(`${user.firstName} ${user.lastName}`)
       console.log('front/component/HomePage.js: logged in user found', user)
 
+      /* get user's ID */
       const getInfo = { email: user.email }
-
       axios
         .post('http://localhost:3001/api/users/getUser', getInfo)
         .then((request) => {
@@ -56,6 +56,14 @@ const HomePage = () => {
           console.log(err)
         })
     }
+  }, [])
+
+  /* This function gets all ideas */
+  useEffect(() => {
+    ideaService.getAll().then((ideas) => {
+      setIdeas(ideas)
+      console.log('ideas: ', ideas)
+    })
   }, [])
 
   /* This function handles create idea form upon submit. */
@@ -165,10 +173,12 @@ const HomePage = () => {
             </Button>
           </Form>
 
-          {/* ============= IDEAS ============= */}
-
-          <Idea />
-          <Idea />
+          {/* ============= DISPLAY ALL IDEAS ============= */}
+          <div>
+            {ideas.map((idea, i) => (
+              <Idea key={i} idea={idea} />
+            ))}
+          </div>
         </div>
 
         {/* ============= SIDE TEXT ============= */}
