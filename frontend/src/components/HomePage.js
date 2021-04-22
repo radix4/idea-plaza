@@ -103,6 +103,9 @@ const HomePage = () => {
         user,
       })
 
+      /* add new idea to array */
+      setIdeas(ideas.concat(idea))
+
       /* Empty form */
       document.getElementById('create-idea-form').reset()
     } catch (exception) {
