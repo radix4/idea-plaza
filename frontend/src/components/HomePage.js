@@ -124,11 +124,11 @@ const HomePage = () => {
     <div>
       <MyNavbar />
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
-        <div className='p-2 pr-4'>
+        <div className='p-2 ml-5 pr-5 mr-5 w-75'>
           {/* ============= CREATE NEW IDEA ============= */}
           <Form
             id='create-idea-form'
-            className='border mt-4 p-3 border-info'
+            className='border mt-4 p-3 w-100 border-info'
             onSubmit={handleCreateIdea}>
             {/* ===== TITLE ===== */}
             <Form.Group controlId='title'>
@@ -171,7 +171,7 @@ const HomePage = () => {
             </Form.Group>
 
             {/* ===== BUTTON ===== */}
-            <Button variant='primary' type='submit'>
+            <Button variant='info' type='submit'>
               Post Your Idea
             </Button>
           </Form>
@@ -184,38 +184,40 @@ const HomePage = () => {
           </div>
         </div>
 
-        {/* ============= SIDE TEXT ============= */}
-        <Card style={{ width: '100rem' }} bg='info' text='light'>
-          <Card.Body>
-            <Card.Header>IdeaPlaza Statement</Card.Header>
-            <br></br>
-            <Card.Title>The Importance of Ideas</Card.Title>
-            <Card.Text>
-              The modern world is powered by ideas. Without ideas, change does
-              not happen and no human progress is possible. The good thing is
-              that humans are inherently creators of ideas, but the bad thing is
-              that not all ideas get shared.
-            </Card.Text>
-            <br></br>
-            <Card.Title>The Goal of IdeaPlaza</Card.Title>
+        <div className='w-25 mt-4 p-2 pr-2'>
+          {/* ============= SIDE TEXT ============= */}
+          <Card bg='info' text='light' className='p-2'>
+            <Card.Body>
+              <Card.Header>IdeaPlaza Statement</Card.Header>
+              <br></br>
+              <Card.Title>The Importance of Ideas</Card.Title>
+              <Card.Text>
+                The modern world is powered by ideas. Without ideas, change does
+                not happen and no human progress is possible. The good thing is
+                that humans are inherently creators of ideas, but the bad thing
+                is that not all ideas get shared.
+              </Card.Text>
+              <br></br>
+              <Card.Title>The Goal of IdeaPlaza</Card.Title>
 
-            <Card.Text>
-              The goal of IdeaPlaza is to bring great ideas together and make
-              them a reality with constructive criticism. Ultimately, in the
-              hope that with many more great ideas generated throughout the
-              world, many major issues will be solved and the world will become
-              a happier and healthier place.
-            </Card.Text>
-            <br></br>
-            <Card.Title>What Makes IdeaPlaza Stood Out?</Card.Title>
-            <Card.Text>
-              IdeaPlaza avoids the current state of the art polarization by
-              having a feature specifically for developers to offer constructive
-              criticism, as well as a voting system on projects but not on
-              comments.
-            </Card.Text>
-          </Card.Body>
-        </Card>
+              <Card.Text>
+                The goal of IdeaPlaza is to bring great ideas together and make
+                them a reality with constructive criticism. Ultimately, in the
+                hope that with many more great ideas generated throughout the
+                world, many major issues will be solved and the world will
+                become a happier and healthier place.
+              </Card.Text>
+              <br></br>
+              <Card.Title>What Makes IdeaPlaza Stood Out?</Card.Title>
+              <Card.Text>
+                IdeaPlaza avoids the current state of the art polarization by
+                having a feature specifically for developers to offer
+                constructive criticism, as well as a voting system on projects
+                but not on comments.
+              </Card.Text>
+            </Card.Body>
+          </Card>
+        </div>
       </div>
     </div>
   )
