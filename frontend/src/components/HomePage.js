@@ -4,24 +4,36 @@ import Idea from './Idea'
 import MyNavbar from './MyNavbar'
 import axios from 'axios'
 import ideaService from '../services/ideas'
+import userService from '../services/users'
+import Notification from './Notification'
 
 const HomePage = () => {
+  /* User state */
+  const [user, setUser] = useState()
+  const [userID, setUserID] = useState()
+
+  const [errorMessage, setErrorMessage] = useState(null)
+
+  /* Idea fields states */
   const [title, setTitle] = useState('')
   const [domain, setDomain] = useState('')
   const [stateOfTheArt, setStateOfTheArt] = useState('')
   const [solution, setSolution] = useState('')
-
-  const [problemStatement, setProblemStatement] = useState({
-    domain,
-    stateOfTheArt,
-    solution,
-  })
   const [author, setAuthor] = useState('')
   const [upVote, setUpVote] = useState(0)
   const [downVote, setDownVote] = useState(0)
-  const [questions, setQuestions] = useState()
-  const [criticisms, setCriticisms] = useState()
-  const [user, setUser] = useState()
+  const [questions, setQuestions] = useState([])
+  const [criticisms, setCriticisms] = useState([])
+
+  /* All state on change handlers */
+  const handleTitleOnChange = (event) => setTitle(event.target.value)
+  const handleDomainOnChange = (event) => setDomain(event.target.value)
+  const handleStateOfTheArtOnChange = (event) =>
+    setStateOfTheArt(event.target.value)
+  const handleSolutionOnChange = (event) => setSolution(event.target.value)
+  const handleAuthorOnChange = (event) => setAuthor(event.target.value)
+  const handleUpVoteOnChange = (event) => setUpVote(event.target.value)
+  const handleDownVoteOnChange = (event) => setDownVote(event.target.value)
 
   /* This function checks if the user is already logged in. */
   useEffect(() => {
@@ -29,9 +41,73 @@ const HomePage = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      setAuthor(`${user.firstName} ${user.lastName}`)
       console.log('front/component/HomePage.js: logged in user found', user)
+
+      const getInfo = { email: user.email }
+
+      axios
+        .post('http://localhost:3001/api/users/getUser', getInfo)
+        .then((request) => {
+          console.log(request.data.id)
+          setUserID(request.data.id)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     }
   }, [])
+
+  /* This function handles create idea form upon submit. */
+  const handleCreateIdea = async (event) => {
+    event.preventDefault()
+
+    if (
+      title === '' ||
+      domain === '' ||
+      stateOfTheArt === '' ||
+      solution === ''
+    ) {
+      /* error message appears for 5s, then disappears */
+      setErrorMessage('Oh no, fields cannot be empty! Please try again.')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+
+      return
+    }
+
+    const user = userID
+
+    const problemStatement = {
+      domain: domain,
+      stateOfTheArt: stateOfTheArt,
+      solution: solution,
+    }
+
+    try {
+      const idea = await ideaService.create({
+        title,
+        problemStatement,
+        upVote,
+        downVote,
+        author,
+        user,
+      })
+
+      /* Empty form */
+      document.getElementById('create-idea-form').reset()
+    } catch (exception) {
+      console.log('HomePage: fail to create idea')
+      console.log(exception)
+
+      /* error message appears for 5s, then disappears */
+      setErrorMessage('Error! Fail to create idea.')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
 
   return (
     <div>
@@ -39,43 +115,51 @@ const HomePage = () => {
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 pr-4'>
           {/* ============= CREATE NEW IDEA ============= */}
-          <Form className='border mt-4 p-3 border-info' onSubmit={}>
-            <Form.Group controlId='formTitle'>
+          <Form
+            id='create-idea-form'
+            className='border mt-4 p-3 border-info'
+            onSubmit={handleCreateIdea}>
+            {/* ===== TITLE ===== */}
+            <Form.Group controlId='title'>
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type='text'
                 placeholder='Enter the title of your idea'
-                value={title}
-                onChange={}
+                onChange={handleTitleOnChange}
               />
             </Form.Group>
-            <Form.Group controlId='formDomain'>
+
+            {/* ===== DOMAIN ===== */}
+            <Form.Group controlId='domain'>
               <Form.Label>Problem Domain</Form.Label>
               <Form.Control
                 as='textarea'
                 placeholder='Enter the domain of your idea'
-                value={problemStatement.domain}
-                onChange={}
+                onChange={handleDomainOnChange}
               />
             </Form.Group>
-            <Form.Group controlId='formStateOfTheArt'>
+
+            {/* ===== STATE OF THE ART ===== */}
+            <Form.Group controlId='stateOfTheArt'>
               <Form.Label>State of the Art</Form.Label>
               <Form.Control
                 as='textarea'
                 placeholder='Enter the state of the art'
-                value={problemStatement.stateOfTheArt}
-                onChange={}
+                onChange={handleStateOfTheArtOnChange}
               />
             </Form.Group>
-            <Form.Group controlId='formSolution'>
+
+            {/* ===== SOLUTION ===== */}
+            <Form.Group controlId='solution'>
               <Form.Label>Solution</Form.Label>
               <Form.Control
                 as='textarea'
                 placeholder='Enter the solution'
-                value={problemStatement.solution}
-                onChange={}
+                onChange={handleSolutionOnChange}
               />
             </Form.Group>
+
+            {/* ===== BUTTON ===== */}
             <Button variant='primary' type='submit'>
               Post Your Idea
             </Button>
