@@ -41,7 +41,9 @@ const Idea = ({ idea }) => {
         <Card.Body>
           <Card.Text>{idea.problemStatement.domain}</Card.Text>
           <div className='d-flex justify-content-between'>
-            <p>{idea.author}</p>
+            <p>
+              <b>Author</b>: {idea.author}
+            </p>
           </div>
 
           <Button variant='primary'>Go to the idea page</Button>

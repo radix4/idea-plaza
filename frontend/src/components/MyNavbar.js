@@ -10,7 +10,7 @@ import {
 import { Link } from 'react-router-dom'
 import logoImage from '../images/logo_white.png'
 
-const MyNavbar = () => {
+const MyNavbar = ({ handleSearchSubmit, onChangeSearch }) => {
   const [user, setUser] = useState()
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
@@ -87,14 +87,15 @@ const MyNavbar = () => {
       <Navbar.Toggle aria-controls='basic-navbar-nav' />
       <Navbar.Collapse id='basic-navbar-nav'>
         {/* ============= SEARCH ============= */}
-        <Form inline className='mr-3'>
+        <Form inline className='mr-3' onSubmit={handleSearchSubmit}>
           <FormControl
             type='text'
             placeholder='Search'
             className='mr-sm-4'
             style={searchFieldStyle}
+            onChange={onChangeSearch}
           />
-          <Button variant='info' className='btn-info'>
+          <Button variant='info' className='btn-info' type='submit'>
             Search
           </Button>
         </Form>

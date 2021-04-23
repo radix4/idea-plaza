@@ -11,8 +11,10 @@ const HomePage = () => {
   /* User state */
   const [user, setUser] = useState()
   const [userID, setUserID] = useState()
+  const [originalIdeas, setOriginalIdeas] = useState([])
   const [ideas, setIdeas] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
+  const [search, setSearch] = useState('')
 
   /* Idea fields states */
   const [title, setTitle] = useState('')
@@ -34,6 +36,10 @@ const HomePage = () => {
   const handleAuthorOnChange = (event) => setAuthor(event.target.value)
   const handleUpVoteOnChange = (event) => setUpVote(event.target.value)
   const handleDownVoteOnChange = (event) => setDownVote(event.target.value)
+  const onChangeSearch = (event) => {
+    console.log(event.target.value)
+    setSearch(event.target.value)
+  }
 
   /* This function checks if the user is already logged in. */
   useEffect(() => {
@@ -62,6 +68,7 @@ const HomePage = () => {
   useEffect(() => {
     ideaService.getAll().then((ideas) => {
       setIdeas(ideas)
+      setOriginalIdeas(ideas)
       console.log('ideas: ', ideas)
     })
   }, [])
@@ -120,9 +127,29 @@ const HomePage = () => {
     }
   }
 
+  /* This function handles search button,
+  make sure ideas is not altered */
+  const handleSearchSubmit = (event) => {
+    event.preventDefault()
+    console.log('Search btn clicked.')
+
+    const copy = originalIdeas
+
+    const ideasByKeywords = copy.filter(filterByTitle)
+
+    setIdeas(ideasByKeywords)
+  }
+
+  const filterByTitle = (idea) => {
+    return idea.title.toLowerCase().indexOf(search) !== -1
+  }
+
   return (
     <div>
-      <MyNavbar />
+      <MyNavbar
+        handleSearchSubmit={handleSearchSubmit}
+        onChangeSearch={onChangeSearch}
+      />
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 ml-5 pr-5 mr-5 w-75'>
           {/* ============= CREATE NEW IDEA ============= */}
