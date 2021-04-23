@@ -3,7 +3,6 @@ const Idea = require('../models/idea') /* User automatically create 'users' coll
 const User = require('../models/user')
 const Comment = require('../models/comment')
 const Reply = require('../models/reply')
-const reply = require('../models/reply')
 
 /**
  * This function adds an idea to the database.
@@ -12,8 +11,6 @@ ideasRouter.post('/', async (request, response) => {
   const body = request.body
 
   console.log('BE/controllers/ideas.js: ', body)
-
-  const user = '605e6daa775830ba55025613'
 
   const idea = new Idea({
     title: body.title,
@@ -24,6 +21,7 @@ ideasRouter.post('/', async (request, response) => {
     questions: body.questions,
     criticisms: body.criticisms,
     user: body.user,
+    date: new Date(),
   })
 
   try {

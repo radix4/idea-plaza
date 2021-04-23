@@ -34,7 +34,7 @@ const Idea = ({ idea }) => {
         <Card.Header>
           <div className='d-flex align-items-center justify-content-between'>
             <h5>{idea.title}</h5>
-            <p>04/20/2021</p>
+            <p>Created on: {idea.date.substring(0, 10)}</p>
           </div>
         </Card.Header>
         {/* =============DESCRIPTION AND AUTHOR============ */}

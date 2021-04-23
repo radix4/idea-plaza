@@ -53,6 +53,7 @@ const ideaSchema = new mongoose.Schema({
       ref: 'Comment',
     },
   ],
+  date: Date,
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
