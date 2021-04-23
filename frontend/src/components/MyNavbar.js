@@ -14,6 +14,7 @@ const MyNavbar = ({
   handleSearchSubmit,
   onChangeSearch,
   handleSortMostPopularity,
+  handleSortMostRecent,
 }) => {
   const [user, setUser] = useState()
   const [firstName, setFirstName] = useState()
@@ -106,7 +107,9 @@ const MyNavbar = ({
         {/* ============= SORT BY ============= */}
         <Nav className='mr-auto'>
           <NavDropdown title='Sort by' style={navDropdownStyle}>
-            <NavDropdown.Item>Most Recent</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleSortMostRecent}>
+              Most Recent
+            </NavDropdown.Item>
             <NavDropdown.Item onClick={handleSortMostPopularity}>
               Popularity
             </NavDropdown.Item>

@@ -85,6 +85,7 @@ const HomePage = () => {
     ) {
       /* error message appears for 5s, then disappears */
       setErrorMessage('Oh no, fields cannot be empty! Please try again.')
+      console.log('aaaaaa')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
@@ -110,6 +111,11 @@ const HomePage = () => {
         user,
       })
 
+      setTitle('')
+      setDomain('')
+      setStateOfTheArt('')
+      setSolution('')
+
       /* add new idea to array */
       setIdeas(ideas.concat(idea))
 
@@ -117,7 +123,6 @@ const HomePage = () => {
       document.getElementById('create-idea-form').reset()
     } catch (exception) {
       console.log('HomePage: fail to create idea')
-      console.log(exception)
 
       /* error message appears for 5s, then disappears */
       setErrorMessage('Error! Fail to create idea.')
@@ -146,7 +151,6 @@ const HomePage = () => {
 
   /* Dropdown sort by most popularity */
   const handleSortMostPopularity = async (event) => {
-    //event.preventDefault()
     console.log('Popularity dropdown clicked')
     let copy
     await ideaService.getAll().then((ideas) => {
@@ -159,8 +163,17 @@ const HomePage = () => {
       return bVote - aVote
     })
 
-    console.log('after sort', copy)
+    setIdeas(copy)
+  }
 
+  const handleSortMostRecent = async (event) => {
+    console.log('Most Recent dropdown clicked')
+    let copy
+    await ideaService.getAll().then((ideas) => {
+      copy = ideas
+    })
+
+    copy.sort((a, b) => new Date(b.date) - new Date(a.date))
     setIdeas(copy)
   }
 
@@ -170,6 +183,7 @@ const HomePage = () => {
         handleSearchSubmit={handleSearchSubmit}
         onChangeSearch={onChangeSearch}
         handleSortMostPopularity={handleSortMostPopularity}
+        handleSortMostRecent={handleSortMostRecent}
       />
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 ml-5 pr-5 mr-5 w-75'>
@@ -179,6 +193,7 @@ const HomePage = () => {
             className='border mt-4 p-3 w-100 border-info'
             onSubmit={handleCreateIdea}>
             {/* ===== TITLE ===== */}
+            <Notification message={errorMessage} />
             <Form.Group controlId='title'>
               <Form.Label>Title</Form.Label>
               <Form.Control
