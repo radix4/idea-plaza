@@ -144,11 +144,32 @@ const HomePage = () => {
     return idea.title.toLowerCase().indexOf(search) !== -1
   }
 
+  /* Dropdown sort by most popularity */
+  const handleSortMostPopularity = async (event) => {
+    //event.preventDefault()
+    console.log('Popularity dropdown clicked')
+    let copy
+    await ideaService.getAll().then((ideas) => {
+      copy = ideas
+    })
+
+    copy.sort(function (a, b) {
+      const bVote = b.upVote - b.downVote
+      const aVote = a.upVote - a.downVote
+      return bVote - aVote
+    })
+
+    console.log('after sort', copy)
+
+    setIdeas(copy)
+  }
+
   return (
     <div>
       <MyNavbar
         handleSearchSubmit={handleSearchSubmit}
         onChangeSearch={onChangeSearch}
+        handleSortMostPopularity={handleSortMostPopularity}
       />
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 ml-5 pr-5 mr-5 w-75'>

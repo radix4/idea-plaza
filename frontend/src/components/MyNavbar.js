@@ -10,7 +10,11 @@ import {
 import { Link } from 'react-router-dom'
 import logoImage from '../images/logo_white.png'
 
-const MyNavbar = ({ handleSearchSubmit, onChangeSearch }) => {
+const MyNavbar = ({
+  handleSearchSubmit,
+  onChangeSearch,
+  handleSortMostPopularity,
+}) => {
   const [user, setUser] = useState()
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
@@ -103,7 +107,9 @@ const MyNavbar = ({ handleSearchSubmit, onChangeSearch }) => {
         <Nav className='mr-auto'>
           <NavDropdown title='Sort by' style={navDropdownStyle}>
             <NavDropdown.Item>Most Recent</NavDropdown.Item>
-            <NavDropdown.Item>Popularity</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleSortMostPopularity}>
+              Popularity
+            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
         {/* ============= LOGIN ============= */}
