@@ -2,7 +2,7 @@ POST http://localhost:3001/api/ideas/
 Content-Type: application/json
 
 {
-    "title": "TBD", 
+    "title": "AAAA", 
     "problemStatement": {
         "domain": "tbd",
         "stateOfTheArt": "tbd",
@@ -13,5 +13,5 @@ Content-Type: application/json
     "downVote": 16,
     "questions": [],
     "criticisms": [],
-    "user": "60738ff358e6195894b41607"
+    "user": "605e6daa775830ba55025613"
 }

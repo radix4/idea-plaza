@@ -40,7 +40,7 @@ const userSchema = new mongoose.Schema({
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Idea',
-      required: true
+      required: true,
     },
   ],
 })
