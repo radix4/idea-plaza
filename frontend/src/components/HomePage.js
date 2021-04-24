@@ -225,7 +225,7 @@ const HomePage = () => {
           </Form>
 
           {/* ============= DISPLAY ALL IDEAS ============= */}
-          <div>
+          <div className='w-100'>
             {ideas.map((idea, i) => (
               <Idea key={i} idea={idea} />
             ))}
