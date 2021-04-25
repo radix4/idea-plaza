@@ -40,6 +40,37 @@ const ContactInfo = () => {
               />
             </Col>
           </Form.Group>
+
+          {/* Old Password */}
+          <Form.Group as={Row} controlId='OldPassword'>
+            <Form.Label column sm='2'>
+              Old Password:
+            </Form.Label>
+
+            <Col sm='10'>
+              <Form.Control type='password' placeholder='Old Password' />
+            </Col>
+          </Form.Group>
+          {/* New Password */}
+          <Form.Group as={Row} controlId='NewPassword'>
+            <Form.Label column sm='2'>
+              New Password:
+            </Form.Label>
+
+            <Col sm='10'>
+              <Form.Control type='password' placeholder='New Password' />
+            </Col>
+          </Form.Group>
+          {/* Confirm Password */}
+          <Form.Group as={Row} controlId='ConfirmPassword'>
+            <Form.Label column sm='2'>
+              Confirm Password:
+            </Form.Label>
+
+            <Col sm='10'>
+              <Form.Control type='password' placeholder='Confirm Password' />
+            </Col>
+          </Form.Group>
         </Form>
       </div>
     </div>
