@@ -6,11 +6,15 @@ const BioAchieve = (props) => {
   const [bios, setBios] = useState(props.bios)
   const [achieve, setAchieve] = useState(props.achieve)
   const [edit, setEdit] = useState(false)
+  const [oldbios, setOldBios] = useState(props.bios)
+  const [oldachieve, setOldAchieve] = useState(props.bios)
 
   useEffect(() => {
     setBios(props.bios)
     setAchieve(props.achieve)
-  }, [props.bios, props.achieve])
+    setOldBios(props.bios)
+    setOldAchieve(props.achieve)
+  }, [props.bios, props.achieve, oldbios, oldachieve])
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -25,21 +29,24 @@ const BioAchieve = (props) => {
   const handleSubmit = () => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
+    setEdit(false)
+    //setting new values as old values
+    setOldAchieve(bios)
+    setOldBios(achieve)
 
     // use axios to send values to the server
+  }
+
+  //Resets values when user cancels changes
+  const resetValues = () => {
+    setAchieve(oldachieve)
+    setBios(oldbios)
+    setEdit(false)
   }
 
   //Turns on editor
   const switchstateT = () => {
     setEdit(true)
-  }
-  //Turns off editor
-  const switchstateF = () => {
-    setEdit(false)
-  }
-  //Resets values when user cancels changes
-  const resetValues = () => {
-    // use axios to get values from the server
   }
 
   /* for EditProfile */
@@ -93,9 +100,9 @@ const BioAchieve = (props) => {
       />
     )
 
-    button = <Button onClick={(resetValues, switchstateF)}>Cancel</Button>
+    button = <Button onClick={resetValues}>Cancel</Button>
 
-    submit = <Button onClick={(handleSubmit, switchstateF)}> Save </Button>
+    submit = <Button onClick={handleSubmit}> Save </Button>
   } else {
     input1 = (
       <Form.Control
@@ -126,7 +133,6 @@ const BioAchieve = (props) => {
     submit = ''
   }
 
-  //   placeholder to print out project ideas etc.
   const displayBioAchieve = (
     <div>
       {/* ProfileImage */}
