@@ -30,6 +30,9 @@ const BioAchieve = (props) => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
     setEdit(false)
+    //setting new values as old values
+    setOldAchieve(bios)
+    setOldBios(achieve)
 
     // use axios to send values to the server
   }
