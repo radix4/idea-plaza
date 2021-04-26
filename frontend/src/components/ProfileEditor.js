@@ -10,8 +10,10 @@ const ProfileEditor = () => {
   const [bios, setBios] = useState()
   const [achieve, setAchieve] = useState()
   const [page, setPage] = useState()
+  const [id, setId] = useState()
 
   /* This function checks if the user is already logged in. */
+  // Starts this on Page Boots
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
@@ -23,16 +25,17 @@ const ProfileEditor = () => {
       axios
         .post('http://localhost:3001/api/users/getUser', getInfo)
         .then((request) => {
-          console.log(request)
+          console.log(request.data)
           setBios(request.data.biography)
           setAchieve(request.data.achievements)
-          setPage(<BioAchieve bios={bios} achieve={achieve} />)
+          setId(request.data.id)
+          setPage(<BioAchieve bios={bios} achieve={achieve} id={id} />)
         })
         .catch((err) => {
           console.log(err)
         })
     }
-  }, [bios, achieve])
+  }, [bios, achieve, id])
 
   // Redirect
   let history = useHistory()
@@ -53,7 +56,7 @@ const ProfileEditor = () => {
   }
 
   const goBioAchieve = () => {
-    setPage(<BioAchieve bios={bios} achieve={achieve} />)
+    setPage(<BioAchieve bios={bios} achieve={achieve} id={id} />)
   }
 
   const goContactInfo = () => {

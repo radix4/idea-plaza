@@ -9,13 +9,19 @@ const BioAchieve = (props) => {
   const [edit, setEdit] = useState(false)
   const [oldbios, setOldBios] = useState(props.bios)
   const [oldachieve, setOldAchieve] = useState(props.bios)
+  const [id, setId] = useState(props.id)
+  var number = 1
 
   useEffect(() => {
-    setBios(props.bios)
-    setAchieve(props.achieve)
-    setOldBios(props.bios)
-    setOldAchieve(props.achieve)
-  }, [props.bios, props.achieve, oldbios, oldachieve])
+    if (number === 1) {
+      setBios(props.bios)
+      setAchieve(props.achieve)
+      setOldBios(props.bios)
+      setOldAchieve(props.achieve)
+      setId(props.id)
+      number = 2
+    }
+  }, [oldbios, oldachieve, id])
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -30,26 +36,37 @@ const BioAchieve = (props) => {
   const handleSubmit = () => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
+    console.log('Id: ' + id)
     setEdit(false)
+
     //setting new values as old values
     setOldAchieve(bios)
     setOldBios(achieve)
 
+    console.log('Target: ' + bios)
     // use axios to send values to the server
 
-    // axios
-    //   .post('http://localhost:3001/api/users/updateBios_Achieve')
-    //   .then((request) => {
-    //     console.log(request)
-    //     setFirst(request.data.firstName)
-    //     setLast(request.data.lastName)
+    console.log('Current ' + props.bios)
 
-    //     setBios(request.data.biography)
-    //     setAchieve(request.data.achievements)
-    //   })
-    //   .catch((err) => {
-    //     console.log(err)
-    //   })
+    const updateValues = {
+      _id: id,
+      biography: bios,
+      achievements: achieve,
+    }
+
+    axios
+      .post('http://localhost:3001/api/users/updateBios_Achieve', updateValues)
+      .then((request) => {
+        console.log(request)
+
+        setBios(request.data.biography)
+        setAchieve(request.data.achievements)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+
+    // window.location.reload()
   }
 
   //Resets values when user cancels changes
