@@ -11,6 +11,9 @@ const ProfileEditor = () => {
   const [achieve, setAchieve] = useState()
   const [page, setPage] = useState()
   const [id, setId] = useState()
+  const [password, setPassword] = useState()
+  const [first, setFirst] = useState()
+  const [last, setLast] = useState()
 
   /* This function checks if the user is already logged in. */
   // Starts this on Page Boots
@@ -26,9 +29,15 @@ const ProfileEditor = () => {
         .post('http://localhost:3001/api/users/getUser', getInfo)
         .then((request) => {
           console.log(request.data)
+          // For Bios_Achieve
           setBios(request.data.biography)
           setAchieve(request.data.achievements)
           setId(request.data.id)
+          // ContactInfo
+          setPassword(request.data.password)
+          setFirst(request.data.first)
+          setLast(request.data.last)
+          // SetPage
           setPage(<BioAchieve bios={bios} achieve={achieve} id={id} />)
         })
         .catch((err) => {

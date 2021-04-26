@@ -10,18 +10,18 @@ const BioAchieve = (props) => {
   const [oldbios, setOldBios] = useState(props.bios)
   const [oldachieve, setOldAchieve] = useState(props.bios)
   const [id, setId] = useState(props.id)
-  var number = 1
+  const [update, setUpdate] = useState(true)
 
   useEffect(() => {
-    if (number === 1) {
+    if (update) {
       setBios(props.bios)
       setAchieve(props.achieve)
       setOldBios(props.bios)
       setOldAchieve(props.achieve)
       setId(props.id)
-      number = 2
+      setUpdate(false)
     }
-  }, [oldbios, oldachieve, id])
+  }, [props.bios, props.achieve, props.id, oldbios, oldachieve, id])
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -42,12 +42,7 @@ const BioAchieve = (props) => {
     //setting new values as old values
     setOldAchieve(bios)
     setOldBios(achieve)
-
-    console.log('Target: ' + bios)
     // use axios to send values to the server
-
-    console.log('Current ' + props.bios)
-
     const updateValues = {
       _id: id,
       biography: bios,
