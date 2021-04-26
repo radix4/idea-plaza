@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/users/updateBios_Achieve
+Content-Type: application/json
+
+{
+    "_id": "607ce21055964544b33c3633",
+    "biography": "test1",
+    "achievements": "test1"
+}

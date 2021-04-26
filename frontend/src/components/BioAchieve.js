@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import profileImage from '../images/DefaultE.jpg'
+import axios from 'axios'
 
 const BioAchieve = (props) => {
   const [bios, setBios] = useState(props.bios)
@@ -35,6 +36,20 @@ const BioAchieve = (props) => {
     setOldBios(achieve)
 
     // use axios to send values to the server
+
+    // axios
+    //   .post('http://localhost:3001/api/users/updateBios_Achieve')
+    //   .then((request) => {
+    //     console.log(request)
+    //     setFirst(request.data.firstName)
+    //     setLast(request.data.lastName)
+
+    //     setBios(request.data.biography)
+    //     setAchieve(request.data.achievements)
+    //   })
+    //   .catch((err) => {
+    //     console.log(err)
+    //   })
   }
 
   //Resets values when user cancels changes
