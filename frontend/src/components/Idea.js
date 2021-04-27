@@ -2,11 +2,15 @@ import React from 'react'
 import { Card, Button, ButtonGroup, Image } from 'react-bootstrap'
 import upvoteImage from '../images/upvote.png'
 import downvoteImage from '../images/downvote.png'
+import { Link } from 'react-router-dom'
 
 const Idea = ({ idea }) => {
   const voteStyle = {
     width: '30px',
     height: '30px',
+  }
+  const authorStyle = {
+    color: '#2b7a98',
   }
 
   return (
@@ -26,7 +30,7 @@ const Idea = ({ idea }) => {
         </ButtonGroup>
       </div>
 
-      <Card border='primary' style={{ width: '100%' }}>
+      <Card border='info' style={{ width: '100%' }}>
         {/* =============TITLE AND DATE============ */}
         <Card.Header>
           <div className='d-flex align-items-center justify-content-between'>
@@ -39,11 +43,14 @@ const Idea = ({ idea }) => {
           <Card.Text>{idea.problemStatement.domain}</Card.Text>
           <div className='d-flex justify-content-between'>
             <p>
-              <b>Author</b>: {idea.author}
+              <Link to={'/profile/' + idea.user} style={authorStyle}>
+                <b>Author</b>: {idea.author}
+              </Link>
             </p>
           </div>
-
-          <Button variant='primary'>Go to the idea page</Button>
+          <Link to={'/ideapage/' + idea.id}>
+            <Button variant='info'>Go to the idea page</Button>
+          </Link>
         </Card.Body>
       </Card>
     </div>

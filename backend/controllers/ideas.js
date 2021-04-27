@@ -99,6 +99,7 @@ ideasRouter.get('/:id', async (request, response) => {
   }
 })
 
+// This function gets all ideas
 ideasRouter.get('/', async (request, response) => {
   await Idea.find({}).then((ideas) => {
     response.json(ideas)
