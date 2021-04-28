@@ -3,21 +3,36 @@ import { Button, Form, Row, Col } from 'react-bootstrap'
 import profileImage from '../images/DefaultE.jpg'
 import axios from 'axios'
 
-const BioAchieve = (props) => {
-  const [bios, setBios] = useState(props.bios)
-  const [achieve, setAchieve] = useState(props.achieve)
+const BioAchieve = () => {
+  const [bios, setBios] = useState()
+  const [achieve, setAchieve] = useState()
   const [edit, setEdit] = useState(false)
-  const [oldbios, setOldBios] = useState(props.bios)
-  const [oldachieve, setOldAchieve] = useState(props.bios)
-  const [id, setId] = useState(props.id)
-  const [loading, setLoading] = useState(false)
+  const [oldbios, setOldBios] = useState()
+  const [oldachieve, setOldAchieve] = useState()
+  const [id, setId] = useState()
 
   useEffect(() => {
-    setBios(props.bios)
-    setAchieve(props.achieve)
-    setOldBios(props.bios)
-    setOldAchieve(props.achieve)
-    setId(props.id)
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      console.log('front/component/HomePage.js: logged in user found', user)
+
+      const getInfo = { email: user.email }
+
+      axios
+        .post('http://localhost:3001/api/users/getUser', getInfo)
+        .then((request) => {
+          console.log(request.data)
+
+          // For Bios_Achieve
+          setBios(request.data.biography)
+          setAchieve(request.data.achievements)
+          setId(request.data.id)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
   }, [])
 
   // updates on input
@@ -47,14 +62,10 @@ const BioAchieve = (props) => {
       achievements: achieve,
     }
 
-    setLoading(true)
-
     axios
       .post('http://localhost:3001/api/users/updateBios_Achieve', updateValues)
       .then((request) => {
         console.log(request)
-
-        setLoading(false)
       })
 
     // window.location.reload()
@@ -92,10 +103,6 @@ const BioAchieve = (props) => {
   const clip = {
     position: 'absolute',
     clipPath: 'circle(50%)',
-  }
-
-  if (loading) {
-    return <div>Loading...</div>
   }
 
   //For Bios and Achievement access

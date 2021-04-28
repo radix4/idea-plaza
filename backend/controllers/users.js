@@ -192,4 +192,25 @@ usersRouter.post('/updateBios_Achieve', async (request, response) => {
   console.log('Updated users Biography and Achievement')
 })
 
+usersRouter.post('/updatePassword', async (request, response) => {
+  const body = request.body
+
+  const find = { _id: body._id }
+
+  const update = { password: body.password }
+
+  const doc = await User.findOneAndUpdate(find, update, (error, data) => {
+    if (error) {
+      // prints error
+      console.log(error)
+    } else {
+      // prints outcome
+      console.log(data)
+      response.json(data)
+    }
+  })
+
+  console.log('Updated Password')
+})
+
 module.exports = usersRouter

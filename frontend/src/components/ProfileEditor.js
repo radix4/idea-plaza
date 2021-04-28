@@ -3,49 +3,10 @@ import { Button, Container } from 'react-bootstrap'
 import BioAchieve from './BioAchieve'
 import ContactInfo from './ContactInfo'
 import MyNavbar from './MyNavbar'
-import axios from 'axios'
 import { useHistory } from 'react-router'
 
 const ProfileEditor = () => {
-  const [bios, setBios] = useState()
-  const [achieve, setAchieve] = useState()
-  const [page, setPage] = useState()
-  const [id, setId] = useState()
-  const [password, setPassword] = useState()
-  const [first, setFirst] = useState()
-  const [last, setLast] = useState()
-  const [load, setLoad] = useState(true)
-
-  /* This function checks if the user is already logged in. */
-  useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      console.log('front/component/HomePage.js: logged in user found', user)
-
-      const getInfo = { email: user.email }
-
-      axios
-        .post('http://localhost:3001/api/users/getUser', getInfo)
-        .then((request) => {
-          console.log(request.data)
-
-          // For Bios_Achieve
-          setBios(request.data.biography)
-          setAchieve(request.data.achievements)
-          setId(request.data.id)
-
-          // ContactInfo
-          setPassword(request.data.password)
-          setFirst(request.data.first)
-          setLast(request.data.last)
-          setLoad(false)
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
-  }, [])
+  const [page, setPage] = useState(<BioAchieve />)
 
   // Redirect
   let history = useHistory()
@@ -66,7 +27,7 @@ const ProfileEditor = () => {
   }
 
   const goBioAchieve = () => {
-    setPage(<BioAchieve bios={bios} achieve={achieve} id={id} />)
+    setPage(<BioAchieve />)
   }
 
   const goContactInfo = () => {
