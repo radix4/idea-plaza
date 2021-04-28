@@ -10,18 +10,15 @@ const BioAchieve = (props) => {
   const [oldbios, setOldBios] = useState(props.bios)
   const [oldachieve, setOldAchieve] = useState(props.bios)
   const [id, setId] = useState(props.id)
-  const [update, setUpdate] = useState(true)
+  const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (update) {
-      setBios(props.bios)
-      setAchieve(props.achieve)
-      setOldBios(props.bios)
-      setOldAchieve(props.achieve)
-      setId(props.id)
-      setUpdate(false)
-    }
-  }, [props.bios, props.achieve, props.id, oldbios, oldachieve, id])
+    setBios(props.bios)
+    setAchieve(props.achieve)
+    setOldBios(props.bios)
+    setOldAchieve(props.achieve)
+    setId(props.id)
+  }, [])
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -37,11 +34,12 @@ const BioAchieve = (props) => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
     console.log('Id: ' + id)
-    setEdit(false)
 
+    setEdit(false)
     //setting new values as old values
-    setOldAchieve(bios)
-    setOldBios(achieve)
+    setOldAchieve(achieve)
+    setOldBios(bios)
+
     // use axios to send values to the server
     const updateValues = {
       _id: id,
@@ -49,16 +47,14 @@ const BioAchieve = (props) => {
       achievements: achieve,
     }
 
+    setLoading(true)
+
     axios
       .post('http://localhost:3001/api/users/updateBios_Achieve', updateValues)
       .then((request) => {
         console.log(request)
 
-        setBios(request.data.biography)
-        setAchieve(request.data.achievements)
-      })
-      .catch((err) => {
-        console.log(err)
+        setLoading(false)
       })
 
     // window.location.reload()
@@ -96,6 +92,10 @@ const BioAchieve = (props) => {
   const clip = {
     position: 'absolute',
     clipPath: 'circle(50%)',
+  }
+
+  if (loading) {
+    return <div>Loading...</div>
   }
 
   //For Bios and Achievement access

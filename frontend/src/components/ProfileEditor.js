@@ -14,9 +14,9 @@ const ProfileEditor = () => {
   const [password, setPassword] = useState()
   const [first, setFirst] = useState()
   const [last, setLast] = useState()
+  const [load, setLoad] = useState(true)
 
   /* This function checks if the user is already logged in. */
-  // Starts this on Page Boots
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
@@ -29,22 +29,23 @@ const ProfileEditor = () => {
         .post('http://localhost:3001/api/users/getUser', getInfo)
         .then((request) => {
           console.log(request.data)
+
           // For Bios_Achieve
           setBios(request.data.biography)
           setAchieve(request.data.achievements)
           setId(request.data.id)
+
           // ContactInfo
           setPassword(request.data.password)
           setFirst(request.data.first)
           setLast(request.data.last)
-          // SetPage
-          setPage(<BioAchieve bios={bios} achieve={achieve} id={id} />)
+          setLoad(false)
         })
         .catch((err) => {
           console.log(err)
         })
     }
-  }, [bios, achieve, id])
+  }, [])
 
   // Redirect
   let history = useHistory()
