@@ -1,20 +1,39 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Form, Row, Col } from 'react-bootstrap'
 import profileImage from '../images/DefaultE.jpg'
+import axios from 'axios'
 
-const BioAchieve = (props) => {
-  const [bios, setBios] = useState(props.bios)
-  const [achieve, setAchieve] = useState(props.achieve)
+const BioAchieve = () => {
+  const [bios, setBios] = useState()
+  const [achieve, setAchieve] = useState()
   const [edit, setEdit] = useState(false)
-  const [oldbios, setOldBios] = useState(props.bios)
-  const [oldachieve, setOldAchieve] = useState(props.bios)
+  const [oldbios, setOldBios] = useState()
+  const [oldachieve, setOldAchieve] = useState()
+  const [id, setId] = useState()
 
   useEffect(() => {
-    setBios(props.bios)
-    setAchieve(props.achieve)
-    setOldBios(props.bios)
-    setOldAchieve(props.achieve)
-  }, [props.bios, props.achieve, oldbios, oldachieve])
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      console.log('front/component/HomePage.js: logged in user found', user)
+
+      const getInfo = { email: user.email }
+
+      axios
+        .post('http://localhost:3001/api/users/getUser', getInfo)
+        .then((request) => {
+          console.log(request.data)
+
+          // For Bios_Achieve
+          setBios(request.data.biography)
+          setAchieve(request.data.achievements)
+          setId(request.data.id)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    }
+  }, [])
 
   // updates on input
   const handleChangeB = ({ target }) => {
@@ -29,12 +48,27 @@ const BioAchieve = (props) => {
   const handleSubmit = () => {
     console.log('Bios : ' + bios)
     console.log('Achievements : ' + achieve)
+    console.log('Id: ' + id)
+
     setEdit(false)
     //setting new values as old values
-    setOldAchieve(bios)
-    setOldBios(achieve)
+    setOldAchieve(achieve)
+    setOldBios(bios)
 
     // use axios to send values to the server
+    const updateValues = {
+      _id: id,
+      biography: bios,
+      achievements: achieve,
+    }
+
+    axios
+      .post('http://localhost:3001/api/users/updateBios_Achieve', updateValues)
+      .then((request) => {
+        console.log(request)
+      })
+
+    // window.location.reload()
   }
 
   //Resets values when user cancels changes
