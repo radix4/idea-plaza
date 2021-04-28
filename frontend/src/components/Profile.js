@@ -10,9 +10,12 @@ const Profile = () => {
   const [bios, setBios] = useState()
   const [achieve, setAchieve] = useState()
   const [user, setUser] = useState()
+
   // First and Last Name
   const [first, setFirst] = useState()
   const [last, setLast] = useState()
+
+  const [loading, setLoading] = useState(true)
 
   // Redirect
   let history = useHistory()
@@ -36,6 +39,8 @@ const Profile = () => {
 
           setBios(request.data.biography)
           setAchieve(request.data.achievements)
+
+          setLoading(false)
         })
         .catch((err) => {
           console.log(err)
@@ -50,8 +55,8 @@ const Profile = () => {
     position: 'absolute',
 
     top: '60%',
-    left: '25%',
-    width: '400px',
+    left: '20%',
+    width: '250px',
 
     transform: 'translate(-50%, -50%)',
   }
@@ -87,6 +92,10 @@ const Profile = () => {
 
   const goProfileEdit = () => {
     history.push('/ProfileEditor')
+  }
+
+  if (loading) {
+    return <div>Loading...</div>
   }
 
   return (
