@@ -65,7 +65,7 @@ const Profile = () => {
   const cardPlacement = {
     position: 'absolute',
 
-    top: '50%',
+    top: '35%',
     left: '30%',
     width: '700px',
   }
