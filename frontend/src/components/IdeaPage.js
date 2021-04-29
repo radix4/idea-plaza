@@ -67,8 +67,6 @@ const IdeaPage = () => {
 	const [visible, setVisible] = useState(true)
 	const [ratingErrorMessage, setRatingErrorMessage] = useState(null)
 	const [feedbackErrorMessage, setFeedbackErrorMessage] = useState(null)
-	//const [questions, setQuestions] = useState('')
-	// const [replies, setReplies] = useState('')
 
 	// useEffect() is similar to componentDidMount()
 	useEffect(() => {
@@ -192,18 +190,12 @@ const IdeaPage = () => {
 		}
 	}
 
-	const commentAreaStyle = {
-		//display: visible ? '' : 'none',
-	}
-
 	const editButtonStyle = {
-		//display: isAuthor ? '' : 'none',
 		float: 'right',
 		fontSize: 16,
 	}
 
 	const deleteButtonStyle = {
-		//display: isAuthor ? '' : 'none',
 		float: 'right',
 		fontSize: 16,
 	}
@@ -317,7 +309,6 @@ const IdeaPage = () => {
 				<Col md={8}>
 					{/* =================IDEA================ */}
 					<Card>
-						{/*<Card.Header as='h2'>{ideaInfo.title}</Card.Header> */}
 						<Card.Header>
 							<div className='d-flex align-items-center justify-content-between'>
 								<h5>{ideaInfo.title}</h5>
@@ -414,10 +405,7 @@ const IdeaPage = () => {
 					<Card>
 						<Card.Header> Questions</Card.Header>
 						<Card.Body>
-							<Form
-								id='question'
-								style={commentAreaStyle}
-								onSubmit={(e) => addComment(e, 'question')}>
+							<Form id='question' onSubmit={(e) => addComment(e, 'question')}>
 								<Form.Group as={Row} controlId='content' onChange={handleContentChange}>
 									<Col md={9}>
 										<Form.Control type='text' placeholder='Content...' />
@@ -456,7 +444,6 @@ const IdeaPage = () => {
 												<td width='10%' style={{ paddingLeft: '40px' }}>
 													<Form
 														id='reply-question'
-														style={commentAreaStyle}
 														onSubmit={(e) => addReply(e, question.id)}>
 														<Form.Group
 															as={Row}
@@ -487,10 +474,7 @@ const IdeaPage = () => {
 					<Card>
 						<Card.Header> Criticisms</Card.Header>
 						<Card.Body>
-							<Form
-								id='criticism'
-								style={commentAreaStyle}
-								onSubmit={(e) => addComment(e, 'criticism')}>
+							<Form id='criticism' onSubmit={(e) => addComment(e, 'criticism')}>
 								<Form.Group as={Row} controlId='content' onChange={handleContentChange}>
 									<Col md={9}>
 										<Form.Control type='text' placeholder='Content...' />
@@ -529,7 +513,6 @@ const IdeaPage = () => {
 												<td style={{ paddingLeft: '40px' }}>
 													<Form
 														id='reply-question'
-														style={commentAreaStyle}
 														onSubmit={(e) => addReply(e, criticism.id)}>
 														<Form.Group
 															as={Row}
