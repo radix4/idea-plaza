@@ -27,6 +27,7 @@ const HomePage = () => {
   const [downVote, setDownVote] = useState(0)
   const [questions, setQuestions] = useState([])
   const [criticisms, setCriticisms] = useState([])
+  const [visible, setVisible] = useState(false)
 
   /* All state on change handlers */
   const handleTitleOnChange = (event) => setTitle(event.target.value)
@@ -43,6 +44,10 @@ const HomePage = () => {
     setSearch(event.target.value)
   }
 
+  const createIdeaFormStyle = {
+    display: visible ? '' : 'none',
+  }
+
   /* This function checks if the user is already logged in. */
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
@@ -50,6 +55,7 @@ const HomePage = () => {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
       setAuthor(`${user.firstName} ${user.lastName}`)
+      setVisible(true)
       console.log('front/component/HomePage.js: logged in user found', user)
 
       /* get user's ID */
@@ -189,10 +195,12 @@ const HomePage = () => {
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 ml-5 pr-5 mr-5 w-75'>
           {/* ============= CREATE NEW IDEA ============= */}
+
           <Form
             id='create-idea-form'
             className='border mt-4 p-3 w-100 border-info'
-            onSubmit={handleCreateIdea}>
+            onSubmit={handleCreateIdea}
+            style={createIdeaFormStyle}>
             {/* ===== TITLE ===== */}
             <Notification message={errorMessage} />
             <Form.Group controlId='title'>
