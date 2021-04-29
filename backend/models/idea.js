@@ -11,54 +11,58 @@ const mongoose = require('mongoose')
  * @user idea belong to an user
  *  */
 const ideaSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
-  },
-  problemStatement: {
-    domain: {
-      type: String,
-      required: true,
-    },
-    stateOfTheArt: {
-      type: String,
-      required: true,
-    },
-    solution: {
-      type: String,
-      required: true,
-    },
-  },
-  author: {
-    type: String,
-    required: true,
-  },
-  upVote: {
-    type: Number,
-    required: true,
-  },
-  downVote: {
-    type: Number,
-    required: true,
-  },
-  questions: [
-    {
-      type: String,
-      ref: 'Comment',
-    },
-  ],
-  criticisms: [
-    {
-      type: String,
-      ref: 'Comment',
-    },
-  ],
-  date: Date,
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true,
-  },
+	title: {
+		type: String,
+		required: true,
+	},
+	problemStatement: {
+		domain: {
+			type: String,
+			required: true,
+		},
+		stateOfTheArt: {
+			type: String,
+			required: true,
+		},
+		solution: {
+			type: String,
+			required: true,
+		},
+	},
+	author: {
+		type: String,
+		required: true,
+	},
+	upVote: {
+		type: Number,
+		required: true,
+	},
+	downVote: {
+		type: Number,
+		required: true,
+	},
+	questions: [
+		{
+			type: String,
+			ref: 'Comment',
+		},
+	],
+	criticisms: [
+		{
+			type: String,
+			ref: 'Comment',
+		},
+	],
+	date: Date,
+	category: {
+		type: String,
+		required: true,
+	},
+	user: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: 'User',
+		required: true,
+	},
 })
 
 /* 
@@ -67,11 +71,11 @@ Mongo's id field looks like a string, but it's an object (watch out!) and
     the toJSON method here takes care of it just in case.
 */
 ideaSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-  },
+	transform: (document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString()
+		delete returnedObject._id
+		delete returnedObject.__v
+	},
 })
 
 module.exports = mongoose.model('Idea', ideaSchema)
