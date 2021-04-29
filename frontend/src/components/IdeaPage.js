@@ -55,6 +55,7 @@ const IdeaPage = () => {
 		criticisms: [],
 		date: 'loading...',
 		user: 'loading',
+		category: 'loading...',
 	})
 	const [user, setUser] = useState()
 	const [isAuthor, setIsAuthor] = useState()
@@ -320,6 +321,7 @@ const IdeaPage = () => {
 						<Card.Header>
 							<div className='d-flex align-items-center justify-content-between'>
 								<h5>{ideaInfo.title}</h5>
+								<p>Category: {ideaInfo.category}</p>
 								<p>Created on: {ideaInfo.date.substring(0, 10)}</p>
 							</div>
 						</Card.Header>
