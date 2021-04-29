@@ -1,20 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Container } from 'react-bootstrap'
-import AllProjects from './AllProjects'
+import { useParams } from 'react-router-dom'
+import Idea from './Idea'
 import profileImage from '../images/DefaultE.jpg'
 import MyNavbar from './MyNavbar'
 import axios from 'axios'
 import { useHistory } from 'react-router'
+import ideaService from '../services/ideas'
 
 const Profile = () => {
+  const { ideaID } = useParams()
+
+  //Display data from user
   const [bios, setBios] = useState()
   const [achieve, setAchieve] = useState()
   const [user, setUser] = useState()
 
-  // First and Last Name
+  //Display Idea
+  const [ideas, setIdeas] = useState([])
+
+  // Data From NavBar
   const [first, setFirst] = useState()
   const [last, setLast] = useState()
+  const [id, setId] = useState()
 
+  //load page
   const [loading, setLoading] = useState(true)
 
   // Redirect
@@ -37,6 +47,8 @@ const Profile = () => {
           setFirst(request.data.firstName)
           setLast(request.data.lastName)
 
+          setId(request.data.id)
+
           setBios(request.data.biography)
           setAchieve(request.data.achievements)
 
@@ -46,6 +58,14 @@ const Profile = () => {
           console.log(err)
         })
     }
+  }, [])
+
+  /* This function gets all ideas */
+  useEffect(() => {
+    ideaService.getAll().then((ideas) => {
+      setIdeas(ideas)
+      console.log('ideas: ', ideas)
+    })
   }, [])
 
   // Styles ----------
@@ -66,7 +86,7 @@ const Profile = () => {
     position: 'absolute',
 
     top: '15%',
-    left: '30%',
+    left: '40%',
     width: '700px',
   }
 
@@ -134,7 +154,9 @@ const Profile = () => {
       </div>
       {/* displays list of projects */}
       <div style={cardPlacement}>
-        <AllProjects />
+        {ideas.map((idea, i) => (
+          <Idea key={i} idea={idea} />
+        ))}
       </div>
     </Container>
   )

@@ -111,7 +111,7 @@ const ContactInfo = () => {
   const inputs = {
     position: 'absolute',
     top: '40%',
-    left: '50%',
+    left: '60%',
     width: '800px',
 
     transform: 'translate(-50%, -50%)',
