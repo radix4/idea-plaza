@@ -1,18 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import { Button, Container } from 'react-bootstrap'
-import AllProjects from './AllProjects'
+import { useParams } from 'react-router-dom'
+import Idea from './Idea'
 import profileImage from '../images/DefaultE.jpg'
 import MyNavbar from './MyNavbar'
 import axios from 'axios'
 import { useHistory } from 'react-router'
+import ideaService from '../services/ideas'
+import userService from '../services/users'
 
 const Profile = () => {
+  const { ideaID } = useParams()
+
+  //Display data from user
   const [bios, setBios] = useState()
   const [achieve, setAchieve] = useState()
-  const [user, setUser] = useState()
-  // First and Last Name
-  const [first, setFirst] = useState()
-  const [last, setLast] = useState()
+
+  //Display Idea
+  const [ideas, setIdeas] = useState([])
+
+  // Data From NavBar
+  const [name, setName] = useState()
+  const [id, setId] = useState()
+
+  //load page
+  const [loading, setLoading] = useState(true)
 
   // Redirect
   let history = useHistory()
@@ -22,24 +34,23 @@ const Profile = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      console.log('front/component/HomePage.js: logged in user found', user)
+      // console.log('front/component/HomePage.js: logged in user found', user)
 
       const getInfo = { email: user.email }
 
-      axios
-        .post('http://localhost:3001/api/users/getUser', getInfo)
-        .then((request) => {
-          console.log(request)
-          setFirst(request.data.firstName)
-          setLast(request.data.lastName)
+      userService.getData(getInfo).then((res) => {
+        setName(res.firstName + ' ' + res.lastName)
+        setId(res.id)
+        setBios(res.biography)
+        setAchieve(res.achievements)
+        setLoading(false)
 
-          setBios(request.data.biography)
-          setAchieve(request.data.achievements)
+        // Retrieve Ideas created from the user
+        ideaService.getIdeas(res.id).then((response) => {
+          console.log(response)
+          setIdeas(response)
         })
-        .catch((err) => {
-          console.log(err)
-        })
+      })
     }
   }, [])
 
@@ -50,8 +61,8 @@ const Profile = () => {
     position: 'absolute',
 
     top: '60%',
-    left: '25%',
-    width: '400px',
+    left: '20%',
+    width: '250px',
 
     transform: 'translate(-50%, -50%)',
   }
@@ -60,8 +71,8 @@ const Profile = () => {
   const cardPlacement = {
     position: 'absolute',
 
-    top: '50%',
-    left: '30%',
+    top: '15%',
+    left: '40%',
     width: '700px',
   }
 
@@ -89,6 +100,10 @@ const Profile = () => {
     history.push('/ProfileEditor')
   }
 
+  if (loading) {
+    return <div></div>
+  }
+
   return (
     <Container fluid style={scrolling}>
       {/* Navbar*/}
@@ -107,9 +122,7 @@ const Profile = () => {
 
       {/* Input fields */}
       <div style={display}>
-        <div style={{ fontSize: '40px' }}>
-          {first} {last}
-        </div>
+        <div style={{ fontSize: '40px' }}>{name}</div>
 
         <br />
         <div style={{ fontWeight: 'bold' }}>Bios</div>
@@ -125,7 +138,9 @@ const Profile = () => {
       </div>
       {/* displays list of projects */}
       <div style={cardPlacement}>
-        <AllProjects />
+        {ideas.map((idea, i) => (
+          <Idea key={i} idea={idea} />
+        ))}
       </div>
     </Container>
   )

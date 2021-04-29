@@ -87,7 +87,7 @@ const BioAchieve = () => {
   const inputs = {
     position: 'absolute',
     top: '60%',
-    left: '50%',
+    left: '60%',
     width: '800px',
 
     transform: 'translate(-50%, -50%)',
@@ -97,7 +97,7 @@ const BioAchieve = () => {
   const container = {
     position: 'fixed',
     top: '10%',
-    left: '40%',
+    left: '50%',
   }
   // edits profile picture
   const clip = {

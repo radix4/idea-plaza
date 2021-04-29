@@ -14,5 +14,15 @@ const getAll = async () => {
   const request = await axios.get(baseUrl)
   return request.data
 }
+// Get user's Idea data by id
+const getIdeas = async (id) => {
+  console.log(id)
 
-export default { create, getAll }
+  const getId = {
+    _id: id,
+  }
+  const response = await axios.post(`${baseUrl}/getUserIdea`, getId)
+  return response.data
+}
+
+export default { create, getAll, getIdeas }
