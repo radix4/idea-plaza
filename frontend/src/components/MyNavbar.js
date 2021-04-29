@@ -113,24 +113,9 @@ const MyNavbar = ({
             <NavDropdown.Item onClick={handleSortMostPopularity}>
               Popularity
             </NavDropdown.Item>
-            <NavDropdown.Item onClick={handleSortMostPopularity}>
-              Category
-            </NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Nav className='mr-auto'>
-          <NavDropdown title='Sort by' style={navDropdownStyle}>
-            <NavDropdown.Item onClick={handleSortMostRecent}>
-              Most Recent
-            </NavDropdown.Item>
-            <NavDropdown.Item onClick={handleSortMostPopularity}>
-              Popularity
-            </NavDropdown.Item>
-            <NavDropdown.Item onClick={handleSortMostPopularity}>
-              Category
-            </NavDropdown.Item>
-          </NavDropdown>
-        </Nav>
+
         {/* ============= LOGIN ============= */}
         <Form className='mr-4'>
           <Link to='/Login'>
