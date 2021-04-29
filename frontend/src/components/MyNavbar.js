@@ -95,7 +95,7 @@ const MyNavbar = ({
         <Form inline className='mr-3' onSubmit={handleSearchSubmit}>
           <FormControl
             type='text'
-            placeholder='Search'
+            placeholder='Search by title'
             className='mr-sm-4'
             style={searchFieldStyle}
             onChange={onChangeSearch}
@@ -112,6 +112,22 @@ const MyNavbar = ({
             </NavDropdown.Item>
             <NavDropdown.Item onClick={handleSortMostPopularity}>
               Popularity
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={handleSortMostPopularity}>
+              Category
+            </NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+        <Nav className='mr-auto'>
+          <NavDropdown title='Sort by' style={navDropdownStyle}>
+            <NavDropdown.Item onClick={handleSortMostRecent}>
+              Most Recent
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={handleSortMostPopularity}>
+              Popularity
+            </NavDropdown.Item>
+            <NavDropdown.Item onClick={handleSortMostPopularity}>
+              Category
             </NavDropdown.Item>
           </NavDropdown>
         </Nav>
