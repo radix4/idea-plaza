@@ -7,6 +7,7 @@ import MyNavbar from './MyNavbar'
 import axios from 'axios'
 import { useHistory } from 'react-router'
 import ideaService from '../services/ideas'
+import userService from '../services/users'
 
 const Profile = () => {
   const { ideaID } = useParams()
@@ -14,14 +15,12 @@ const Profile = () => {
   //Display data from user
   const [bios, setBios] = useState()
   const [achieve, setAchieve] = useState()
-  const [user, setUser] = useState()
 
   //Display Idea
   const [ideas, setIdeas] = useState([])
 
   // Data From NavBar
-  const [first, setFirst] = useState()
-  const [last, setLast] = useState()
+  const [name, setName] = useState()
   const [id, setId] = useState()
 
   //load page
@@ -35,37 +34,24 @@ const Profile = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
-      console.log('front/component/HomePage.js: logged in user found', user)
+      // console.log('front/component/HomePage.js: logged in user found', user)
 
       const getInfo = { email: user.email }
 
-      axios
-        .post('http://localhost:3001/api/users/getUser', getInfo)
-        .then((request) => {
-          console.log(request)
-          setFirst(request.data.firstName)
-          setLast(request.data.lastName)
+      userService.getData(getInfo).then((res) => {
+        setName(res.firstName + ' ' + res.lastName)
+        setId(res.id)
+        setBios(res.biography)
+        setAchieve(res.achievements)
+        setLoading(false)
 
-          setId(request.data.id)
-
-          setBios(request.data.biography)
-          setAchieve(request.data.achievements)
-
-          setLoading(false)
+        // Retrieve Ideas created from the user
+        ideaService.getIdeas(res.id).then((response) => {
+          console.log(response)
+          setIdeas(response)
         })
-        .catch((err) => {
-          console.log(err)
-        })
+      })
     }
-  }, [])
-
-  /* This function gets all ideas */
-  useEffect(() => {
-    ideaService.getAll().then((ideas) => {
-      setIdeas(ideas)
-      console.log('ideas: ', ideas)
-    })
   }, [])
 
   // Styles ----------
@@ -115,7 +101,7 @@ const Profile = () => {
   }
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div></div>
   }
 
   return (
@@ -136,9 +122,7 @@ const Profile = () => {
 
       {/* Input fields */}
       <div style={display}>
-        <div style={{ fontSize: '40px' }}>
-          {first} {last}
-        </div>
+        <div style={{ fontSize: '40px' }}>{name}</div>
 
         <br />
         <div style={{ fontWeight: 'bold' }}>Bios</div>

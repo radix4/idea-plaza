@@ -15,4 +15,11 @@ const create = async (newUserObject) => {
   return response.data
 }
 
-export default { login, create }
+// get user data based on email
+const getData = async (id) => {
+  const response = await axios.post(`${baseUrl}/getUser`, id)
+
+  return response.data
+}
+
+export default { login, create, getData }

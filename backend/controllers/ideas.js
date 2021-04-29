@@ -106,6 +106,20 @@ ideasRouter.get('/', async (request, response) => {
   })
 })
 
+// This function gets idea based on user's id
+ideasRouter.post('/getUserIdea', async (request, response) => {
+  const findIdea = {
+    user: request.body._id,
+  }
+  await Idea.find(findIdea)
+    .then((request) => {
+      response.json(request)
+    })
+    .catch((err) => {
+      response.json('Something Went Wrong')
+    })
+})
+
 // This function adds an upvote/downvote rating to an idea
 ideasRouter.post('/:id/rating', async (request, response) => {
   // type should be upVote or downVote
