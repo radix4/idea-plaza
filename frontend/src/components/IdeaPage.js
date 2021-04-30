@@ -17,6 +17,7 @@ import downvoteActiveImage from '../images/downvote_active.png'
 import commentService from '../services/comments'
 import repliesService from '../services/replies'
 import Notification from './Notification'
+import profileImage from '../images/DefaultE.jpg'
 
 import axios from 'axios'
 
@@ -194,6 +195,11 @@ const IdeaPage = () => {
       }
     } else {
     }
+  }
+
+  const clip = {
+    position: 'absolute',
+    clipPath: 'circle(50%)',
   }
 
   const editButtonStyle = {
@@ -391,7 +397,14 @@ const IdeaPage = () => {
         </Col>
         {/* =============AUTHOR============ */}
         <Col md={2}>
-          <div style={styles.circle} className='mb-3'></div>
+          {/* <div style={styles.circle} className='mb-3'></div> */}
+          <img
+            src={profileImage}
+            alt='Image_file'
+            style={(clip, styles.circle)}
+            width='300px'
+            height='300px'
+          />
           <Card>
             <Card.Header>Author</Card.Header>
             <Card.Body>
