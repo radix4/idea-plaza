@@ -21,7 +21,7 @@ const App = () => {
           <Route path='/Registration' component={RegistrationPage} />
           <Route path='/IdeaPage/:ideaID' component={IdeaPage} />
           <Route path='/IdeaEditor/:ideaID' component={IdeaEditor} />
-          <Route path='/Profile' component={Profile} />
+          <Route path='/Profile/:ideaID' component={Profile} />
           <Route path='/ProfileEditor' component={ProfileEditor} />
           {/* Error Case */}
           {/* <Route component={NoMatch} /> */}

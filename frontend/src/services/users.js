@@ -15,9 +15,9 @@ const create = async (newUserObject) => {
   return response.data
 }
 
-// get user data based on email
+// get user data based on id
 const getData = async (id) => {
-  const response = await axios.post(`${baseUrl}/getUser`, id)
+  const response = await axios.post(`${baseUrl}/getUserID`, id)
 
   return response.data
 }
