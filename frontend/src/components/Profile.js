@@ -41,7 +41,8 @@ const Profile = () => {
         setEditButton(<Button onClick={goProfileEdit}>Edit Profile</Button>)
       }
 
-      const getInfo = { id: user.id }
+      //User From Navbar
+      const getInfo = { id: ideaID }
 
       userService.getData(getInfo).then((res) => {
         setName(res.firstName + ' ' + res.lastName)
