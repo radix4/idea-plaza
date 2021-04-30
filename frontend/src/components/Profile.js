@@ -11,15 +11,13 @@ import userService from '../services/users'
 const Profile = () => {
   const { ideaID } = useParams()
 
-  //Display data from user
-  const [bios, setBios] = useState()
-  const [achieve, setAchieve] = useState()
-
   //Display Idea
   const [ideas, setIdeas] = useState([])
 
-  // Data From NavBar
+  // Data From Params
   const [name, setName] = useState()
+  const [bios, setBios] = useState()
+  const [achieve, setAchieve] = useState()
 
   // Check User is the same as NavBar User (so they can edit their profile)
   const [editbutton, setEditButton] = useState()
@@ -32,33 +30,30 @@ const Profile = () => {
 
   /* This function checks if the user is already logged in. */
   useEffect(() => {
+    //User ID From Params
+    const getInfo = { id: ideaID }
+
+    userService.getData(getInfo).then((res) => {
+      setName(res.firstName + ' ' + res.lastName)
+      setBios(res.biography)
+      setAchieve(res.achievements)
+      setLoading(false)
+    })
+
+    // Retrieve Ideas created from the user
+    ideaService.getIdeas(ideaID).then((response) => {
+      console.log(response)
+      setIdeas(response)
+    })
+
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       // console.log('front/component/HomePage.js: logged in user found', user)
-
+      // If the id from params is the same as the user in the NavBar, They should be able to edit their profile
       if (ideaID === user.id) {
         setEditButton(<Button onClick={goProfileEdit}>Edit Profile</Button>)
       }
-
-      //User From Navbar
-      const getInfo = { id: ideaID }
-
-      userService.getData(getInfo).then((res) => {
-        setName(res.firstName + ' ' + res.lastName)
-        setBios(res.biography)
-        setAchieve(res.achievements)
-        setLoading(false)
-      })
-
-      // Retrieve Ideas created from the user
-      ideaService.getIdeas(ideaID).then((response) => {
-        console.log(response)
-        setIdeas(response)
-      })
-    } else {
-      console.log('User Logged out, Redirect to HomePage')
-      history.push('/')
     }
   }, [])
 

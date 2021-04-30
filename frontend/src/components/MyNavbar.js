@@ -8,6 +8,7 @@ import {
   Button,
 } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useHistory } from 'react-router'
 import logoImage from '../images/logo_white.png'
 
 const MyNavbar = ({
@@ -23,6 +24,8 @@ const MyNavbar = ({
   const [visible, setVisible] = useState(true)
 
   const linkAccount = `/Profile/${id}`
+
+  let history = useHistory()
 
   const navbarStyle = {
     backgroundColor: '#2b7a98',
@@ -76,6 +79,7 @@ const MyNavbar = ({
     window.localStorage.removeItem('loggedInUser')
     setUser(null)
     setVisible(false)
+    history.push('/')
   }
 
   return (
