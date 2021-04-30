@@ -21,7 +21,9 @@ const Profile = () => {
 
   // Data From NavBar
   const [name, setName] = useState()
-  const [id, setId] = useState()
+
+  // Check User is the same as NavBar User (so they can edit their profile)
+  const [editbutton, setEditButton] = useState()
 
   //load page
   const [loading, setLoading] = useState(true)
@@ -36,21 +38,27 @@ const Profile = () => {
       const user = JSON.parse(loggedUserJSON)
       // console.log('front/component/HomePage.js: logged in user found', user)
 
-      const getInfo = { email: user.email }
+      if (ideaID === user.id) {
+        setEditButton(<Button onClick={goProfileEdit}>Edit Profile</Button>)
+      }
+
+      const getInfo = { id: user.id }
 
       userService.getData(getInfo).then((res) => {
         setName(res.firstName + ' ' + res.lastName)
-        setId(res.id)
         setBios(res.biography)
         setAchieve(res.achievements)
         setLoading(false)
-
-        // Retrieve Ideas created from the user
-        ideaService.getIdeas(res.id).then((response) => {
-          console.log(response)
-          setIdeas(response)
-        })
       })
+
+      // Retrieve Ideas created from the user
+      ideaService.getIdeas(ideaID).then((response) => {
+        console.log(response)
+        setIdeas(response)
+      })
+    } else {
+      console.log('User Logged out, Redirect to HomePage')
+      history.push('/')
     }
   }, [])
 
@@ -132,9 +140,7 @@ const Profile = () => {
         <div style={{ fontWeight: 'bold' }}>Achievements</div>
         <div>{achieve}</div>
         <br />
-        <div>
-          <Button onClick={goProfileEdit}>Edit Profile</Button>
-        </div>
+        <div>{editbutton}</div>
       </div>
       {/* displays list of projects */}
       <div style={cardPlacement}>

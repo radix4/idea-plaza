@@ -19,7 +19,10 @@ const MyNavbar = ({
   const [user, setUser] = useState()
   const [firstName, setFirstName] = useState()
   const [lastName, setLastName] = useState()
+  const [id, setId] = useState()
   const [visible, setVisible] = useState(true)
+
+  const linkAccount = `/Profile/${id}`
 
   const navbarStyle = {
     backgroundColor: '#2b7a98',
@@ -62,6 +65,7 @@ const MyNavbar = ({
       setUser(user)
       setFirstName(user.firstName)
       setLastName(user.lastName)
+      setId(user.id)
       setVisible(false)
       console.log('front/component/HomePage.js: visible', visible)
       console.log('front/component/HomePage.js: logged in user found', user)
@@ -146,7 +150,7 @@ const MyNavbar = ({
               {firstName} {lastName}
             </b>{' '}
           </>{' '}
-          <Link to='/Profile'>
+          <Link to={linkAccount}>
             <Button
               variant='info'
               className='rounded-pill ml-4 mr-4'
