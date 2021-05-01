@@ -63,15 +63,15 @@ const Profile = () => {
   const display = {
     position: 'absolute',
 
-    top: '60%',
-    left: '20%',
+    top: '650px',
+    left: '300px',
     width: '250px',
     overflowWrap: 'break-word',
 
     transform: 'translate(-50%, -50%)',
   }
 
-  /* for profile, need fix on card size */
+  /* for profile information */
   const cardPlacement = {
     position: 'absolute',
 
@@ -83,8 +83,8 @@ const Profile = () => {
   /* Location ProfilePic  */
   const container = {
     position: 'absolute',
-    top: '13%',
-    left: '12%',
+    top: '100px',
+    left: '150px',
   }
   // edits profile picture
   const clip = {
