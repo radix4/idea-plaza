@@ -52,7 +52,7 @@ const ProfileEditor = () => {
   return (
     <Container fluid style={scrolling}>
       {/* Navbar*/}
-      <MyNavbar />
+      <MyNavbar onHomePage={false} />
 
       <a style={SelectionPos}>
         <Button onClick={goBioAchieve}>

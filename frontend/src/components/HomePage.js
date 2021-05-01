@@ -191,6 +191,7 @@ const HomePage = () => {
         onChangeSearch={onChangeSearch}
         handleSortMostPopularity={handleSortMostPopularity}
         handleSortMostRecent={handleSortMostRecent}
+        onHomePage={true}
       />
       <div className='d-flex justify-content-between mt-4 pt-4 pl-5 ml-5 pr-4'>
         <div className='p-2 ml-5 pr-5 mr-5 w-75'>

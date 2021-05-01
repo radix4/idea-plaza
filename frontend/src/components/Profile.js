@@ -111,7 +111,7 @@ const Profile = () => {
   return (
     <Container fluid style={scrolling}>
       {/* Navbar*/}
-      <MyNavbar />
+      <MyNavbar onHomePage={false} />
 
       {/* ProfileImage */}
       <div style={container}>

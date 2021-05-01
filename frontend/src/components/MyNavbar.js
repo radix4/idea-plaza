@@ -16,6 +16,7 @@ const MyNavbar = ({
   onChangeSearch,
   handleSortMostPopularity,
   handleSortMostRecent,
+  onHomePage,
 }) => {
   const [user, setUser] = useState()
   const [firstName, setFirstName] = useState()
@@ -33,6 +34,7 @@ const MyNavbar = ({
 
   const searchFieldStyle = {
     width: '350px',
+    display: onHomePage ? '' : 'none',
   }
 
   const loginButtonStyle = {
@@ -58,6 +60,11 @@ const MyNavbar = ({
 
   const navDropdownStyle = {
     color: 'white',
+    display: onHomePage ? '' : 'none',
+  }
+
+  const searchButtonStyle = {
+    display: onHomePage ? '' : 'none',
   }
 
   /* This function checks if the user is already logged in. */
@@ -108,7 +115,11 @@ const MyNavbar = ({
             style={searchFieldStyle}
             onChange={onChangeSearch}
           />
-          <Button variant='info' className='btn-info' type='submit'>
+          <Button
+            variant='info'
+            className='btn-info'
+            type='submit'
+            style={searchButtonStyle}>
             Search
           </Button>
         </Form>
