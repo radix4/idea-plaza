@@ -7,6 +7,17 @@ import { useHistory } from 'react-router'
 
 const ProfileEditor = () => {
   const [page, setPage] = useState(<BioAchieve />)
+  const [id, setID] = useState()
+
+  useEffect(() => {
+    //User ID From Params
+
+    const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setID(user.id)
+    }
+  }, [])
 
   // Redirect
   let history = useHistory()
@@ -35,7 +46,7 @@ const ProfileEditor = () => {
   }
 
   const goProfile = () => {
-    history.push('/Profile')
+    history.push(`/Profile/${id}`)
   }
 
   return (
