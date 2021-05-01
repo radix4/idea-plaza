@@ -33,8 +33,8 @@ const ProfileEditor = () => {
 
   const SelectionPos = {
     position: 'fixed',
-    left: '10%',
-    top: '30%',
+    left: '75px',
+    top: '300px',
   }
 
   const goBioAchieve = () => {

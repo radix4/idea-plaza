@@ -110,11 +110,9 @@ const ContactInfo = () => {
   //Style
   const inputs = {
     position: 'absolute',
-    top: '40%',
-    left: '60%',
+    top: '300px',
+    left: '500px',
     width: '800px',
-
-    transform: 'translate(-50%, -50%)',
   }
 
   //   placeholder to print out project ideas etc.
