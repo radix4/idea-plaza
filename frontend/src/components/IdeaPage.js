@@ -15,6 +15,8 @@ import {
 import MyNavbar from './MyNavbar'
 import upvoteImage from '../images/upvote.png'
 import downvoteImage from '../images/downvote.png'
+import upvoteActiveImage from '../images/upvote_active.png'
+import downvoteActiveImage from '../images/downvote_active.png'
 import commentService from '../services/comments'
 import repliesService from '../services/replies'
 import Notification from './Notification'
@@ -51,8 +53,8 @@ const IdeaPage = () => {
 			solution: '',
 		},
 		author: 'loading...',
-		upVote: undefined,
-		downVote: undefined,
+		upVote: 0,
+		downVote: 0,
 		questions: [],
 		criticisms: [],
 		date: 'loading...',
@@ -69,7 +71,6 @@ const IdeaPage = () => {
 	const [visible, setVisible] = useState(true)
 	const [ratingErrorMessage, setRatingErrorMessage] = useState(null)
 	const [feedbackErrorMessage, setFeedbackErrorMessage] = useState(null)
-	const [vote, setVote] = useState(ideaInfo.upVote - ideaInfo.downVote || 0)
 
 	/* initially idea vote state is neutral */
 
@@ -77,22 +78,23 @@ const IdeaPage = () => {
 	const [upVoted, setUpVoted] = useState(false)
 	const [downVoted, setDownVoted] = useState(false)
 
+	const [vote, setVote] = useState(ideaInfo.upVote - ideaInfo.downVote)
+
 	const upVoteStyle = {
 		width: '30px',
 		height: '30px',
-		filter: upVoted ? 'invert(100%)' : 'none',
 	}
 
 	const downVoteStyle = {
 		width: '30px',
 		height: '30px',
-		filter: downVoted ? 'invert(100%)' : 'none',
 	}
 
 	// useEffect() is similar to componentDidMount()
 	useEffect(() => {
 		async function func() {
 			const loggedUserJSON = window.localStorage.getItem('loggedInUser')
+
 			if (loggedUserJSON) {
 				const user = JSON.parse(loggedUserJSON)
 				console.log('user is ' + loggedUserJSON)
@@ -125,7 +127,10 @@ const IdeaPage = () => {
 					user: authorResult.data.id,
 				})
 				setAuthorBriefBio(authorResult.data.biography.substring(0, 150) + '...')
-				setVote(ideaInfo.upVote - ideaInfo.downVote)
+				console.log(
+					'updating score: ' + (ideaResult.data.upVote - ideaResult.data.downVote)
+				)
+				setVote(ideaResult.data.upVote - ideaResult.data.downVote)
 
 				if (user) {
 					if (authorEmailAddress === user.email) {
@@ -330,6 +335,14 @@ const IdeaPage = () => {
 	}
 
 	const handleUpVote = async () => {
+		if (!visible) {
+			setRatingErrorMessage('Oh no! You must be logged in to vote on ideas.')
+			setTimeout(() => {
+				setRatingErrorMessage(null)
+			}, 5000)
+			return
+		}
+
 		if (!neutral && upVoted) {
 			setRatingErrorMessage('Error! You already up-voted this idea.')
 			setTimeout(() => {
@@ -349,7 +362,6 @@ const IdeaPage = () => {
 				setUpVoted(true)
 				setNeutral(false)
 			}
-
 			setVote(vote + 1)
 		} catch (error) {
 			console.log('upvote error')
@@ -357,6 +369,13 @@ const IdeaPage = () => {
 	}
 
 	const handleDownVote = async () => {
+		if (!visible) {
+			setRatingErrorMessage('Oh no! You must be logged in to vote on ideas.')
+			setTimeout(() => {
+				setRatingErrorMessage(null)
+			}, 5000)
+			return
+		}
 		if (!neutral && downVoted) {
 			setRatingErrorMessage('Error! You already down-voted this idea.')
 			setTimeout(() => {
@@ -376,7 +395,6 @@ const IdeaPage = () => {
 				setDownVoted(true)
 				setNeutral(false)
 			}
-
 			setVote(vote - 1)
 		} catch (error) {
 			console.log('down vote error')
@@ -443,20 +461,28 @@ const IdeaPage = () => {
 					<Card>
 						<Card.Header>Popularity</Card.Header>
 						<Card.Body>
-							<div className='col text-center'>
-								<div className='row mb-1'>
+							<div className='mt-1 mr-1'>
+								{/* =============UPVOTE/DOWNVOTE============ */}
+								<ButtonGroup vertical>
+									{/* === upvote === */}
 									<Button variant='link' onClick={handleUpVote}>
-										<Image style={upVoteStyle} src={upvoteImage}></Image>
+										<Image
+											style={upVoteStyle}
+											src={upVoted ? upvoteActiveImage : upvoteImage}></Image>
 									</Button>
-								</div>
-								<div className='col text-center'>
-									<h5>{vote}</h5>
-								</div>
-								<div className='row mb-1'>
+
+									{/* === vote display === */}
+									<div className='col text-center'>
+										<h5>{vote}</h5>
+									</div>
+
+									{/* === downvote === */}
 									<Button variant='link' onClick={handleDownVote}>
-										<Image style={downVoteStyle} src={downvoteImage}></Image>
+										<Image
+											style={downVoteStyle}
+											src={downVoted ? downvoteActiveImage : downvoteImage}></Image>
 									</Button>
-								</div>
+								</ButtonGroup>
 							</div>
 						</Card.Body>
 					</Card>
