@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Card, Button, ButtonGroup, Image } from 'react-bootstrap'
 import upvoteImage from '../images/upvote.png'
 import downvoteImage from '../images/downvote.png'
+import upvoteActiveImage from '../images/upvote_active.png'
+import downvoteActiveImage from '../images/downvote_active.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Notification from './Notification'
@@ -18,13 +20,11 @@ const Idea = ({ idea }) => {
   const upVoteStyle = {
     width: '30px',
     height: '30px',
-    filter: upVoted ? 'invert(100%)' : 'none',
   }
 
   const downVoteStyle = {
     width: '30px',
     height: '30px',
-    filter: downVoted ? 'invert(100%)' : 'none',
   }
 
   const authorStyle = {
@@ -92,7 +92,9 @@ const Idea = ({ idea }) => {
         <ButtonGroup vertical>
           {/* === upvote === */}
           <Button variant='link' onClick={handleUpVote}>
-            <Image style={upVoteStyle} src={upvoteImage}></Image>
+            <Image
+              style={upVoteStyle}
+              src={upVoted ? upvoteActiveImage : upvoteImage}></Image>
           </Button>
 
           {/* === vote display === */}
@@ -102,7 +104,9 @@ const Idea = ({ idea }) => {
 
           {/* === downvote === */}
           <Button variant='link' onClick={handleDownVote}>
-            <Image style={downVoteStyle} src={downvoteImage}></Image>
+            <Image
+              style={downVoteStyle}
+              src={downVoted ? downvoteActiveImage : downvoteImage}></Image>
           </Button>
         </ButtonGroup>
       </div>

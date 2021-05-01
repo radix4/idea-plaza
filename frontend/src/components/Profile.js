@@ -66,6 +66,7 @@ const Profile = () => {
     top: '60%',
     left: '20%',
     width: '250px',
+    overflowWrap: 'break-word',
 
     transform: 'translate(-50%, -50%)',
   }

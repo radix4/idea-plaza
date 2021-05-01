@@ -120,6 +120,7 @@ const BioAchieve = () => {
         value={bios}
         onChange={handleChangeB}
         rows={3}
+        maxLength='150'
       />
     )
 
@@ -131,6 +132,7 @@ const BioAchieve = () => {
         value={achieve}
         onChange={handleChangeA}
         rows={3}
+        maxLength='150'
       />
     )
 
