@@ -7,11 +7,9 @@ import {
   Container,
   Button,
   Form,
-  Table,
   InputGroup,
 } from 'react-bootstrap'
 import MyNavbar from './MyNavbar'
-import commentService from '../services/comments'
 import axios from 'axios'
 
 const styles = {

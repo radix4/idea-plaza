@@ -1,17 +1,14 @@
-import { Button, Form, Card, Dropdown } from 'react-bootstrap'
+import { Button, Form, Card } from 'react-bootstrap'
 import React, { useState, useEffect } from 'react'
 import Idea from './Idea'
 import MyNavbar from './MyNavbar'
 import axios from 'axios'
 import ideaService from '../services/ideas'
-import userService from '../services/users'
 import Notification from './Notification'
 
 const HomePage = () => {
   /* User state */
-  const [user, setUser] = useState()
   const [userID, setUserID] = useState()
-  const [originalIdeas, setOriginalIdeas] = useState([])
   const [ideas, setIdeas] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
   const [search, setSearch] = useState('')
@@ -23,10 +20,6 @@ const HomePage = () => {
   const [solution, setSolution] = useState('')
   const [category, setCategory] = useState('')
   const [author, setAuthor] = useState('')
-  const [upVote, setUpVote] = useState(0)
-  const [downVote, setDownVote] = useState(0)
-  const [questions, setQuestions] = useState([])
-  const [criticisms, setCriticisms] = useState([])
   const [visible, setVisible] = useState(false)
 
   /* All state on change handlers */
@@ -36,9 +29,7 @@ const HomePage = () => {
     setStateOfTheArt(event.target.value)
   const handleSolutionOnChange = (event) => setSolution(event.target.value)
   const handleCategoryChange = (event) => setCategory(event.target.value)
-  const handleAuthorOnChange = (event) => setAuthor(event.target.value)
-  const handleUpVoteOnChange = (event) => setUpVote(event.target.value)
-  const handleDownVoteOnChange = (event) => setDownVote(event.target.value)
+
   const onChangeSearch = (event) => {
     console.log(event.target.value)
     setSearch(event.target.value)
@@ -53,7 +44,6 @@ const HomePage = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
       setAuthor(`${user.firstName} ${user.lastName}`)
       setVisible(true)
       console.log('front/component/HomePage.js: logged in user found', user)
@@ -76,7 +66,6 @@ const HomePage = () => {
   useEffect(() => {
     ideaService.getAll().then((ideas) => {
       setIdeas(ideas)
-      setOriginalIdeas(ideas)
       console.log('ideas: ', ideas)
     })
   }, [])
@@ -113,8 +102,8 @@ const HomePage = () => {
       const idea = await ideaService.create({
         title,
         problemStatement,
-        upVote,
-        downVote,
+        upVote: 0,
+        downVote: 0,
         author,
         user,
         category,

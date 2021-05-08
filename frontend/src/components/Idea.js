@@ -1,15 +1,12 @@
 import React, { useState } from 'react'
 import { Card, Button, ButtonGroup, Image } from 'react-bootstrap'
-import upvoteImage from '../images/upvote.png'
-import downvoteImage from '../images/downvote.png'
-import upvoteActiveImage from '../images/upvote_active.png'
-import downvoteActiveImage from '../images/downvote_active.png'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Notification from './Notification'
 
 const Idea = ({ idea }) => {
-  let vote = idea.upVote - idea.downVote
+  let upVote = idea.upVote
+  let downVote = idea.downVote
   const [errorMessage, setErrorMessage] = useState(null)
 
   /* initially idea vote state is neutral */
@@ -18,13 +15,12 @@ const Idea = ({ idea }) => {
   const [downVoted, setDownVoted] = useState(false)
 
   const upVoteStyle = {
-    width: '30px',
-    height: '30px',
+    marginBottom: '30px',
+    color: upVoted ? 'black' : '',
   }
 
   const downVoteStyle = {
-    width: '30px',
-    height: '30px',
+    color: downVoted ? 'black' : '',
   }
 
   const authorStyle = {
@@ -42,23 +38,13 @@ const Idea = ({ idea }) => {
       return
     }
 
-    if (!neutral && upVoted) {
-      setErrorMessage('Error! You already up-voted this idea.')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-
-      return
-    }
+    if (upVoted) return
 
     try {
       await axios.post(`/api/ideas/${idea.id}/rating`, { type: 'upVote' })
+      setUpVoted(true)
       if (downVoted) {
         setDownVoted(false)
-        setNeutral(true)
-      } else {
-        setUpVoted(true)
-        setNeutral(false)
       }
     } catch (error) {
       console.log('upvote error')
@@ -75,60 +61,50 @@ const Idea = ({ idea }) => {
       }, 5000)
       return
     }
-    if (!neutral && downVoted) {
-      setErrorMessage('Error! You already down-voted this idea.')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
-
-      return
-    }
+    if (downVoted) return
 
     try {
       await axios.post(`/api/ideas/${idea.id}/rating`, { type: 'downVote' })
+
+      setDownVoted(true)
+
       if (upVoted) {
         setUpVoted(false)
-        setNeutral(true)
-      } else {
-        setDownVoted(true)
-        setNeutral(false)
       }
     } catch (error) {
       console.log('down vote error')
     }
   }
 
-  const displayVote = () => {
-    if (upVoted) vote++
-    if (downVoted) vote--
+  const displayUpVote = () => {
+    if (upVoted) upVote++
 
-    return vote
+    return upVote
+  }
+
+  const displayDownVote = () => {
+    if (downVoted) downVote++
+
+    return downVote
   }
 
   return (
     <div className='mt-4 mb-4 d-flex justify-content-between'>
       <div className='mt-1 mr-1'>
         {/* =============UPVOTE/DOWNVOTE============ */}
-        <ButtonGroup vertical>
-          {/* === upvote === */}
-          <Button variant='link' onClick={handleUpVote}>
-            <Image
-              style={upVoteStyle}
-              src={upVoted ? upvoteActiveImage : upvoteImage}></Image>
-          </Button>
-
-          {/* === vote display === */}
-          <div className='col text-center'>
-            <h5>{displayVote()}</h5>
-          </div>
-
-          {/* === downvote === */}
-          <Button variant='link' onClick={handleDownVote}>
-            <Image
-              style={downVoteStyle}
-              src={downVoted ? downvoteActiveImage : downvoteImage}></Image>
-          </Button>
-        </ButtonGroup>
+        <Button
+          className='fa fa-thumbs-up thumbs-up-button'
+          style={upVoteStyle}
+          onClick={handleUpVote}>
+          {' ' + displayUpVote()}
+        </Button>
+        <Button
+          variant='danger'
+          className='fa fa-thumbs-down thumbs-down-button'
+          style={downVoteStyle}
+          onClick={handleDownVote}>
+          {' ' + displayDownVote()}
+        </Button>
       </div>
 
       <Card border='info' style={{ width: '100%' }}>
