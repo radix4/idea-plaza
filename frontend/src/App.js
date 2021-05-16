@@ -6,6 +6,7 @@ import IdeaPage from './components/IdeaPage'
 import IdeaEditor from './components/IdeaEditor'
 import Profile from './components/Profile'
 import ProfileEditor from './components/ProfileEditor'
+import SeniorTeam from './components/SeniorTeam'
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -23,6 +24,7 @@ const App = () => {
           <Route path='/IdeaEditor/:ideaID' component={IdeaEditor} />
           <Route path='/Profile/:ideaID' component={Profile} />
           <Route path='/ProfileEditor' component={ProfileEditor} />
+          <Route path='/SeniorTeam' component={SeniorTeam} />
           {/* Error Case */}
           {/* <Route component={NoMatch} /> */}
         </Switch>

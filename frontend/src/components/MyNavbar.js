@@ -133,6 +133,14 @@ const MyNavbar = ({
               Popularity
             </NavDropdown.Item>
           </NavDropdown>
+
+          <Form>
+            <Link to='/SeniorTeam'>
+              <Button variant='info' className='rounded-pill'>
+                Senior Project Team
+              </Button>
+            </Link>
+          </Form>
         </Nav>
 
         {/* ============= LOGIN ============= */}

@@ -28,6 +28,7 @@ const usersRouter = require('./controllers/users')
 const ideasRouter = require('./controllers/ideas')
 const commentsRouter = require('./controllers/comments')
 const replysRouter = require('./controllers/replies')
+const seniorPostsRouter = require('./controllers/seniorPosts')
 
 const middleware = require('./utils/middleware')
 
@@ -35,6 +36,7 @@ app.use('/api/users', usersRouter)
 app.use('/api/ideas', ideasRouter)
 app.use('/api/comments', commentsRouter)
 app.use('/api/replies', replysRouter)
+app.use('/api/seniorPosts', seniorPostsRouter)
 
 /* error handlers */
 app.use(middleware.unknownEndpoint)

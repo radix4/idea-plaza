@@ -1,0 +1,12 @@
+POST http://localhost:3001/api/seniorPosts
+Content-Type: application/json
+
+{
+    "title": "BBBB", 
+    "major": "BBBB", 
+    "technologies": "BBBB", 
+    "strengths": "BBBB", 
+    "weaknesses": "AAAA", 
+    "author": "Rhea",
+    "user": "6091aec59cce5556bd3393cd"
+}
