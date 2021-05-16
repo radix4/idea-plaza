@@ -44,6 +44,9 @@ const Idea = ({ idea }) => {
       await axios.post(`/api/ideas/${idea.id}/rating`, { type: 'upVote' })
       setUpVoted(true)
       if (downVoted) {
+        await axios.post(`/api/ideas/${idea.id}/ratingDown`, {
+          type: 'downVote',
+        })
         setDownVoted(false)
       }
     } catch (error) {
@@ -65,10 +68,12 @@ const Idea = ({ idea }) => {
 
     try {
       await axios.post(`/api/ideas/${idea.id}/rating`, { type: 'downVote' })
-
       setDownVoted(true)
 
       if (upVoted) {
+        await axios.post(`/api/ideas/${idea.id}/ratingDown`, {
+          type: 'upVote',
+        })
         setUpVoted(false)
       }
     } catch (error) {
