@@ -62,6 +62,8 @@ const IdeaPage = () => {
 		user: 'loading',
 		category: 'loading...',
 	})
+	let upVote = ideaInfo.upVote
+	let downVote = ideaInfo.downVote
 	// define variables to hold user info and error messages
 	const [user, setUser] = useState()
 	const [isAuthor, setIsAuthor] = useState()
@@ -70,6 +72,7 @@ const IdeaPage = () => {
 	const [loggedInEmail, setLoggedInEmail] = useState()
 	const [authorBriefBio, setAuthorBriefBio] = useState()
 	const [content, setContent] = useState('')
+
 	// true if user is logged in, and makes commenting & upvoting visible
 	const [visible, setVisible] = useState(true)
 	const [ratingErrorMessage, setRatingErrorMessage] = useState(null)
@@ -81,17 +84,14 @@ const IdeaPage = () => {
 	const [upVoted, setUpVoted] = useState(false)
 	const [downVoted, setDownVoted] = useState(false)
 
-	const [vote, setVote] = useState(ideaInfo.upVote - ideaInfo.downVote)
-
 	//styles
 	const upVoteStyle = {
-		width: '30px',
-		height: '30px',
+		marginBottom: '30px',
+		color: upVoted ? 'black' : '',
 	}
 
 	const downVoteStyle = {
-		width: '30px',
-		height: '30px',
+		color: downVoted ? 'black' : '',
 	}
 
 	// useEffect() is similar to componentDidMount()
@@ -135,7 +135,6 @@ const IdeaPage = () => {
 				console.log(
 					'updating score: ' + (ideaResult.data.upVote - ideaResult.data.downVote)
 				)
-				setVote(ideaResult.data.upVote - ideaResult.data.downVote)
 
 				// checks whether user is author of idea
 				if (user) {
@@ -352,7 +351,6 @@ const IdeaPage = () => {
 				setUpVoted(true)
 				setNeutral(false)
 			}
-			setVote(vote + 1)
 		} catch (error) {
 			console.log('upvote error')
 		}
@@ -386,10 +384,21 @@ const IdeaPage = () => {
 				setDownVoted(true)
 				setNeutral(false)
 			}
-			setVote(vote - 1)
 		} catch (error) {
 			console.log('down vote error')
 		}
+	}
+
+	const displayUpVote = () => {
+		if (upVoted) upVote++
+
+		return upVote
+	}
+
+	const displayDownVote = () => {
+		if (downVoted) downVote++
+
+		return downVote
 	}
 
 	return (
@@ -457,26 +466,19 @@ const IdeaPage = () => {
 						<Card.Body>
 							<div className='mt-1 mr-1'>
 								{/* =============UPVOTE/DOWNVOTE============ */}
-								<ButtonGroup vertical>
-									{/* === upvote === */}
-									<Button variant='link' onClick={handleUpVote}>
-										<Image
-											style={upVoteStyle}
-											src={upVoted ? upvoteActiveImage : upvoteImage}></Image>
-									</Button>
-
-									{/* === vote total display === */}
-									<div className='col text-center'>
-										<h5>{vote}</h5>
-									</div>
-
-									{/* === downvote === */}
-									<Button variant='link' onClick={handleDownVote}>
-										<Image
-											style={downVoteStyle}
-											src={downVoted ? downvoteActiveImage : downvoteImage}></Image>
-									</Button>
-								</ButtonGroup>
+								<Button
+									className='fa fa-thumbs-up thumbs-up-button'
+									style={upVoteStyle}
+									onClick={handleUpVote}>
+									{' ' + displayUpVote()}
+								</Button>
+								<Button
+									variant='danger'
+									className='fa fa-thumbs-down thumbs-down-button'
+									style={downVoteStyle}
+									onClick={handleDownVote}>
+									{' ' + displayDownVote()}
+								</Button>
 							</div>
 						</Card.Body>
 					</Card>
