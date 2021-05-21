@@ -36,7 +36,7 @@ const ProfileEditor = () => {
     left: '75px',
     top: '300px',
   }
-
+  // Switches between functions between BioAchieve and ContactInfo
   const goBioAchieve = () => {
     setPage(<BioAchieve />)
   }
@@ -44,7 +44,7 @@ const ProfileEditor = () => {
   const goContactInfo = () => {
     setPage(<ContactInfo />)
   }
-
+  // Goes to Profile page
   const goProfile = () => {
     history.push(`/Profile/${id}`)
   }
@@ -53,7 +53,7 @@ const ProfileEditor = () => {
     <Container fluid style={scrolling}>
       {/* Navbar*/}
       <MyNavbar onHomePage={false} />
-
+      {/* For buttons on the left */}
       <a style={SelectionPos}>
         <Button onClick={goBioAchieve}>
           View/Change Biography and Achievement

@@ -67,8 +67,6 @@ const BioAchieve = () => {
       .then((request) => {
         console.log(request)
       })
-
-    // window.location.reload()
   }
 
   //Resets values when user cancels changes
@@ -111,6 +109,7 @@ const BioAchieve = () => {
   var button = <Button></Button>
   var submit = ''
 
+  // Swaps between view mode and edit mode
   if (edit) {
     input1 = (
       <Form.Control
@@ -181,7 +180,7 @@ const BioAchieve = () => {
           height='300px'
         />
       </div>
-
+      {/* displays inputs based on the current mode */}
       <div style={inputs}>
         <Form>
           <Form.Group as={Row} controlId='Bios'>

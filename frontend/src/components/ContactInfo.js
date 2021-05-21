@@ -125,7 +125,7 @@ const ContactInfo = () => {
             <Form.Label column sm='2'>
               Name:
             </Form.Label>
-
+            {/* Displays information */}
             <Col sm='10'>
               <Form.Control plaintext readOnly defaultValue={name} />
             </Col>
@@ -140,7 +140,7 @@ const ContactInfo = () => {
               <Form.Control plaintext readOnly defaultValue={email} />
             </Col>
           </Form.Group>
-
+          {/* Gets input to change password */}
           {/* Old Password */}
           <Form.Group as={Row} controlId='OldPassword'>
             <Form.Label column sm='2'>

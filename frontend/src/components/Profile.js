@@ -99,11 +99,11 @@ const Profile = () => {
     maxWidth: '100%',
     overflowX: 'hidden',
   }
-
+  // goes to ProfileEditor page
   const goProfileEdit = () => {
     history.push('/ProfileEditor')
   }
-
+  // This page is shown first
   if (loading) {
     return <div></div>
   }
