@@ -66,6 +66,8 @@ const IdeaEditor = () => {
 		func()
 	}, [])
 
+	const [content, setContent] = useState('')
+
 	// handles any content changes
 	const handleContentChange = (event) => {
 		setContent(event.target.value)
