@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom'
 import { useHistory } from 'react-router'
 import logoImage from '../images/logo_white.png'
 
+// Custom navbar component
 const MyNavbar = ({
   handleSearchSubmit,
   onChangeSearch,
@@ -27,6 +28,8 @@ const MyNavbar = ({
   const linkAccount = `/Profile/${id}`
 
   let history = useHistory()
+
+  // CSS stylings:
 
   const navbarStyle = {
     backgroundColor: '#2b7a98',
@@ -82,6 +85,7 @@ const MyNavbar = ({
     }
   }, [])
 
+  /** This function handles logout action */
   const handleBtnLogout = () => {
     window.localStorage.removeItem('loggedInUser')
     setUser(null)
@@ -133,7 +137,6 @@ const MyNavbar = ({
               Popularity
             </NavDropdown.Item>
           </NavDropdown>
-
           <Form>
             <Link to='/SeniorTeam'>
               <Button variant='info' className='rounded-pill'>
@@ -142,7 +145,6 @@ const MyNavbar = ({
             </Link>
           </Form>
         </Nav>
-
         {/* ============= LOGIN ============= */}
         <Form className='mr-4'>
           <Link to='/Login'>

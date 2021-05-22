@@ -168,6 +168,7 @@ const BioAchieve = () => {
     submit = ''
   }
 
+  /** Displays bio and achievements */
   const displayBioAchieve = (
     <div>
       {/* ProfileImage */}

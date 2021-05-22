@@ -30,11 +30,13 @@ const HomePage = () => {
   const handleSolutionOnChange = (event) => setSolution(event.target.value)
   const handleCategoryChange = (event) => setCategory(event.target.value)
 
+  /** OnChange listener */
   const onChangeSearch = (event) => {
     console.log(event.target.value)
     setSearch(event.target.value)
   }
 
+  // CSS styling
   const createIdeaFormStyle = {
     display: visible ? '' : 'none',
   }
@@ -162,6 +164,7 @@ const HomePage = () => {
     setIdeas(copy)
   }
 
+  /** Dropdown sort by most recent */
   const handleSortMostRecent = async (event) => {
     console.log('Most Recent dropdown clicked')
     let copy
@@ -175,6 +178,7 @@ const HomePage = () => {
 
   return (
     <div>
+      {/* ============= MyNavbar ============= */}
       <MyNavbar
         handleSearchSubmit={handleSearchSubmit}
         onChangeSearch={onChangeSearch}

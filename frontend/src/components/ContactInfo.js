@@ -13,6 +13,7 @@ const ContactInfo = () => {
   const [id, setId] = useState()
   const [errorMessage, setErrorMessage] = useState(null)
 
+  /** This function checks if the user is logged in */
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedInUser')
     if (loggedUserJSON) {
@@ -36,7 +37,8 @@ const ContactInfo = () => {
     }
   }, [])
 
-  // updates on input
+  // updates on input:
+
   const handleChangeOldPassword = ({ target }) => {
     setOldPassword(target.value)
   }
@@ -49,8 +51,7 @@ const ContactInfo = () => {
     setConfirmPassword(target.value)
   }
 
-  // Checks Input
-
+  // OnSubmit listener
   const onSubmit = () => {
     if (currentpassword !== oldpassword) {
       setErrorMessage(
@@ -107,7 +108,7 @@ const ContactInfo = () => {
     }
   }
 
-  //Style
+  // Style
   const inputs = {
     position: 'absolute',
     top: '300px',
@@ -115,7 +116,7 @@ const ContactInfo = () => {
     width: '800px',
   }
 
-  //   placeholder to print out project ideas etc.
+  // Placeholder to print out project ideas etc.
   const display = (
     <div>
       <div style={inputs}>
