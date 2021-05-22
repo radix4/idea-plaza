@@ -55,18 +55,14 @@ const RegistrationPage = () => {
     ) {
       /* error message appears for 5s, then disappears */
       setErrorMessage('You cannot leave any fields blank! Please try again.')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+
       return
     }
 
     if (password !== confirmPassword) {
       /* error message appears for 5s, then disappears */
       setErrorMessage('Passwords do not match. Please try again.')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+
       return
     }
 
@@ -85,9 +81,6 @@ const RegistrationPage = () => {
       setErrorMessage(
         'Yay, account successfully created! Go to the login page to login.'
       )
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
 
       // clear react bootstrap form
       document.getElementById('registration').reset()
@@ -96,9 +89,6 @@ const RegistrationPage = () => {
 
       /* error message appears for 5s, then disappears */
       setErrorMessage('Email already exists! Please use another email.')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
     }
   }
 
